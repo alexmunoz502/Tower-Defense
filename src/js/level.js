@@ -8,6 +8,10 @@ const Bullet = require("./bullet.js");
 const Tower = require("./tower.js");
 const Enemy = require("./enemy.js");
 
+const CELL_SIZE = 54;
+const CELL_OFFSET = CELL_SIZE / 2;
+
+
 class LevelScene extends Phaser.Scene {
     // Initialization
     constructor(levelData) {
@@ -15,6 +19,10 @@ class LevelScene extends Phaser.Scene {
 
         // Private scene properties
         this._levelData = levelData;
+
+        // Tower Controls
+        this._towerPlacingMode = false
+        this.towerPlacementCursor = {x: 0, y: 0, previousX: 0, previousY: 0, isValid: false};
 
         // Wave Data
         this._waveData = this._levelData.waveData
@@ -102,9 +110,75 @@ class LevelScene extends Phaser.Scene {
 
     update() {
         this._userInterface.update();
+
+        if (this._towerPlacingMode) {
+            this.towerPlacementCursor.x = Math.floor(this.game.input.mousePointer.worldX / CELL_SIZE) * CELL_SIZE + CELL_OFFSET
+            this.towerPlacementCursor.y = Math.floor(this.game.input.mousePointer.worldY / CELL_SIZE) * CELL_SIZE + CELL_OFFSET
+
+            if ((this.towerPlacementCursor.x != this.towerPlacementCursor.previousX) || (this.towerPlacementCursor.y != this.towerPlacementCursor.previousY)) {
+                this.towerPlacementCursor.isValid = this.checkTowerPlacementValidity();
+            }
+
+            this.towerPlacementCursor.previousX = this.towerPlacementCursor.x
+            this.towerPlacementCursor.previousY = this.towerPlacementCursor.y
+        }
     }
 
     // Actions
+    // -- Towers
+    enableTowerPlacementMode() {
+        this._towerPlacingMode = true
+    }
+
+    disableTowerPlacementMode() {
+        this._towerPlacingMode = false
+    }
+
+    addTower(x, y, towerName) {
+        if (this.towerPlacementCursor.isValid) {
+            return this._towerManager.addTower(x, y, towerName)
+        } else {
+            return null;
+        }
+    }
+
+    checkTowerPlacementValidity() {
+        var pathData = this._levelData.path
+        for (var i = 0; i < pathData.length; i++) {
+            var x1 = pathData[i][0];
+            var y1 = pathData[i][1];
+            var x2 = pathData[i][2];
+            var y2 = pathData[i][3];
+
+            // Check if tower position is on path on X axis
+            var isXMatch = false
+            if (this.towerPlacementCursor.x >= x1 && this.towerPlacementCursor.x <= x2) {
+                // Check X left-to-right
+                isXMatch = true
+            } else if (this.towerPlacementCursor.x >= x2 && this.towerPlacementCursor.x <= x1) {
+                // Check X right-to-left
+                isXMatch = true
+            }
+
+            // Check if tower position is on path Y axis
+            var isYMatch = false
+            if (this.towerPlacementCursor.y >= y1 && this.towerPlacementCursor.y <= y2) {
+                isYMatch = true
+            } else if (this.towerPlacementCursor.y >= y2 && this.towerPlacementCursor.y <= y1) {
+                isYMatch = true
+            }
+
+            // If both X and Y match, tower is on path, i.e. invalid position
+            if (isXMatch && isYMatch) {
+                console.log("Invalid Placement, x: " + String(this.towerPlacementCursor.x) + " y: " + String(this.towerPlacementCursor.y))
+                return false;
+            }
+        }
+        console.log("Valid Placement, x: " + String(this.towerPlacementCursor.x) + " y: " + String(this.towerPlacementCursor.y))
+        return true;
+    }
+
+    // -- Waves
     nextWave() {
         this._currentWaveIndex += 1;
         if (this._currentWaveIndex < this._waveCount) {
@@ -117,11 +191,6 @@ class LevelScene extends Phaser.Scene {
         }
     }
 
-    addTower(x, y, towerName) {
-        return this._towerManager.addTower(x, y, towerName)
-    }
-
-    // Wave Functions
     startWave(waveNumber) {
         var waveRecord = this._waveData[waveNumber]
         for (const wave of waveRecord) {

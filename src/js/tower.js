@@ -1,6 +1,6 @@
 import images from '../assets/*.png';
 const Bullet = require("./bullet.js")
-
+const ROTATION_ADJUSTMENT = 90 * (Math.PI / 180)
 
 class Tower extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, towerData) {
@@ -69,7 +69,7 @@ class Tower extends Phaser.Physics.Arcade.Sprite {
     }
 
     getTurretAngleToEnemy(enemy) {
-        let angle = Phaser.Math.Angle.Between(enemy.x, enemy.y, this.turret.x, this.turret.y) - (90 * (180/Math.PI))
+        let angle = Phaser.Math.Angle.Between(enemy.x, enemy.y, this.turret.x, this.turret.y) + ROTATION_ADJUSTMENT;
         return angle;
     }
 
