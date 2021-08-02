@@ -1,5 +1,5 @@
 {
-    "name": "rapid_tower",
+    "name": "repeater",
     "type": "non-homing",
     "projectile": "bullet",
     "projectile_speed" : 1100,
