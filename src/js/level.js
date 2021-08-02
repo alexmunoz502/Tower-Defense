@@ -2,6 +2,10 @@ import images from '../assets/*.png';
 import backgroundImages from '../assets/backgrounds/*.png';
 import musicTracks from '../assets/music/*.mp3';
 
+import towerSprites from '../assets/towers/*.png';
+import bulletSprites from '../assets/bullets/*.png';
+import enemySprites from '../assets/enemies/*.png';
+
 const UserInterface = require("./userInterface.js");
 const TowerManager = require("./towerManager.js");
 const EnemyManager = require("./enemyManager.js");
@@ -44,20 +48,30 @@ class LevelScene extends Phaser.Scene {
     }
 
     preload() {
-        // Scene object images
-        for (const spriteName in images) {
-            this.load.image(spriteName, images[spriteName]);
+        // Load Game Assets
+        // -- Tower Sprites
+        for (const spriteName in towerSprites) {
+            this.load.image(spriteName, towerSprites[spriteName]);
         }
 
-        // Background Image
+        // -- Bullet Sprites
+        for (const spriteName in bulletSprites) {
+            this.load.image(spriteName, bulletSprites[spriteName]);
+        }
+
+        // -- Enemy Sprites
+        for (const spriteName in enemySprites) {
+            this.load.image(spriteName, enemySprites[spriteName]);
+        }
+
+        // -- Background Image
         var bgImageName = this._levelData.background;
         this.load.image('levelBg', backgroundImages[bgImageName])
 
-        // Audio - Music
+        // -- Audio - Music
         for (const track in musicTracks) {
             this.load.audio(track, musicTracks[track])
         }
-
     }
 
     create() {

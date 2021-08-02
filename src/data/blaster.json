@@ -1,7 +1,7 @@
 {
-    "name": "basic_tower",
-    "type": "homing",
-    "projectile": "bullet",
+    "name": "blaster",
+    "type": "non-homing",
+    "projectile": "laser_red",
     "projectile_speed" : 450,
     "projectile_duration" : 300,
     "accuracy": 1.0,

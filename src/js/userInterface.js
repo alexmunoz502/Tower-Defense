@@ -70,7 +70,7 @@ class UserInterface {
         // ---------------------
         // Tower icons & titles
         // ---------------------
-        this.addTothis(this, 400, 580, "basic_tower");
+        this.addTothis(this, 400, 580, "blaster");
         this.tower1Title = this._scene.add.text(385, 610, "100", { 
             fontFamily: 'Verdana',
             fontSize: '16px',
@@ -80,7 +80,7 @@ class UserInterface {
             strokeThickness: '2'
         });
 
-        this.addTothis(this, 500, 580, "rapid_tower");
+        this.addTothis(this, 500, 580, "repeater");
         this.tower2Title = this._scene.add.text(485, 610, "200", { 
             fontFamily: 'Verdana',
             fontSize: '16px',
@@ -90,7 +90,7 @@ class UserInterface {
             strokeThickness: '2'
         });
         
-        this.addTothis(this, 600, 580, "aoe_tower");
+        this.addTothis(this, 600, 580, "shocker");
         this.tower3Title  = this._scene.add.text(585, 610, "250", { 
             fontFamily: 'Verdana',
             fontSize: '16px',
@@ -150,24 +150,30 @@ class UserInterface {
         if (this.towerPreview !== null) {
             this.towerPreview.x = this._scene.towerPlacementCursor.x
             this.towerPreview.y = this._scene.towerPlacementCursor.y
+            this.towerPreview.turret.x = this.towerPreview.x
+            this.towerPreview.turret.y = this.towerPreview.y
             if (!this._scene.towerPlacementCursor.isValid) {
                 this.towerPreview.setTint(0xff0000);
+                this.towerPreview.turret.setTint(0xff0000);
             } else {
                 this.towerPreview.setTint(0xffffff)
+                this.towerPreview.turret.setTint(0xffffff);
             }
         }
     }
 
     // Adds interactable tower icon to scene
     addTothis(towerParent, x, y, towerName) {
-        var towerSelect = towerParent._scene.add.sprite(x, y, towerName).setInteractive();
+        var towerSelect = towerParent._scene.add.sprite(x, y, "tower_base").setInteractive();
+        towerSelect.turret = towerParent._scene.add.sprite(x, y, towerName)
 
         // Clicking on a tower creates a floating transparent tower to preview placement.
         towerSelect.on("pointerdown", function (scene = this._scene) {
             this.scene.enableTowerPlacementMode()
-            towerParent.towerPreview = towerParent._scene.add.sprite(x, y, towerName).setInteractive();
-            towerParent.towerPreview.scale = 1;
+            towerParent.towerPreview = towerParent._scene.add.sprite(x, y, "tower_base").setInteractive();
+            towerParent.towerPreview.turret = towerParent._scene.add.sprite(x, y, towerName);
             towerParent.towerPreview.alpha = 0.5;
+            towerParent.towerPreview.turret.alpha = 0.5;
             
             // Clicking again adds a new tower to the scene at the given location.
             towerParent.towerPreview.on("pointerdown", function (pointer) {
