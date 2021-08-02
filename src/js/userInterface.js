@@ -174,6 +174,7 @@ class UserInterface {
             towerParent.towerPreview.turret = towerParent._scene.add.sprite(x, y, towerName);
             towerParent.towerPreview.alpha = 0.5;
             towerParent.towerPreview.turret.alpha = 0.5;
+
             // Clicking again adds a new tower to the scene at the given location.
             towerParent.towerPreview.on("pointerdown", function (pointer) {
                 // Stops towers from being placed out of bounds on hud
