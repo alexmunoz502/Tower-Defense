@@ -1,0 +1,26 @@
+Music by Eric Matyas
+www.soundimage.org
+
+Action Themes:
+    "Trash Aliens"
+    "Monster Street Fighters"
+    "Quirky Action"
+    "Quirky Action 2"
+    "Dangerous Cyber Streets"
+    "Robo Boss Battle"
+
+Boss Theme:
+    "Boss Battle"
+
+Title Screen:
+    "Futureopolis"
+
+Level Select:
+    "Electric Drizzle"
+
+Preparation Phase Themes:
+    "Network"
+    "Corporate Ladder"
+    "Bot Builders"
+    "Automation"
+    "World of Automotons"

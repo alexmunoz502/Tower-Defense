@@ -5,11 +5,11 @@
         "width": 960,
         "height": 640,
         "waveData": [
-            [1, "test_enemy", 1000],
-            [4, "test_enemy", 900],
-            [6, "test_enemy", 800],
-            [8, "test_enemy", 700],
-            [10, "test_enemy", 600]
+            [10, "test_enemy", 1000],
+            [12, "test_enemy", 900],
+            [14, "test_enemy", 800],
+            [17, "test_enemy", 700],
+            [20, "test_enemy", 600]
         ],
         "path": [
             [0, 405, 513, 405],
