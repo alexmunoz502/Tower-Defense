@@ -38,7 +38,7 @@ class UserInterface {
         });
 
         // Health Title
-        this.healthTitle = this._scene.add.text(30, 600, "Health", { 
+        this.healthTitle = this._scene.add.text(30, 600, "Health", {
             fontFamily: 'Verdana',
             fontSize: '16px',
             fontStyle: 'bold',
@@ -58,7 +58,7 @@ class UserInterface {
         });
 
         // Credits Title
-        this.creditsTitle = this._scene.add.text(225, 600, "Credits", { 
+        this.creditsTitle = this._scene.add.text(225, 600, "Credits", {
             fontFamily: 'Verdana',
             fontSize: '16px',
             fontStyle: 'bold',
@@ -70,8 +70,13 @@ class UserInterface {
         // ---------------------
         // Tower icons & titles
         // ---------------------
+<<<<<<< HEAD
         this.addTothis(this, 400, 580, "blaster");
         this.tower1Title = this._scene.add.text(385, 610, "100", { 
+=======
+        this.addTothis(this, 400, 580, "basic_tower");
+        this.tower1Title = this._scene.add.text(385, 610, "100", {
+>>>>>>> c8e9cf49a639df10e943e75389a56b0426ffed6d
             fontFamily: 'Verdana',
             fontSize: '16px',
             fontStyle: 'normal',
@@ -80,8 +85,13 @@ class UserInterface {
             strokeThickness: '2'
         });
 
+<<<<<<< HEAD
         this.addTothis(this, 500, 580, "repeater");
         this.tower2Title = this._scene.add.text(485, 610, "200", { 
+=======
+        this.addTothis(this, 500, 580, "rapid_tower");
+        this.tower2Title = this._scene.add.text(485, 610, "200", {
+>>>>>>> c8e9cf49a639df10e943e75389a56b0426ffed6d
             fontFamily: 'Verdana',
             fontSize: '16px',
             fontStyle: 'normal',
@@ -89,9 +99,15 @@ class UserInterface {
             stroke: STROKE_COLOR,
             strokeThickness: '2'
         });
+<<<<<<< HEAD
         
         this.addTothis(this, 600, 580, "shocker");
         this.tower3Title  = this._scene.add.text(585, 610, "250", { 
+=======
+
+        this.addTothis(this, 600, 580, "aoe_tower");
+        this.tower3Title = this._scene.add.text(585, 610, "250", {
+>>>>>>> c8e9cf49a639df10e943e75389a56b0426ffed6d
             fontFamily: 'Verdana',
             fontSize: '16px',
             fontStyle: 'normal',
@@ -100,7 +116,7 @@ class UserInterface {
             strokeThickness: '2'
         });
         // -----------------------
-        
+
         // Tower Details Background
         this.details = this._scene.add.rectangle(956, 635, 300, 90, DETAILS_BACKGROUND_COLOR).setOrigin(1, 1);
         this.details.setStrokeStyle(2, DETAILS_STROKE_COLOR);
@@ -133,7 +149,7 @@ class UserInterface {
     // Triggered when health or credit values change
     // Add each updateable value to the switch statement
     updateValues(parent, key, data) {
-        switch(key){
+        switch (key) {
             case 'base_health':
                 this.healthValue.setText(data);
                 break;
@@ -173,38 +189,43 @@ class UserInterface {
             towerParent.towerPreview = towerParent._scene.add.sprite(x, y, "tower_base").setInteractive();
             towerParent.towerPreview.turret = towerParent._scene.add.sprite(x, y, towerName);
             towerParent.towerPreview.alpha = 0.5;
+<<<<<<< HEAD
             towerParent.towerPreview.turret.alpha = 0.5;
             
+=======
+
+>>>>>>> c8e9cf49a639df10e943e75389a56b0426ffed6d
             // Clicking again adds a new tower to the scene at the given location.
             towerParent.towerPreview.on("pointerdown", function (pointer) {
                 // Stops towers from being placed out of bounds on hud
                 // NOTE: I'm not sure what value to put to adjust for the horizontal hud so it's a static value for now.
-                if (towerParent.towerPreview.y <= (towerParent.hud.y - 100)) {  
+                if (towerParent.towerPreview.y <= (towerParent.hud.y - 100)) {
                     var newTowerX = Math.floor(towerParent.towerPreview.x / CELL_SIZE) * CELL_SIZE + CELL_OFFSET;
                     var newTowerY = Math.floor(towerParent.towerPreview.y / CELL_SIZE) * CELL_SIZE + CELL_OFFSET;
                     var newTower = towerParent._scene.addTower(newTowerX, newTowerY, towerName);
 
-                    if (newTower != null) {
-                        // Shows tower stats when selecting tower.
-                        newTower.on("pointerdown", function (pointer) {
-                            // Updates tower stat towerParent
-                            towerParent.damageTitle.setText("Damage: " + newTower.damage);
-                            towerParent.rangeTitle.setText("Range: " + newTower.range);
-                            towerParent.attackSpeedTitle.setText("Cooldown: " + newTower.cooldown / 60.0);
+                    // Shows tower stats when selecting tower.
+                    newTower.on("pointerdown", function (pointer) {
+                        // Updates tower stat towerParent
+                        towerParent.damageTitle.setText("Damage: " + newTower.damage);
+                        towerParent.rangeTitle.setText("Range: " + newTower.range);
+                        towerParent.attackSpeedTitle.setText("Cooldown: " + newTower.cooldown / 60.0);
 
-                            // Adds upgradeButton to towerParent if tower is not at max rank
-                            if (newTower.rank < 3 && !towerParent.activeButton) {
+                        // Adds upgradeButton to towerParent if tower is not at max rank
+                        if (newTower.rank < 3 && !towerParent.activeButton) {
+                            towerParent.addUpgradeButton(towerParent, newTower);
+                            towerParent.activeButton = newTower;
+                        }
+                        // If another upgradeButton already exists in towerParent, remove it and add new one
+                        else if (towerParent.activeButton !== newTower) {
+                            towerParent.upgradeButton.destroy();
+                            towerParent.activeButton = false
+                            if (newTower.rank < 3) {
                                 towerParent.addUpgradeButton(towerParent, newTower);
                                 towerParent.activeButton = newTower;
                             }
-                            // If another upgradeButton already exists in towerParent, remove it and add new one
-                            else if (towerParent.activeButton !== newTower && newTower.rank < 3) {
-                                towerParent.upgradeButton.destroy();
-                                towerParent.addUpgradeButton(towerParent, newTower);
-                                towerParent.activeButton = newTower;
-                            }
-                        });
-                    }
+                        }
+                    });
                     
                     // DEBUG: Placing multiple towers
                     if (!towerParent._scene.shiftKey.isDown) {
