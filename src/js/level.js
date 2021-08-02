@@ -1,9 +1,11 @@
 import images from '../assets/*.png';
 import backgroundImages from '../assets/backgrounds/*.png';
+import musicTracks from '../assets/music/*.mp3';
 
 const UserInterface = require("./userInterface.js");
 const TowerManager = require("./towerManager.js");
 const EnemyManager = require("./enemyManager.js");
+const AudioManager = require("./audioManager.js");
 const Bullet = require("./bullet.js");
 const Tower = require("./tower.js");
 const Enemy = require("./enemy.js");
@@ -19,6 +21,10 @@ class LevelScene extends Phaser.Scene {
 
         // Private scene properties
         this._levelData = levelData;
+
+        // State Control
+        this._isWaveInProgress = false
+        this._enemyCount = 0
 
         // Tower Controls
         this._towerPlacingMode = false
@@ -47,6 +53,11 @@ class LevelScene extends Phaser.Scene {
         var bgImageName = this._levelData.background;
         this.load.image('levelBg', backgroundImages[bgImageName])
 
+        // Audio - Music
+        for (const track in musicTracks) {
+            this.load.audio(track, musicTracks[track])
+        }
+
     }
 
     create() {
@@ -67,6 +78,9 @@ class LevelScene extends Phaser.Scene {
         this.shiftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
 
         // Initialize Managers
+        this._audioManager = new AudioManager(this, musicTracks);
+        this._audioManager.initializeMusic();
+        this._audioManager.playMusic("preparation")
         this._userInterface = new UserInterface(this);
         this._enemyManager = new EnemyManager(this, this._levelData.waveData);
         this._towerManager = new TowerManager(this);
@@ -122,6 +136,14 @@ class LevelScene extends Phaser.Scene {
             this.towerPlacementCursor.previousX = this.towerPlacementCursor.x
             this.towerPlacementCursor.previousY = this.towerPlacementCursor.y
         }
+
+        if (this._isWaveInProgress) {
+            if (this._enemyCount <= 0) {
+                console.log("Wave Ended.")
+                this._isWaveInProgress = false
+                this._audioManager.playMusic("preparation")
+            }
+        }
     }
 
     // Actions
@@ -170,20 +192,20 @@ class LevelScene extends Phaser.Scene {
 
             // If both X and Y match, tower is on path, i.e. invalid position
             if (isXMatch && isYMatch) {
-                console.log("Invalid Placement, x: " + String(this.towerPlacementCursor.x) + " y: " + String(this.towerPlacementCursor.y))
                 return false;
             }
         }
-        console.log("Valid Placement, x: " + String(this.towerPlacementCursor.x) + " y: " + String(this.towerPlacementCursor.y))
         return true;
     }
 
     // -- Waves
     nextWave() {
+        this._audioManager.playMusic("action");
+        this._isWaveInProgress = true
         this._currentWaveIndex += 1;
         if (this._currentWaveIndex < this._waveCount) {
             this.startWave(this._currentWaveIndex)
-            console.log("Starting Wave: " + String(this._currentWaveIndex))
+            console.log("Starting Wave: " + String(this._currentWaveIndex) + " Enemies Remaining: " + String(this._enemyCount))
         } else {
             // DEBUG, reset waves
             this._currentWaveIndex = -1
