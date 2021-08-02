@@ -1,0 +1,7 @@
+{
+    "name": "alien_green",
+    "damage": 5,
+    "speed": 0.5,
+    "scale": 1,
+    "health": 100
+}

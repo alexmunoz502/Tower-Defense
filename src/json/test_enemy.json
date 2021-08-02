@@ -1,7 +1,0 @@
-{
-    "name": "test_enemy",
-    "damage": 5,
-    "speed": 1.2,
-    "scale": 0.1,
-    "health": 45
-}

@@ -1,8 +1,13 @@
+import images from '../assets/*.png';
+
 class Enemy extends Phaser.Physics.Arcade.Sprite {
     // Initialization
-    constructor(scene, x, y, enemyData) {        
-        // Sprite
-        super(scene, x, y, enemyName);
+    constructor(scene, x, y, enemyData, path) {
+        super(scene, x, y, enemyData, path);
+        this.scene = scene;
+        this.path = path;
+
+        this.setTexture(enemyData.name);
         this.scale = enemyData.scale;
 
         // Private Attributes
@@ -11,10 +16,12 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this._damage = enemyData.damage;
         this._speed = enemyData.speed;
         
-        // Instantiation into the game world    
+
+        // Adds enemy to scene
         scene.add.existing(this);
-        var newEnemy = scene.physics.add.existing(this);
-        newEnemy.body.debugShowBody = false;
+        scene.registry.enemies.add(this);
+        
+        // newEnemy.body.debugShowBody = false;
     }
 
     // Getters
@@ -35,18 +42,32 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
 
     // Public Methods
-    checkIsDead() {
+    isDead() {
         return this._health <= 0 ? true : false;
     }
 
     takeDamage(damageValue) {
         this._health -= damageValue;
-        if (this.checkIsDead()) this.die();
+        if (this.isDead()) this.die();
     }
 
     die() {
         // TODO: death animation ?
-        this.destroy(true);
+        this.scene._enemyCount -= 1
+        this.scene.registry.enemies.remove(this, true, true);
+    }
+
+    update() {
+        // update the tween this enemy is 'following'
+        this.path.getPoint(this.follower.t, this.follower.vec);
+
+        // update enemy/sprite coordinates to match tween
+        this.x = this.follower.vec.x;
+        this.y = this.follower.vec.y;
+        if (this.follower.t == 1) {
+            this.scene.registry.set('base_health', (this.scene.registry.get('base_health') - this._damage));
+            this.scene.registry.enemies.remove(this, true, true);
+        }
     }
 
 }

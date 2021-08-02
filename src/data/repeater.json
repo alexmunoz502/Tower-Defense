@@ -1,0 +1,12 @@
+{
+    "name": "repeater",
+    "type": "non-homing",
+    "projectile": "bullet",
+    "projectile_speed" : 1100,
+    "projectile_duration" : 300,
+    "accuracy": 0.6,
+    "damage": [5,7.5,10],
+    "range": [225, 250, 265],
+    "cooldown": [0.2, 0.19, 0.18],
+    "scale": 1
+}

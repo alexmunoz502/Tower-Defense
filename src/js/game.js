@@ -1,30 +1,34 @@
 import 'phaser';
-import LevelOneScene from './LevelOneScene.js';
+import LevelScene from './level.js';
+import levelData from '../data/levels.json';
 
-// Scenes here
-var levelOne = new LevelOneScene();
+// Creates a new scene for each existing level data
+var levels = [];
+for (var level in levelData) if (levelData.hasOwnProperty(level)) {
+  levels.push(new LevelScene(levelData[level]));
+}
 
-// Global settings
+// Game settings
 const gameConfig = {
-    type: Phaser.AUTO,
-    parent: 'tower-defense',
-    title: "Tower Defense",
-    width: 800,
-    height: 600,
-    backgroundColor: '#a06505', // Placeholder color
-    physics: {
-      default: 'arcade',
-      arcade: {
-        debug: true,
-        gravity: { 
-          y: 0
-        }
+  type: Phaser.AUTO,
+  parent: 'tower-defense',
+  title: "Tower Defense",
+  width: 960,
+  height: 640,
+  backgroundColor: '#a06505', 
+  physics: {
+    default: 'arcade',
+    arcade: {
+      debug: false,
+      gravity: {
+        y: 0
       }
-    },
-    scene: [levelOne]  // Scene array
-  };
+    }
+  },
+  scene: levels
+};
 
 // Instantiates a phaser game.
-window.onload = function() {
+window.onload = function () {
   var game = new Phaser.Game(gameConfig);
 };

@@ -1,0 +1,12 @@
+{
+    "name": "shocker",
+    "type": "stationary-aoe",
+    "projectile": null,
+    "projectile_speed" : null,
+    "projectile_duration" : null,
+    "accuracy": 1.0,
+    "damage": [25, 35, 50],
+    "range": [80, 100, 125],
+    "cooldown": [1.25, 1.10, 0.9],
+    "scale": 1
+}
