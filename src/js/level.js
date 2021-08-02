@@ -22,7 +22,7 @@ class LevelScene extends Phaser.Scene {
 
         // Tower Controls
         this._towerPlacingMode = false
-        this.towerPlacementCursor = {x: 0, y: 0, previousX: 0, previousY: 0, isValid: false};
+        this.towerPlacementCursor = { x: 0, y: 0, previousX: 0, previousY: 0, isValid: false };
 
         // Wave Data
         this._waveData = this._levelData.waveData
