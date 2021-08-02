@@ -219,7 +219,7 @@ class LevelScene extends Phaser.Scene {
         this._currentWaveIndex += 1;
         if (this._currentWaveIndex < this._waveCount) {
             this.startWave(this._currentWaveIndex)
-            console.log("Starting Wave: " + String(this._currentWaveIndex) + " Enemies Remaining: " + String(this._enemyCount))
+            console.log("Starting Wave: " + String(this._currentWaveIndex) + "\nEnemies Remaining: " + String(this._enemyCount))
         } else {
             // DEBUG, reset waves
             this._currentWaveIndex = -1
@@ -233,6 +233,7 @@ class LevelScene extends Phaser.Scene {
             var enemyCount = wave[0] - 1
             var enemyType = wave[1]
             var spawnDelay = wave[2]
+            this._enemyCount = enemyCount + 1
             var waveTimer = this.time.addEvent({
                 delay: spawnDelay,
                 callback: this._enemyManager.addToPath,
@@ -241,6 +242,10 @@ class LevelScene extends Phaser.Scene {
                 repeat: enemyCount
             })
         }
+    }
+
+    decEnemyCount() {
+        this._enemyCount -= 1;
     }
 
 

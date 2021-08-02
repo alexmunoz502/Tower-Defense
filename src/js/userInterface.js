@@ -70,13 +70,8 @@ class UserInterface {
         // ---------------------
         // Tower icons & titles
         // ---------------------
-<<<<<<< HEAD
         this.addTothis(this, 400, 580, "blaster");
-        this.tower1Title = this._scene.add.text(385, 610, "100", { 
-=======
-        this.addTothis(this, 400, 580, "basic_tower");
         this.tower1Title = this._scene.add.text(385, 610, "100", {
->>>>>>> c8e9cf49a639df10e943e75389a56b0426ffed6d
             fontFamily: 'Verdana',
             fontSize: '16px',
             fontStyle: 'normal',
@@ -85,13 +80,8 @@ class UserInterface {
             strokeThickness: '2'
         });
 
-<<<<<<< HEAD
         this.addTothis(this, 500, 580, "repeater");
-        this.tower2Title = this._scene.add.text(485, 610, "200", { 
-=======
-        this.addTothis(this, 500, 580, "rapid_tower");
         this.tower2Title = this._scene.add.text(485, 610, "200", {
->>>>>>> c8e9cf49a639df10e943e75389a56b0426ffed6d
             fontFamily: 'Verdana',
             fontSize: '16px',
             fontStyle: 'normal',
@@ -99,15 +89,9 @@ class UserInterface {
             stroke: STROKE_COLOR,
             strokeThickness: '2'
         });
-<<<<<<< HEAD
-        
-        this.addTothis(this, 600, 580, "shocker");
-        this.tower3Title  = this._scene.add.text(585, 610, "250", { 
-=======
 
-        this.addTothis(this, 600, 580, "aoe_tower");
+        this.addTothis(this, 600, 580, "shocker");
         this.tower3Title = this._scene.add.text(585, 610, "250", {
->>>>>>> c8e9cf49a639df10e943e75389a56b0426ffed6d
             fontFamily: 'Verdana',
             fontSize: '16px',
             fontStyle: 'normal',
@@ -189,12 +173,8 @@ class UserInterface {
             towerParent.towerPreview = towerParent._scene.add.sprite(x, y, "tower_base").setInteractive();
             towerParent.towerPreview.turret = towerParent._scene.add.sprite(x, y, towerName);
             towerParent.towerPreview.alpha = 0.5;
-<<<<<<< HEAD
             towerParent.towerPreview.turret.alpha = 0.5;
-            
-=======
 
->>>>>>> c8e9cf49a639df10e943e75389a56b0426ffed6d
             // Clicking again adds a new tower to the scene at the given location.
             towerParent.towerPreview.on("pointerdown", function (pointer) {
                 // Stops towers from being placed out of bounds on hud
@@ -226,7 +206,7 @@ class UserInterface {
                             }
                         }
                     });
-                    
+
                     // DEBUG: Placing multiple towers
                     if (!towerParent._scene.shiftKey.isDown) {
                         towerParent.towerPreview.destroy(true);
