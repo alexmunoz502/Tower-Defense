@@ -6,7 +6,7 @@ class Tower extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, towerData) {
         super(scene, x, y, towerData);
 
-        this.setTexture(towerData.name)
+        this.setTexture("tower_base")
         this.name = towerData.name;
         this.type = towerData.type;
         this.projectile = towerData.projectile;
@@ -21,7 +21,7 @@ class Tower extends Phaser.Physics.Arcade.Sprite {
         this._cooldown = towerData.cooldown;
         this.scene = scene;
 
-        this.turret = new Phaser.Physics.Arcade.Sprite(scene, x, y, "basic_turret")
+        this.turret = new Phaser.Physics.Arcade.Sprite(scene, x, y, towerData.name)
         this.turret.isTracking = false
         //this.turret.setTexture("basic_turret")
 
