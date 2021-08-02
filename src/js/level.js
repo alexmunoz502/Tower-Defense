@@ -214,7 +214,7 @@ class LevelScene extends Phaser.Scene {
 
     // -- Waves
     nextWave() {
-        this._audioManager.playMusic("action");
+        if (!this._isWaveInProgress) this._audioManager.playMusic("action");
         this._isWaveInProgress = true
         this._currentWaveIndex += 1;
         if (this._currentWaveIndex < this._waveCount) {
