@@ -1,5 +1,4 @@
-const CELL_SIZE = 54;
-const CELL_OFFSET = CELL_SIZE / 2;
+const { NONE } = require("phaser");
 
 // Theme colors
 const HUD_COLOR = '0xedf4ff';
@@ -12,6 +11,9 @@ const HEALTH_COLOR = 'red';
 const DETAILS_BACKGROUND_COLOR = 'black';
 const DETAILS_TEXT_COLOR = 'lime';
 const DETAILS_STROKE_COLOR = '0x00FF00';
+
+const CELL_SIZE = 54;
+const CELL_OFFSET = CELL_SIZE / 2;
 
 class UserInterface {
     constructor(scene) {
@@ -146,8 +148,13 @@ class UserInterface {
 
         // Snap tower preview to grid
         if (this.towerPreview !== null) {
-            this.towerPreview.x = Math.floor(this._scene.game.input.mousePointer.worldX / CELL_SIZE) * CELL_SIZE + CELL_OFFSET
-            this.towerPreview.y = Math.floor(this._scene.game.input.mousePointer.worldY / CELL_SIZE) * CELL_SIZE + CELL_OFFSET
+            this.towerPreview.x = this._scene.towerPlacementCursor.x
+            this.towerPreview.y = this._scene.towerPlacementCursor.y
+            if (!this._scene.towerPlacementCursor.isValid) {
+                this.towerPreview.setTint(0xff0000);
+            } else {
+                this.towerPreview.setTint(0xffffff)
+            }
         }
     }
 
@@ -156,7 +163,8 @@ class UserInterface {
         var towerSelect = towerParent._scene.add.sprite(x, y, towerName).setInteractive();
 
         // Clicking on a tower creates a floating transparent tower to preview placement.
-        towerSelect.on("pointerdown", function (pointer) {
+        towerSelect.on("pointerdown", function (scene = this._scene) {
+            this.scene.enableTowerPlacementMode()
             towerParent.towerPreview = towerParent._scene.add.sprite(x, y, towerName).setInteractive();
             towerParent.towerPreview.scale = 1;
             towerParent.towerPreview.alpha = 0.5;
@@ -169,29 +177,34 @@ class UserInterface {
                     var newTowerX = Math.floor(towerParent.towerPreview.x / CELL_SIZE) * CELL_SIZE + CELL_OFFSET;
                     var newTowerY = Math.floor(towerParent.towerPreview.y / CELL_SIZE) * CELL_SIZE + CELL_OFFSET;
                     var newTower = towerParent._scene.addTower(newTowerX, newTowerY, towerName);
+
+                    if (newTower != null) {
+                        // Shows tower stats when selecting tower.
+                        newTower.on("pointerdown", function (pointer) {
+                            // Updates tower stat towerParent
+                            towerParent.damageTitle.setText("Damage: " + newTower.damage);
+                            towerParent.rangeTitle.setText("Range: " + newTower.range);
+                            towerParent.attackSpeedTitle.setText("Cooldown: " + newTower.cooldown / 60.0);
+
+                            // Adds upgradeButton to towerParent if tower is not at max rank
+                            if (newTower.rank < 3 && !towerParent.activeButton) {
+                                towerParent.addUpgradeButton(towerParent, newTower);
+                                towerParent.activeButton = newTower;
+                            }
+                            // If another upgradeButton already exists in towerParent, remove it and add new one
+                            else if (towerParent.activeButton !== newTower && newTower.rank < 3) {
+                                towerParent.upgradeButton.destroy();
+                                towerParent.addUpgradeButton(towerParent, newTower);
+                                towerParent.activeButton = newTower;
+                            }
+                        });
+                    }
                     
-                    // Shows tower stats when selecting tower.
-                    newTower.on("pointerdown", function (pointer) {
-                        // Updates tower stat towerParent
-                        towerParent.damageTitle.setText("Damage: " + newTower.damage);
-                        towerParent.rangeTitle.setText("Range: " + newTower.range);
-                        towerParent.attackSpeedTitle.setText("Cooldown: " + newTower.cooldown / 60.0);
-
-                        // Adds upgradeButton to towerParent if tower is not at max rank
-                        if (newTower.rank < 3 && !towerParent.activeButton) {
-                            towerParent.addUpgradeButton(towerParent, newTower);
-                            towerParent.activeButton = newTower;
-                        }
-                        // If another upgradeButton already exists in towerParent, remove it and add new one
-                        else if (towerParent.activeButton !== newTower && newTower.rank < 3) {
-                            towerParent.upgradeButton.destroy();
-                            towerParent.addUpgradeButton(towerParent, newTower);
-                            towerParent.activeButton = newTower;
-                        }
-                    });
-
                     // DEBUG: Placing multiple towers
-                    if (!towerParent._scene.shiftKey.isDown) towerParent.towerPreview.destroy(true);
+                    if (!towerParent._scene.shiftKey.isDown) {
+                        towerParent.towerPreview.destroy(true);
+                        towerParent._scene.disableTowerPlacementMode();
+                    }
                 }
                 else {
                     // Invalid placement area

@@ -1,3 +1,5 @@
+const ROTATION_ADJUSTMENT = 90 * (Math.PI / 180)
+
 class Bullet extends Phaser.GameObjects.Sprite {
     constructor(scene, parent, target) {
         super(scene, parent, target);
@@ -5,8 +7,8 @@ class Bullet extends Phaser.GameObjects.Sprite {
         this.setTexture(parent.projectile)
         this.scene = scene;
         this.parent = parent;
-        this.x = parent.x;
-        this.y = parent.y;
+        this.x = this.parent.turret.x + (Math.sin(this.parent.turret.rotation) * -24); // makes it look like bullet is coming out of turret
+        this.y = this.parent.turret.y + (Math.cos(this.parent.turret.rotation) * 24); // ''
         this.behavior = parent.type;
         this.speed = parent.projectileSpeed;
         this.damage = parent.damage;
@@ -14,41 +16,34 @@ class Bullet extends Phaser.GameObjects.Sprite {
         this.duration = parent.projectileDuration;
         this.stopTargeting = false
         this.depth = 1;
+        this.accuracyVariation = Phaser.Math.FloatBetween(this.parent.accuracy - 1, 1 - this.parent.accuracy);
+        this.rotation = this.parent.turret.rotation + this.accuracyVariation
 
         // Adds bullet to scene
         scene.add.existing(this);
         scene.registry.bullets.add(this);
-
-        // Get angle to target ("direction") using trigonometry
-        this.updateDirection();
-    }
-
-    // TODO: Getters and Setters
-
-    updateDirection() {
-        // Introduces 'randomness' into bullet direction. Set tower accuracy to 1.0 for no randomness
-        this.direction = this.getAngleToTarget() + Phaser.Math.FloatBetween(this.parent.accuracy - 1, 1 - this.parent.accuracy);
-        this.xSpeed = Math.sign(this.target.y - this.y) * this.speed
-        this.ySpeed = Math.sign(this.target.y - this.y) * this.speed
     }
 
     getAngleToTarget() {
-        let oppositeSide = this.target.x - this.x;
-        let adjacentSide = this.target.y - this.y;
-        let angle = Math.atan(oppositeSide / adjacentSide);
+        // The base rotation is based off of the turret rotation, which is 
+        // adjusted 90 degrees counter-clockwise because in Phaser3 0 degrees 
+        // is right-facing and the turret sprites are down-facing. Since the
+        // bullet is created with the turret rotation as its own rotation,
+        // for homing to work, the updated angle must be adjusted as well.
+        let angle = Phaser.Math.Angle.Between(this.target.x, this.target.y, this.x, this.y) + ROTATION_ADJUSTMENT;
         return angle;
     }
 
     update() {
         if (this.behavior == "homing" && this.target.active) {
-            this.updateDirection()
+            this.setRotation(this.getAngleToTarget())
         }
 
 
         if (!this.stopTargeting || this.behavior != "non-homing") {
             let targetPosition = {
-                x: this.x + (this.xSpeed * Math.sin(this.direction)),
-                y: this.y + (this.ySpeed * Math.cos(this.direction))
+                x: this.x - (this.speed * Math.sin(this.rotation)),
+                y: this.y + (this.speed * Math.cos(this.rotation))
             };
             this.scene.physics.moveToObject(this, targetPosition, this.speed)
             this.stopTargeting = true;
