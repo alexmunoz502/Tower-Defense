@@ -49,7 +49,6 @@ class Tower extends Phaser.Physics.Arcade.Sprite {
                         this.scene.registry.bullets.add(new Bullet(this.scene, this, enemy));
                     }
                     else if (this.type == "stationary-aoe") {
-                        // setting tint is only temp solution until aoe animation is implemented
                         this.setTint(0xfc0303);
                         this.areaAttack();
                     }
@@ -69,7 +68,8 @@ class Tower extends Phaser.Physics.Arcade.Sprite {
     }
 
     getTurretAngleToEnemy(enemy) {
-        let angle = Phaser.Math.Angle.Between(enemy.x, enemy.y, this.turret.x, this.turret.y) + ROTATION_ADJUSTMENT;
+        let angle = Phaser.Math.Angle.Between(enemy.x, enemy.y, 
+            this.turret.x, this.turret.y) + ROTATION_ADJUSTMENT;
         return angle;
     }
 
