@@ -68,7 +68,7 @@ class LevelScene extends Phaser.Scene {
         // -- UI
         for (const spriteName in UISprites) {
             this.load.image(spriteName, UISprites[spriteName]);
-        }       
+        }
 
         // -- Background Image
         var bgImageName = this._levelData.background;
@@ -85,7 +85,7 @@ class LevelScene extends Phaser.Scene {
         this.physics.world.setBounds(0, 0, this._levelData.width, this._levelData.height);
 
         // Background
-        this.add.image(459 , 297, 'levelBg');
+        this.add.image(459, 297, 'levelBg');
 
         // Physics groups
         // NOTE: These physics groups were added indirectly by manager classes, but since
@@ -212,7 +212,9 @@ class LevelScene extends Phaser.Scene {
             }
 
             // If both X and Y match, tower is on path, i.e. invalid position
-            if (isXMatch && isYMatch) {
+            if ((isXMatch && isYMatch)
+                || this._userInterface.grid[Math.floor(this.towerPlacementCursor.y / CELL_SIZE)]
+                [Math.floor(this.towerPlacementCursor.x / CELL_SIZE)]) {
                 return false;
             }
         }
@@ -240,7 +242,7 @@ class LevelScene extends Phaser.Scene {
             var enemyType = wave[1]
             var spawnDelay = wave[2]
             this._enemyCount += enemyCount;
-          
+
             var waveTimer = this.time.addEvent({
                 delay: spawnDelay,
                 callback: this._enemyManager.addToPath,
