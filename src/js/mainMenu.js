@@ -46,7 +46,7 @@ class MainMenu extends Phaser.Scene {
         });
 
         // Clicking start text moves player to first level
-        this.start_option = this.add.text(400, 400, 'Start', {
+        this.start_option = this.add.text(420, 360, 'Start', {
             fontFamily: 'Verdana',
             fontSize: '48px',
             fontStyle: 'bold',
