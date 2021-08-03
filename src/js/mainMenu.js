@@ -1,6 +1,7 @@
 // Importing only necessary assets
 import { Scene } from 'phaser';
 import background from '../assets/backgrounds/menu_background.png'
+import mainTheme from '../assets/music/Main_Theme.mp3'
 import LevelScene from './level';
 
 // const UserInterface = require("./userInterface.js");
@@ -22,10 +23,7 @@ class MainMenu extends Phaser.Scene {
 
     preload() {
         this.load.image('menu_background', background);
-    }
-
-    startGame(){
-        this.scene.start('Level 1');
+        this.load.audio('main_theme', mainTheme)
     }
 
     create() {
@@ -56,6 +54,7 @@ class MainMenu extends Phaser.Scene {
         });
         this.start_option.setInteractive(new Phaser.Geom.Rectangle(0, 0, this.start_option.width, this.start_option.height), Phaser.Geom.Rectangle.Contains);
         this.start_option.on('pointerdown', function() {
+            music.stop();
             this.scene.start('Level 1');
         }, this);
 
@@ -63,6 +62,11 @@ class MainMenu extends Phaser.Scene {
         this.input.on('pointerdown', function (pointer) {
             console.log(pointer.x, pointer.y);
         });
+
+        let music = this.sound.add('main_theme')
+        music.setVolume(0.5);
+        music.setLoop(true);
+        music.play()
     }
 
     
