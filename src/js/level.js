@@ -93,13 +93,7 @@ class LevelScene extends Phaser.Scene {
         this.physics.world.setBounds(0, 0, this._levelData.width, this._levelData.height);
 
         // Background
-<<<<<<< HEAD
         this.add.image(459, 297, 'levelBg');
-||||||| merged common ancestors
-        this.add.image(459 , 297, 'levelBg');
-=======
-        var bg = this.add.image(459 , 297, 'levelBg');
->>>>>>> alex08032021_2
 
         // Physics groups
         // NOTE: These physics groups were added indirectly by manager classes, but since
