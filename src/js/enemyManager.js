@@ -1,4 +1,4 @@
-import * as data from "../data/*.json"
+import data from "../data/enemies.json"
 const Enemy = require("./enemy.js")
 
 class EnemyManager {
@@ -6,8 +6,8 @@ class EnemyManager {
         this._scene = scene;
     }
 
-    addEnemy(x, y, enemyName, path) {
-        var enemyData = data[enemyName];
+    addEnemy(x, y, enemyID) {
+        var enemyData = data[enemyID];
         let newEnemy = new Enemy(this._scene, x, y, enemyData);
         this._scene.add.existing(newEnemy);
         this._scene.registry.enemies.add(newEnemy);
