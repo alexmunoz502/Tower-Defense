@@ -3,6 +3,7 @@
         "name": "Level 1",
         "background": "level_1",
         "width": 960,
+        "startingCredits": 400,
         "height": 640,
         "waveData": [
             [[10, "test_enemy", 1000]],
