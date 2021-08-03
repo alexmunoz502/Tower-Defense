@@ -1,4 +1,5 @@
 import images from '../assets/*.png';
+import UISprites from '../assets/UI/*.png';
 import backgroundImages from '../assets/backgrounds/*.png';
 import musicTracks from '../assets/music/*.mp3';
 
@@ -64,6 +65,11 @@ class LevelScene extends Phaser.Scene {
             this.load.image(spriteName, enemySprites[spriteName]);
         }
 
+        // -- UI
+        for (const spriteName in UISprites) {
+            this.load.image(spriteName, UISprites[spriteName]);
+        }       
+
         // -- Background Image
         var bgImageName = this._levelData.background;
         this.load.image('levelBg', backgroundImages[bgImageName])
@@ -79,7 +85,7 @@ class LevelScene extends Phaser.Scene {
         this.physics.world.setBounds(0, 0, this._levelData.width, this._levelData.height);
 
         // Background
-        this.add.image(270, 270, 'levelBg');
+        this.add.image(459 , 297, 'levelBg');
 
         // Physics groups
         // NOTE: These physics groups were added indirectly by manager classes, but since
@@ -115,7 +121,8 @@ class LevelScene extends Phaser.Scene {
             }
         }
         this.path = path
-        // DEBUG: path.draw(graphics);
+        // DEBUG: 
+        path.draw(graphics);
         // -------------------------
         // DEBUG Tools
         // -------------------------
@@ -219,27 +226,27 @@ class LevelScene extends Phaser.Scene {
         this._currentWaveIndex += 1;
         if (this._currentWaveIndex < this._waveCount) {
             this.startWave(this._currentWaveIndex)
-            console.log("Starting Wave: " + String(this._currentWaveIndex) + "\nEnemies Remaining: " + String(this._enemyCount))
         } else {
             // DEBUG, reset waves
             this._currentWaveIndex = -1
-            this.nextWave()
+            this.nextWave();
         }
     }
 
     startWave(waveNumber) {
         var waveRecord = this._waveData[waveNumber]
         for (const wave of waveRecord) {
-            var enemyCount = wave[0] - 1
+            var enemyCount = wave[0]
             var enemyType = wave[1]
             var spawnDelay = wave[2]
-            this._enemyCount = enemyCount + 1
+            this._enemyCount += enemyCount;
+          
             var waveTimer = this.time.addEvent({
                 delay: spawnDelay,
                 callback: this._enemyManager.addToPath,
                 args: [this, this.path, enemyType],
                 callbackScope: this._enemyManager,
-                repeat: enemyCount
+                repeat: enemyCount - 1
             })
         }
     }

@@ -13,8 +13,8 @@ const gameConfig = {
   type: Phaser.AUTO,
   parent: 'tower-defense',
   title: "Tower Defense",
-  width: 960,
-  height: 640,
+  width: 918,
+  height: 594,
   backgroundColor: '#a06505', 
   physics: {
     default: 'arcade',

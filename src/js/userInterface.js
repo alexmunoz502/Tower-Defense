@@ -24,11 +24,10 @@ class UserInterface {
         // NOTE: Creating UI from left to right
 
         // UI region
-        this.hud = this._scene.add.rectangle(959, 639, 958, 98, HUD_COLOR).setOrigin(1, 1);
-        this.hud.setStrokeStyle(2, HUD_STROKE_COLOR);
+        this.hud = this._scene.add.sprite(459, 540, "HUD")
 
         // Health Value
-        this.healthValue = this._scene.add.text(25, 550, this._scene.registry.get('base_health'), {
+        this.healthValue = this._scene.add.text(78, 509, this._scene.registry.get('base_health'), {
             fontFamily: 'Verdana',
             fontSize: '36px',
             fontStyle: 'bold',
@@ -38,7 +37,7 @@ class UserInterface {
         });
 
         // Health Title
-        this.healthTitle = this._scene.add.text(30, 600, "Health", {
+        this.healthTitle = this._scene.add.text(78, 549, "Health", {
             fontFamily: 'Verdana',
             fontSize: '16px',
             fontStyle: 'bold',
@@ -48,7 +47,7 @@ class UserInterface {
         });
 
         // Credits Value
-        this.creditsValue = this._scene.add.text(200, 550, this._scene.registry.get('credits'), {
+        this.creditsValue = this._scene.add.text(182, 509, this._scene.registry.get('credits'), {
             fontFamily: 'Verdana',
             fontSize: '36px',
             fontStyle: 'bold',
@@ -58,7 +57,7 @@ class UserInterface {
         });
 
         // Credits Title
-        this.creditsTitle = this._scene.add.text(225, 600, "Credits", {
+        this.creditsTitle = this._scene.add.text(182, 549, "Credits", {
             fontFamily: 'Verdana',
             fontSize: '16px',
             fontStyle: 'bold',
@@ -70,8 +69,9 @@ class UserInterface {
         // ---------------------
         // Tower icons & titles
         // ---------------------
-        this.addTothis(this, 400, 580, "blaster");
-        this.tower1Title = this._scene.add.text(385, 610, "100", {
+        this.addTothis(this, 320, 531, "blaster");
+        this.tower1Title = this._scene.add.text(302, 558, "100", { 
+
             fontFamily: 'Verdana',
             fontSize: '16px',
             fontStyle: 'normal',
@@ -80,8 +80,9 @@ class UserInterface {
             strokeThickness: '2'
         });
 
-        this.addTothis(this, 500, 580, "repeater");
-        this.tower2Title = this._scene.add.text(485, 610, "200", {
+        this.addTothis(this, 398, 531, "repeater");
+        this.tower2Title = this._scene.add.text(380, 558, "200", { 
+
             fontFamily: 'Verdana',
             fontSize: '16px',
             fontStyle: 'normal',
@@ -90,8 +91,9 @@ class UserInterface {
             strokeThickness: '2'
         });
 
-        this.addTothis(this, 600, 580, "shocker");
-        this.tower3Title = this._scene.add.text(585, 610, "250", {
+        this.addTothis(this, 482, 531, "shocker");
+        this.tower3Title  = this._scene.add.text(464, 558, "250", { 
+
             fontFamily: 'Verdana',
             fontSize: '16px',
             fontStyle: 'normal',
@@ -102,25 +104,25 @@ class UserInterface {
         // -----------------------
 
         // Tower Details Background
-        this.details = this._scene.add.rectangle(956, 635, 300, 90, DETAILS_BACKGROUND_COLOR).setOrigin(1, 1);
-        this.details.setStrokeStyle(2, DETAILS_STROKE_COLOR);
+        //this.details = this._scene.add.rectangle(956, 635, 300, 90, DETAILS_BACKGROUND_COLOR).setOrigin(1, 1);
+        //this.details.setStrokeStyle(2, DETAILS_STROKE_COLOR);
 
         // Damage Title + Value
-        this.damageTitle = this._scene.add.text(665, 555, 'Damage:', {
+        this.damageTitle = this._scene.add.text(665, 516, 'Damage:', {
             fontFamily: 'Verdana',
             fontSize: '12px',
             color: DETAILS_TEXT_COLOR
         });
 
         // Range Title + Value
-        this.rangeTitle = this._scene.add.text(665, 580, 'Range:', {
+        this.rangeTitle = this._scene.add.text(665, 534, 'Range:', {
             fontFamily: 'Verdana',
             fontSize: '12px',
             color: DETAILS_TEXT_COLOR
         });
 
         // Attack Speed + Title
-        this.attackSpeedTitle = this._scene.add.text(665, 605, 'Attack Speed:', {
+        this.attackSpeedTitle = this._scene.add.text(665, 550, 'Attack Speed:', {
             fontFamily: 'Verdana',
             fontSize: '12px',
             color: DETAILS_TEXT_COLOR
@@ -179,7 +181,7 @@ class UserInterface {
             towerParent.towerPreview.on("pointerdown", function (pointer) {
                 // Stops towers from being placed out of bounds on hud
                 // NOTE: I'm not sure what value to put to adjust for the horizontal hud so it's a static value for now.
-                if (towerParent.towerPreview.y <= (towerParent.hud.y - 100)) {
+                if (towerParent.towerPreview.y <= (towerParent.hud.y - 54)) {
                     var newTowerX = Math.floor(towerParent.towerPreview.x / CELL_SIZE) * CELL_SIZE + CELL_OFFSET;
                     var newTowerY = Math.floor(towerParent.towerPreview.y / CELL_SIZE) * CELL_SIZE + CELL_OFFSET;
                     var newTower = towerParent._scene.addTower(newTowerX, newTowerY, towerName);
@@ -209,12 +211,14 @@ class UserInterface {
 
                     // DEBUG: Placing multiple towers
                     if (!towerParent._scene.shiftKey.isDown) {
+                        towerParent.towerPreview.turret.destroy(true);
                         towerParent.towerPreview.destroy(true);
                         towerParent._scene.disableTowerPlacementMode();
                     }
                 }
                 else {
                     // Invalid placement area
+                    towerParent.towerPreview.turret.destroy(true);
                     towerParent.towerPreview.destroy(true);
                 }
             });
