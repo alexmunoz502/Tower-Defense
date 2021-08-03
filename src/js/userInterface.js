@@ -130,6 +130,9 @@ class UserInterface {
 
         // Updates display of health and credit values when they change.
         this._scene.registry.events.on('changedata', this.updateValues, this);
+
+        // Controls
+        this.rangeDisplay = null;
     }
 
     // Triggered when health or credit values change
@@ -242,6 +245,18 @@ class UserInterface {
             buttonParent.rangeTitle.setText("Range: " + tower.range);
             buttonParent.attackSpeedTitle.setText("Cooldown: " + tower.cooldown / 60.0);
         });
+    }
+
+    // Displays the range information on a selected tower
+    updateRangeDisplay(selectedTower) {
+        this.rangeDisplay = selectedTower.scene.add.circle(
+            selectedTower.x, selectedTower.y, selectedTower.range)
+        this.rangeDisplay.setStrokeStyle(2, 0xfc0303)
+    }
+
+    clearRangeDisplay() {
+        this.rangeDisplay.destroy();
+        this.rangeDisplay = null;
     }
 
 }

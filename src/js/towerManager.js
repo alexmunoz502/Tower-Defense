@@ -13,15 +13,13 @@ class TowerManager {
         this._scene.registry.towers.add(newTower);
 
         // Show/hide range display when mousing over tower.
-        let rangeDisplay;
+        // let rangeDisplay;
         newTower.setInteractive();
-        newTower.on("pointerover", function (pointer) {
-            rangeDisplay = newTower.scene.add.circle(
-                newTower.x, newTower.y, newTower.range)
-            rangeDisplay.setStrokeStyle(2, 0xfc0303)
-        });
-        newTower.on("pointerout", function (pointer) {
-            rangeDisplay.destroy();
+        newTower.on("pointerdown", function () {
+            if (this._scene.selectedTower != this) {
+                this._scene.selectTower(this)
+                this._scene._audioManager.playSound("tower_select");
+            }
         });
 
         return newTower

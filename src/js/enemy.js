@@ -53,7 +53,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     die() {
         // TODO: death animation ?
-        this.scene.decEnemyCount();
+        this.scene.decrementEnemyCount();
         this.scene.registry.enemies.remove(this, true, true);
     }
 
@@ -66,7 +66,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.y = this.follower.vec.y;
         if (this.follower.t == 1) {
             this.scene.registry.set('base_health', (this.scene.registry.get('base_health') - this._damage));
-            this.scene.decEnemyCount();
+            this.scene.decrementEnemyCount();
             this.scene.registry.enemies.remove(this, true, true);
         }
     }

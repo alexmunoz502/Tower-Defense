@@ -72,6 +72,20 @@ class AudioManager {
             ease: 'Linear'
         })
     }
+
+    playSound(soundName, hasRandomPitch=false) {
+        if (hasRandomPitch) {
+            this._scene.sound.play(soundName, {
+                detune: this.getRandomPitchShiftValue(),
+            })
+        } else {
+            this._scene.sound.play(soundName);
+        }
+    }
+
+    getRandomPitchShiftValue() {
+        return Math.random() * (2000) - 1000;
+    }
 }
 
 module.exports = AudioManager

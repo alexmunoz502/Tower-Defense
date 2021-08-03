@@ -1,6 +1,7 @@
 {
     "name": "repeater",
     "type": "non-homing",
+    "sound": "repeater",
     "projectile": "bullet",
     "projectile_speed" : 1100,
     "projectile_duration" : 300,
