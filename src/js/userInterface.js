@@ -21,6 +21,12 @@ class UserInterface {
         this.towerPreview = null;
         this.activeButton = false;
 
+        // 2d array to track occupied spaces
+        this.grid = [];
+        for (let i = 0; i < (scene.game.config.height / CELL_SIZE); i++) {
+            this.grid.push([])
+        }
+
         // NOTE: Creating UI from left to right
 
         // UI region
@@ -70,7 +76,7 @@ class UserInterface {
         // Tower icons & titles
         // ---------------------
         this.addTothis(this, 320, 531, "blaster");
-        this.tower1Title = this._scene.add.text(302, 558, "100", { 
+        this.tower1Title = this._scene.add.text(302, 558, "100", {
 
             fontFamily: 'Verdana',
             fontSize: '16px',
@@ -81,7 +87,7 @@ class UserInterface {
         });
 
         this.addTothis(this, 398, 531, "repeater");
-        this.tower2Title = this._scene.add.text(380, 558, "200", { 
+        this.tower2Title = this._scene.add.text(380, 558, "200", {
 
             fontFamily: 'Verdana',
             fontSize: '16px',
@@ -92,7 +98,7 @@ class UserInterface {
         });
 
         this.addTothis(this, 482, 531, "shocker");
-        this.tower3Title  = this._scene.add.text(464, 558, "250", { 
+        this.tower3Title = this._scene.add.text(464, 558, "250", {
 
             fontFamily: 'Verdana',
             fontSize: '16px',
@@ -164,7 +170,7 @@ class UserInterface {
         }
     }
 
-    // Adds interactable tower icon to scene
+    // Adds interactive tower icon to scene
     addTothis(towerParent, x, y, towerName) {
         var towerSelect = towerParent._scene.add.sprite(x, y, "tower_base").setInteractive();
         towerSelect.turret = towerParent._scene.add.sprite(x, y, towerName)
@@ -185,6 +191,9 @@ class UserInterface {
                     var newTowerX = Math.floor(towerParent.towerPreview.x / CELL_SIZE) * CELL_SIZE + CELL_OFFSET;
                     var newTowerY = Math.floor(towerParent.towerPreview.y / CELL_SIZE) * CELL_SIZE + CELL_OFFSET;
                     var newTower = towerParent._scene.addTower(newTowerX, newTowerY, towerName);
+
+                    // Mark grid space as occupied
+                    towerParent.grid[Math.floor(newTower.y / CELL_SIZE)][Math.floor(newTower.x / CELL_SIZE)] = true;
 
                     // Shows tower stats when selecting tower.
                     newTower.on("pointerdown", function (pointer) {
@@ -227,7 +236,7 @@ class UserInterface {
 
     // Adds upgrade button to UI
     addUpgradeButton(buttonParent, tower) {
-        buttonParent.upgradeButton = buttonParent._scene.add.rectangle(945, 625, 70, 70, '0x44ff00').setOrigin(1, 1).setInteractive();
+        buttonParent.upgradeButton = buttonParent._scene.add.rectangle(830, 570, 60, 60, '0x44ff00').setOrigin(1, 1).setInteractive();
 
         // Upgrades tower and updates text
         buttonParent.upgradeButton.on("pointerdown", function (pointer) {
