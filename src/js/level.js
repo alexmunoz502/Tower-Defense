@@ -33,7 +33,7 @@ class LevelScene extends Phaser.Scene {
 
         // Tower Controls
         this._towerPlacingMode = false
-        this.towerPlacementCursor = {x: 0, y: 0, previousX: 0, previousY: 0, isValid: false};
+        this.towerPlacementCursor = { x: 0, y: 0, previousX: 0, previousY: 0, isValid: false };
 
         // Wave Data
         this._waveData = this._levelData.waveData
@@ -239,9 +239,8 @@ class LevelScene extends Phaser.Scene {
             var enemyCount = wave[0]
             var enemyType = wave[1]
             var spawnDelay = wave[2]
-
             this._enemyCount += enemyCount;
-
+          
             var waveTimer = this.time.addEvent({
                 delay: spawnDelay,
                 callback: this._enemyManager.addToPath,
@@ -250,6 +249,10 @@ class LevelScene extends Phaser.Scene {
                 repeat: enemyCount - 1
             })
         }
+    }
+
+    decEnemyCount() {
+        this._enemyCount -= 1;
     }
 
 

@@ -71,6 +71,7 @@ class UserInterface {
         // ---------------------
         this.addTothis(this, 320, 531, "blaster");
         this.tower1Title = this._scene.add.text(302, 558, "100", { 
+
             fontFamily: 'Verdana',
             fontSize: '16px',
             fontStyle: 'normal',
@@ -81,6 +82,7 @@ class UserInterface {
 
         this.addTothis(this, 398, 531, "repeater");
         this.tower2Title = this._scene.add.text(380, 558, "200", { 
+
             fontFamily: 'Verdana',
             fontSize: '16px',
             fontStyle: 'normal',
@@ -88,9 +90,10 @@ class UserInterface {
             stroke: STROKE_COLOR,
             strokeThickness: '2'
         });
-        
+
         this.addTothis(this, 482, 531, "shocker");
         this.tower3Title  = this._scene.add.text(464, 558, "250", { 
+
             fontFamily: 'Verdana',
             fontSize: '16px',
             fontStyle: 'normal',
@@ -173,7 +176,7 @@ class UserInterface {
             towerParent.towerPreview.turret = towerParent._scene.add.sprite(x, y, towerName);
             towerParent.towerPreview.alpha = 0.5;
             towerParent.towerPreview.turret.alpha = 0.5;
-            
+
             // Clicking again adds a new tower to the scene at the given location.
             towerParent.towerPreview.on("pointerdown", function (pointer) {
                 // Stops towers from being placed out of bounds on hud
@@ -205,7 +208,7 @@ class UserInterface {
                             }
                         }
                     });
-                    
+
                     // DEBUG: Placing multiple towers
                     if (!towerParent._scene.shiftKey.isDown) {
                         towerParent.towerPreview.turret.destroy(true);

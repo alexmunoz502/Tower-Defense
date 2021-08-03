@@ -15,12 +15,12 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this._health = enemyData.health;
         this._damage = enemyData.damage;
         this._speed = enemyData.speed;
-        
+
 
         // Adds enemy to scene
         scene.add.existing(this);
         scene.registry.enemies.add(this);
-        
+
         // newEnemy.body.debugShowBody = false;
     }
 
@@ -53,7 +53,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     die() {
         // TODO: death animation ?
-        this.scene._enemyCount -= 1
+        this.scene.decEnemyCount();
         this.scene.registry.enemies.remove(this, true, true);
     }
 
@@ -66,6 +66,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.y = this.follower.vec.y;
         if (this.follower.t == 1) {
             this.scene.registry.set('base_health', (this.scene.registry.get('base_health') - this._damage));
+            this.scene.decEnemyCount();
             this.scene.registry.enemies.remove(this, true, true);
         }
     }
