@@ -7,8 +7,10 @@ class Tower extends Phaser.Physics.Arcade.Sprite {
         super(scene, x, y, towerData);
 
         this.setTexture("tower_base")
+        this._scene = scene
         this.name = towerData.name;
         this.type = towerData.type;
+        this.sound = towerData.sound;
         this.projectile = towerData.projectile;
         this.projectileSpeed = towerData.projectile_speed;
         this.projectileDuration = towerData.projectile_duration;
@@ -47,6 +49,7 @@ class Tower extends Phaser.Physics.Arcade.Sprite {
                 if (this.currentCD == 0) {
                     if (this.projectile !== null) {
                         this.scene.registry.bullets.add(new Bullet(this.scene, this, enemy));
+                        this.scene._audioManager.playSound(this.sound, true);
                     }
                     else if (this.type == "stationary-aoe") {
                         this.setTint(0xfc0303);
@@ -83,6 +86,7 @@ class Tower extends Phaser.Physics.Arcade.Sprite {
 
     upgrade() {
         if (this._rank < 2) {
+            this._scene._audioManager.playSound("tower_upgrade", true);
             this._rank += 1
             return this._rank
         }
