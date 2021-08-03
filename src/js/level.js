@@ -2,6 +2,7 @@ import images from '../assets/*.png';
 import UISprites from '../assets/UI/*.png';
 import backgroundImages from '../assets/backgrounds/*.png';
 import musicTracks from '../assets/music/*.mp3';
+import soundFX from '../assets/sfx/*.mp3';
 
 import towerSprites from '../assets/towers/*.png';
 import bulletSprites from '../assets/bullets/*.png';
@@ -32,6 +33,8 @@ class LevelScene extends Phaser.Scene {
         this._enemyCount = 0
 
         // Tower Controls
+        this._selectedTower = null
+        this._selectorSwitch = false // prevents deselect executing on select
         this._towerPlacingMode = false
         this.towerPlacementCursor = { x: 0, y: 0, previousX: 0, previousY: 0, isValid: false };
 
@@ -72,11 +75,16 @@ class LevelScene extends Phaser.Scene {
 
         // -- Background Image
         var bgImageName = this._levelData.background;
-        this.load.image('levelBg', backgroundImages[bgImageName])
+        this.load.image('levelBg', backgroundImages[bgImageName]);
 
         // -- Audio - Music
         for (const track in musicTracks) {
-            this.load.audio(track, musicTracks[track])
+            this.load.audio(track, musicTracks[track]);
+        }
+
+        // -- Audio - SFX
+        for (const soundClip in soundFX) {
+            this.load.audio(soundClip, soundFX[soundClip]);
         }
     }
 
@@ -85,7 +93,13 @@ class LevelScene extends Phaser.Scene {
         this.physics.world.setBounds(0, 0, this._levelData.width, this._levelData.height);
 
         // Background
+<<<<<<< HEAD
         this.add.image(459, 297, 'levelBg');
+||||||| merged common ancestors
+        this.add.image(459 , 297, 'levelBg');
+=======
+        var bg = this.add.image(459 , 297, 'levelBg');
+>>>>>>> alex08032021_2
 
         // Physics groups
         // NOTE: These physics groups were added indirectly by manager classes, but since
@@ -122,20 +136,25 @@ class LevelScene extends Phaser.Scene {
         }
         this.path = path
         // DEBUG: 
-        path.draw(graphics);
+        // path.draw(graphics);
         // -------------------------
         // DEBUG Tools
         // -------------------------
         // Spawn an enemy manually
         this.input.keyboard.on('keydown-A', () => {
             //this._enemyManager.addToPath(this, path, "test_enemy")
-            this.nextWave()
+            this.nextWave();
         }, this);
 
         // Click on a spot to print x/y coordinates to console.
-        this.input.on('pointerdown', function (pointer) {
+        this.input.on('pointerdown', (pointer) => {
             console.log(pointer.x, pointer.y);
-        });
+            if (this._selectedTower && !this._selectorSwitch) {
+                this.deselectTower();
+            } else {
+                this._selectorSwitch = false;
+            }
+        }, this);
 
         // Increase credits
         this.input.keyboard.on('keydown-C', () => {
@@ -164,6 +183,29 @@ class LevelScene extends Phaser.Scene {
                 this._isWaveInProgress = false
                 this._audioManager.playMusic("preparation")
             }
+        }
+    }
+
+    // Setters
+    decrementEnemyCount() {
+        this._enemyCount -= 1
+    }
+
+    get selectedTower() {
+        return this._selectedTower;
+    }
+
+    selectTower(tower) {
+        if (this._selectedTower) this.deselectTower();
+        this._selectorSwitch = true;
+        this._selectedTower = tower;
+        this._userInterface.updateRangeDisplay(tower);
+    }
+
+    deselectTower() {
+        if (this._selectedTower) { 
+            this._selectedTower = null;
+            this._userInterface.clearRangeDisplay();
         }
     }
 
