@@ -46,17 +46,6 @@ class MainMenu extends Phaser.Scene {
         this.dynamic = this.add.bitmapText(100, 100, 'retro_font', 'MARS MAYHEM!');
         this.dynamic.setScale(2);
 
-
-        /* // Logo
-        this.add.text(200, 100, 'Mars Mayhem!', {
-            fontFamily: 'Verdana',
-            fontSize: '72px',
-            fontStyle: 'bold',
-            color: LOGO_COLOR,
-            stroke: LOGO_STROKE,
-            strokeThickness: '4'
-        }); */
-
         // Clicking start text moves player to first level
         this.start_option = this.add.text(420, 360, 'Start', {
             fontFamily: 'Verdana',
