@@ -7,8 +7,10 @@ class AudioManager {
         this._musicFiles = musicFiles
         this._music = {}
         this._song = null
-        this._actionThemeCounter = 1;
-        this._preparationThemeCounter = 1;
+        this._actionThemeCounter = Math.floor(Math.random() * (ACTION_THEME_COUNT - 1) + 1);
+        console.log("Action " + String(this._actionThemeCounter))
+        this._preparationThemeCounter = Math.floor(Math.random() * (PREPARATION_THEME_COUNT -1) + 1);
+        console.log("Prep " + String(this._preparationThemeCounter))
         this._currentTrack = null;
 
         this._musicVolume = 0.5
@@ -39,7 +41,7 @@ class AudioManager {
             case "action":
                 this._currentTrack = `Action_Theme_${this._actionThemeCounter}`
                 this._actionThemeCounter += 1
-                if (this._actionThemeCounter > PREPARATION_THEME_COUNT) this._actionThemeCounter = 1;
+                if (this._actionThemeCounter > ACTION_THEME_COUNT) this._actionThemeCounter = 1;
                 break;
             case "boss":
                 this._currentTrack = musicTracks["Boss_Theme"]
@@ -47,6 +49,7 @@ class AudioManager {
             default:
                 break; 
         }
+        console.log(this._currentTrack)
         this._song = this._music[this._currentTrack]
         this._song.setLoop(true)
         this._song.setVolume(0)
@@ -73,13 +76,16 @@ class AudioManager {
         })
     }
 
-    playSound(soundName, hasRandomPitch=false) {
+    playSound(soundName, hasRandomPitch=false, soundVolume=1) {
         if (hasRandomPitch) {
             this._scene.sound.play(soundName, {
+                volume: soundVolume,
                 detune: this.getRandomPitchShiftValue(),
             })
         } else {
-            this._scene.sound.play(soundName);
+            this._scene.sound.play(soundName, {
+                volume: soundVolume
+            });
         }
     }
 

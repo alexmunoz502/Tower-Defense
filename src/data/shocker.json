@@ -1,7 +1,8 @@
 {
     "name": "shocker",
     "type": "stationary-aoe",
-    "projectile": null,
+    "sound": "shock",
+    "sound_volume": 0.3,
     "projectile_speed" : null,
     "projectile_duration" : null,
     "accuracy": 1.0,

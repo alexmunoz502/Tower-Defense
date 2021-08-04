@@ -3,6 +3,7 @@
     "type": "non-homing",
     "projectile": "laser_red",
     "sound": "blaster",
+    "sound_volume": 0.95,
     "projectile_speed" : 450,
     "projectile_duration" : 300,
     "accuracy": 1.0,
