@@ -2,9 +2,8 @@
 import { Scene } from 'phaser';
 import background from '../assets/backgrounds/menu_background.png'
 import mainTheme from '../assets/music/Main_Theme.mp3'
-import LevelScene from './level';
-
-// const UserInterface = require("./userInterface.js");
+import retroFont from '../assets/bitmaps/knight3.png'
+import LevelScene from './level.js';
 
 const ROOM_WIDTH = 960;
 const ROOM_HEIGHT = 640;
@@ -23,7 +22,8 @@ class MainMenu extends Phaser.Scene {
 
     preload() {
         this.load.image('menu_background', background);
-        this.load.audio('main_theme', mainTheme)
+        this.load.audio('main_theme', mainTheme);
+        this.load.image('retro_font', retroFont);
     }
 
     create() {
@@ -33,7 +33,21 @@ class MainMenu extends Phaser.Scene {
         // Background
         this.add.image(0, 0, 'menu_background').setOrigin(0, 0);
 
-        // Title screen: Replace with Logo
+        // Logo
+        var fontConfig = {
+            image: 'retro_font',
+            width: 31,
+            height: 25,
+            chars: Phaser.GameObjects.RetroFont.TEXT_SET6,
+            charsPerRow: 10,
+            spacing: { x: 1, y: 1 }
+        };
+        this.cache.bitmapFont.add('retro_font', Phaser.GameObjects.RetroFont.Parse(this, fontConfig));
+        this.dynamic = this.add.bitmapText(100, 100, 'retro_font', 'MARS MAYHEM!');
+        this.dynamic.setScale(2);
+
+
+        /* // Logo
         this.add.text(200, 100, 'Mars Mayhem!', {
             fontFamily: 'Verdana',
             fontSize: '72px',
@@ -41,7 +55,7 @@ class MainMenu extends Phaser.Scene {
             color: LOGO_COLOR,
             stroke: LOGO_STROKE,
             strokeThickness: '4'
-        });
+        }); */
 
         // Clicking start text moves player to first level
         this.start_option = this.add.text(420, 360, 'Start', {
