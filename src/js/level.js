@@ -173,9 +173,9 @@ class LevelScene extends Phaser.Scene {
 
         if (this._isWaveInProgress) {
             if (this._enemyCount <= 0) {
-                console.log("Wave Ended.")
+                this._audioManager.playSound("wave_end");
                 this._isWaveInProgress = false
-                this._audioManager.playMusic("preparation")
+                this._audioManager.playMusic("preparation");
             }
         }
     }
@@ -206,7 +206,8 @@ class LevelScene extends Phaser.Scene {
     // Actions
     // -- Towers
     enableTowerPlacementMode() {
-        this._towerPlacingMode = true
+        this._towerPlacingMode = true;
+        this._audioManager.playSound("tower_pickup");
     }
 
     disableTowerPlacementMode() {
@@ -215,7 +216,8 @@ class LevelScene extends Phaser.Scene {
 
     addTower(x, y, towerName) {
         if (this.towerPlacementCursor.isValid) {
-            return this._towerManager.addTower(x, y, towerName)
+            this._audioManager.playSound("tower_place");
+            return this._towerManager.addTower(x, y, towerName) 
         } else {
             return null;
         }
@@ -263,6 +265,7 @@ class LevelScene extends Phaser.Scene {
         this._isWaveInProgress = true
         this._currentWaveIndex += 1;
         if (this._currentWaveIndex < this._waveCount) {
+            this._audioManager.playSound("wave_start");
             this.startWave(this._currentWaveIndex)
         } else {
             // DEBUG, reset waves
