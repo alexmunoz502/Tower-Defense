@@ -71,8 +71,6 @@ class Tower extends Phaser.Physics.Arcade.Sprite {
         }
         if (this.currentCD >= this.cooldown) {
             this.currentCD = 0;
-            // remove tint to show aoe tower is off cooldown
-            //this.clearTint();
         }
     }
 
