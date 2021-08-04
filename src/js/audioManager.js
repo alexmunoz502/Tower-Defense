@@ -8,9 +8,7 @@ class AudioManager {
         this._music = {}
         this._song = null
         this._actionThemeCounter = Math.floor(Math.random() * (ACTION_THEME_COUNT - 1) + 1);
-        console.log("Action " + String(this._actionThemeCounter))
         this._preparationThemeCounter = Math.floor(Math.random() * (PREPARATION_THEME_COUNT -1) + 1);
-        console.log("Prep " + String(this._preparationThemeCounter))
         this._currentTrack = null;
 
         this._musicVolume = 0.5
