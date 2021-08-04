@@ -7,7 +7,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.scene = scene;
         this.path = path;
 
-        this.setTexture(enemyData.name);
+        this.setTexture(enemyData.texture);
         this.scale = enemyData.scale;
 
         // Private Attributes

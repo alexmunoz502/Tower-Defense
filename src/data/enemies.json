@@ -1,0 +1,18 @@
+{
+    "grunt" : {
+        "name": "Martian Grunt",
+        "texture": "alien_green",
+        "damage": 5,
+        "speed": 0.5,
+        "scale": 1,
+        "health": 100        
+    },
+    "runner" : {
+        "name": "Martian Runner",
+        "texture": "alien_gold",
+        "damage": 2,
+        "speed": 0.75,
+        "scale": 1,
+        "health": 25
+    }
+}
