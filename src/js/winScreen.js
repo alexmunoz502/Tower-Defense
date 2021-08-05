@@ -9,10 +9,10 @@ import LevelScene from './level.js';
 const ROOM_WIDTH = 960;
 const ROOM_HEIGHT = 640;
 
-class MainMenu extends Phaser.Scene {
+class WinScreen extends Phaser.Scene {
     // Initialization
     constructor() {
-        super({ key: 'mainMenu' });
+        super({ key: 'winScreen' });
     }
 
     init() {
@@ -31,7 +31,8 @@ class MainMenu extends Phaser.Scene {
         this.physics.world.setBounds(0, 0, ROOM_WIDTH, ROOM_HEIGHT);
 
         // Background
-        this.add.image(0, 0, 'menu_background').setOrigin(0, 0);
+        // TODO: Replace with alternate background
+        this.add.image(0, 0, 'menu_background').setOrigin(0, 0); 
 
         // Logo
         var titleFontConfig = {
@@ -43,11 +44,11 @@ class MainMenu extends Phaser.Scene {
             spacing: { x: 1, y: 1 }
         };
         this.cache.bitmapFont.add('retro_font', Phaser.GameObjects.RetroFont.Parse(this, titleFontConfig));
-        this.dynamic = this.add.bitmapText(200, 100, 'retro_font', ' MARS\nMAYHEM');
-        this.dynamic.setScale(3);
+        this.dynamic = this.add.bitmapText(30, 100, 'retro_font', 'STELLAR WORK! MARS\nIS SAFE... FOR NOW!');
+        this.dynamic.setScale(1.5);
 
         // --------------------------------------------------------
-        // Clicking flashing start text moves player to first level
+        // Clicking flashing text moves player to title screen
         // --------------------------------------------------------
         // Adding bitmap text to scene
         var startFontConfig = {
@@ -59,8 +60,8 @@ class MainMenu extends Phaser.Scene {
             spacing: { x: 1, y: 1 }
         };
         this.cache.bitmapFont.add('retro_font', Phaser.GameObjects.RetroFont.Parse(this, startFontConfig));
-        this.start_option = this.add.bitmapText(250, 475, 'retro_font', ' START!');
-        this.start_option.setScale(2);
+        this.start_option = this.add.bitmapText(250, 500, 'retro_font', 'RETURN TO TITLE');
+        this.start_option.setScale(1);
         
         // Fade in/out animation
         this.start_tween = this.tweens.timeline({
@@ -89,7 +90,7 @@ class MainMenu extends Phaser.Scene {
         this.start_option.setInteractive(new Phaser.Geom.Rectangle(0, 0, this.start_option.width, this.start_option.height), Phaser.Geom.Rectangle.Contains);
         this.start_option.on('pointerdown', function() {
             music.stop();
-            this.scene.start('Level 1');
+            this.scene.start('mainMenu');
         }, this);
         
 
@@ -98,14 +99,7 @@ class MainMenu extends Phaser.Scene {
             console.log(pointer.x, pointer.y);
         });
 
-        // Credit text
-        this.add.text(320, 570, 'Created by Devin Leung, Alex Munox, and Ryan Ong', {
-            fontFamily: 'Arial',
-            color: 'Black',
-            fontSize: 14
-        });
-
-        // Main menu music
+        // Victory music
         let music = this.sound.add('main_theme')
         music.setVolume(0.5);
         music.setLoop(true);
@@ -115,4 +109,4 @@ class MainMenu extends Phaser.Scene {
     
 }
 
-export default MainMenu;
+export default WinScreen;

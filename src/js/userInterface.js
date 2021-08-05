@@ -30,7 +30,7 @@ class UserInterface {
         // NOTE: Creating UI from left to right
 
         // UI region
-        this.hud = this._scene.add.sprite(459, 540, "HUD")
+        this.hud = this._scene.add.sprite(459, 540, "HUD");
 
         // Health Value
         this.healthValue = this._scene.add.text(78, 509, this._scene.registry.get('base_health'), {
