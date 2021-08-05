@@ -21,12 +21,6 @@ class UserInterface {
         this.towerPreview = null;
         this.activeButton = false;
 
-        // 2d array to track occupied spaces
-        this.grid = [];
-        for (let i = 0; i < (scene.game.config.height / CELL_SIZE); i++) {
-            this.grid.push([])
-        }
-
         // NOTE: Creating UI from left to right
 
         // UI region
@@ -193,7 +187,7 @@ class UserInterface {
                     var newTower = towerParent._scene.addTower(newTowerX, newTowerY, towerName);
 
                     // Mark grid space as occupied
-                    towerParent.grid[Math.floor(newTower.y / CELL_SIZE)][Math.floor(newTower.x / CELL_SIZE)] = true;
+                    towerParent._scene.grid[Math.floor(newTower.y / CELL_SIZE)][Math.floor(newTower.x / CELL_SIZE)] = true;
 
                     // Shows tower stats when selecting tower.
                     newTower.on("pointerdown", function (pointer) {
@@ -217,6 +211,7 @@ class UserInterface {
                             }
                         }
                     });
+
 
                     // DEBUG: Placing multiple towers
                     if (!towerParent._scene.shiftKey.isDown) {
