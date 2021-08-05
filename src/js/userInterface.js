@@ -207,7 +207,7 @@ class UserInterface {
                     var newTowerX = Math.floor(towerParent.towerPreview.x / CELL_SIZE) * CELL_SIZE + CELL_OFFSET;
                     var newTowerY = Math.floor(towerParent.towerPreview.y / CELL_SIZE) * CELL_SIZE + CELL_OFFSET;
                     var newTower = towerParent._scene.addTower(newTowerX, newTowerY, towerName);
-                    
+
                     if (newTower == null) return;
 
                     // Mark grid space as occupied
@@ -262,7 +262,8 @@ class UserInterface {
         // Upgrades tower and updates text
         buttonParent.upgradeButton.on("pointerdown", function (pointer) {
             // remove button if tower is fully upgraded(rank 3)
-            if (tower.upgrade() >= 2) {
+            console.log(this)
+            if ((this.scene.getCredits() > tower.upgradeCost) && tower.upgrade() >= 2) {
                 buttonParent.upgradeButton.destroy();
                 buttonParent.activeButton = false;
             }

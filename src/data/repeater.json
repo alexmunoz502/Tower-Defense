@@ -2,6 +2,7 @@
     "name": "repeater",
     "type": "non-homing",
     "cost": 200,
+    "upgrade_cost": [150, 200],
     "sound": "repeater",
     "sound_volume": 0.65,
     "projectile": "bullet",
