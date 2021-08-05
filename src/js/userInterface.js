@@ -74,7 +74,6 @@ class UserInterface {
         // ---------------------
         var blaster = this.addTothis(this, 320, 531, "blaster");
         this.tower1Title = this._scene.add.text(302, 558, "100", {
-
             fontFamily: 'Verdana',
             fontSize: '16px',
             fontStyle: 'normal',
@@ -85,7 +84,6 @@ class UserInterface {
 
         var repeater = this.addTothis(this, 398, 531, "repeater");
         this.tower2Title = this._scene.add.text(380, 558, "200", {
-
             fontFamily: 'Verdana',
             fontSize: '16px',
             fontStyle: 'normal',
@@ -94,9 +92,8 @@ class UserInterface {
             strokeThickness: '2'
         });
 
-        var shocker = this.addTothis(this, 482, 531, "shocker");
-        this.tower3Title = this._scene.add.text(464, 558, "250", {
-
+        var shocker = this.addTothis(this, 476, 531, "shocker");
+        this.tower3Title = this._scene.add.text(460, 558, "250", {
             fontFamily: 'Verdana',
             fontSize: '16px',
             fontStyle: 'normal',
@@ -258,7 +255,7 @@ class UserInterface {
 
     // Adds upgrade button to UI
     addUpgradeButton(buttonParent, tower) {
-        buttonParent.upgradeButton = buttonParent._scene.add.rectangle(594, 570, 60, 60, '0x44ff00').setOrigin(1, 1).setInteractive();
+        buttonParent.upgradeButton = buttonParent._scene.add.image(608, 558, 'tower_base_upgrade').setOrigin(1, 1).setInteractive();
 
         // Upgrades tower and updates text
         buttonParent.upgradeButton.on("pointerdown", function (pointer) {
