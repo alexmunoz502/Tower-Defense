@@ -262,7 +262,6 @@ class UserInterface {
         // Upgrades tower and updates text
         buttonParent.upgradeButton.on("pointerdown", function (pointer) {
             // remove button if tower is fully upgraded(rank 3)
-            console.log(this)
             if ((this.scene.getCredits() > tower.upgradeCost) && tower.upgrade() >= 2) {
                 buttonParent.upgradeButton.destroy();
                 buttonParent.activeButton = false;

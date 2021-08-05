@@ -2,10 +2,12 @@ import 'phaser';
 import LevelScene from './level.js';
 import levelData from '../data/levels.json';
 import MainMenu from './mainMenu.js';
+import LevelSelect from './levelSelect.js';
 import WinScreen from './winScreen.js';
+import levelSelectBg from '../assets/backgrounds/level_select.png';
 
 
-var scenes = [new MainMenu()];
+var scenes = [new MainMenu(), new LevelSelect()];
 
 // Creates a new scene for each existing level data
 for (var level in levelData) if (levelData.hasOwnProperty(level)) {
@@ -21,7 +23,7 @@ const gameConfig = {
   title: "Tower Defense",
   width: 918,
   height: 594,
-  backgroundColor: '#a06505', 
+  backgroundColor: '#000000',
   physics: {
     default: 'arcade',
     arcade: {
