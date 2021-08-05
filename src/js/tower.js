@@ -7,8 +7,11 @@ class Tower extends Phaser.Physics.Arcade.Sprite {
         super(scene, x, y, towerData);
 
         this.setTexture("tower_base")
+        this._scene = scene
         this.name = towerData.name;
         this.type = towerData.type;
+        this.sound = towerData.sound;
+        this.soundVolume = towerData.sound_volume;
         this.projectile = towerData.projectile;
         this.projectileSpeed = towerData.projectile_speed;
         this.projectileDuration = towerData.projectile_duration;
@@ -24,13 +27,13 @@ class Tower extends Phaser.Physics.Arcade.Sprite {
         this.turret = new Phaser.Physics.Arcade.Sprite(scene, x, y, towerData.name)
         this.turret.isTracking = false
         //this.turret.setTexture("basic_turret")
-
         // Adds enemy to scene
         scene.add.existing(this);
         scene.add.existing(this.turret)
         scene.registry.towers.add(this);
 
         this.body.debugShowBody = false;
+
     }
 
     update(time, delta) {
@@ -45,11 +48,17 @@ class Tower extends Phaser.Physics.Arcade.Sprite {
                     this.turret.isTracking = true;
                 }
                 if (this.currentCD == 0) {
-                    if (this.projectile !== null) {
+                    this.scene._audioManager.playSound(this.sound, true, this.soundVolume);
+                    if (this.type != "stationary-aoe") {
                         this.scene.registry.bullets.add(new Bullet(this.scene, this, enemy));
                     }
-                    else if (this.type == "stationary-aoe") {
-                        this.setTint(0xfc0303);
+                    else {
+                        var attackSpriteBorder = this.scene.add.circle(this.x, this.y, this.range, '0xFFFFFF', 0.5)
+                        var attackSprite = this.scene.add.circle(this.x, this.y, this.range - 5, '0x2CC5F6', 0.5);
+                        setTimeout(() => {
+                            attackSpriteBorder.destroy();
+                            attackSprite.destroy();
+                        }, 250);
                         this.areaAttack();
                     }
                     this.currentCD += 1;
@@ -62,8 +71,6 @@ class Tower extends Phaser.Physics.Arcade.Sprite {
         }
         if (this.currentCD >= this.cooldown) {
             this.currentCD = 0;
-            // remove tint to show aoe tower is off cooldown
-            this.clearTint();
         }
     }
 
@@ -83,6 +90,7 @@ class Tower extends Phaser.Physics.Arcade.Sprite {
 
     upgrade() {
         if (this._rank < 2) {
+            this._scene._audioManager.playSound("tower_upgrade", true);
             this._rank += 1
             return this._rank
         }

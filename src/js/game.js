@@ -2,6 +2,7 @@ import 'phaser';
 import LevelScene from './level.js';
 import levelData from '../data/levels.json';
 import MainMenu from './mainMenu.js';
+import WinScreen from './winScreen.js';
 
 
 var scenes = [new MainMenu()];
@@ -10,6 +11,8 @@ var scenes = [new MainMenu()];
 for (var level in levelData) if (levelData.hasOwnProperty(level)) {
   scenes.push(new LevelScene(levelData[level]));
 }
+
+scenes.push(new WinScreen());
 
 // Game settings
 const gameConfig = {

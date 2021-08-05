@@ -2,6 +2,7 @@ import images from '../assets/*.png';
 import UISprites from '../assets/UI/*.png';
 import backgroundImages from '../assets/backgrounds/*.png';
 import musicTracks from '../assets/music/*.mp3';
+import soundFX from '../assets/sfx/*.mp3';
 
 import towerSprites from '../assets/towers/*.png';
 import bulletSprites from '../assets/bullets/*.png';
@@ -32,6 +33,8 @@ class LevelScene extends Phaser.Scene {
         this._enemyCount = 0
 
         // Tower Controls
+        this._selectedTower = null
+        this._selectorSwitch = false // prevents deselect executing on select
         this._towerPlacingMode = false
         this.towerPlacementCursor = { x: 0, y: 0, previousX: 0, previousY: 0, isValid: false };
 
@@ -75,11 +78,16 @@ class LevelScene extends Phaser.Scene {
 
         // -- Background Image
         var bgImageName = this._levelData.background;
-        this.load.image('levelBg', backgroundImages[bgImageName])
+        this.load.image('levelBg', backgroundImages[bgImageName]);
 
         // -- Audio - Music
         for (const track in musicTracks) {
-            this.load.audio(track, musicTracks[track])
+            this.load.audio(track, musicTracks[track]);
+        }
+
+        // -- Audio - SFX
+        for (const soundClip in soundFX) {
+            this.load.audio(soundClip, soundFX[soundClip]);
         }
     }
 
@@ -131,20 +139,25 @@ class LevelScene extends Phaser.Scene {
         }
         this.path = path
         // DEBUG: 
-        path.draw(graphics);
+        // path.draw(graphics);
         // -------------------------
         // DEBUG Tools
         // -------------------------
         // Spawn an enemy manually
         this.input.keyboard.on('keydown-A', () => {
             //this._enemyManager.addToPath(this, path, "test_enemy")
-            this.nextWave()
+            this.nextWave();
         }, this);
 
         // Click on a spot to print x/y coordinates to console.
-        this.input.on('pointerdown', function (pointer) {
+        this.input.on('pointerdown', (pointer) => {
             console.log(pointer.x, pointer.y);
-        });
+            if (this._selectedTower && !this._selectorSwitch) {
+                this.deselectTower();
+            } else {
+                this._selectorSwitch = false;
+            }
+        }, this);
 
         // Increase credits
         this.input.keyboard.on('keydown-C', () => {
@@ -169,17 +182,41 @@ class LevelScene extends Phaser.Scene {
 
         if (this._isWaveInProgress) {
             if (this._enemyCount <= 0) {
-                console.log("Wave Ended.")
+                this._audioManager.playSound("wave_end");
                 this._isWaveInProgress = false
-                this._audioManager.playMusic("preparation")
+                this._audioManager.playMusic("preparation");
             }
+        }
+    }
+
+    // Setters
+    decrementEnemyCount() {
+        this._enemyCount -= 1
+    }
+
+    get selectedTower() {
+        return this._selectedTower;
+    }
+
+    selectTower(tower) {
+        if (this._selectedTower) this.deselectTower();
+        this._selectorSwitch = true;
+        this._selectedTower = tower;
+        this._userInterface.updateRangeDisplay(tower);
+    }
+
+    deselectTower() {
+        if (this._selectedTower) { 
+            this._selectedTower = null;
+            this._userInterface.clearRangeDisplay();
         }
     }
 
     // Actions
     // -- Towers
     enableTowerPlacementMode() {
-        this._towerPlacingMode = true
+        this._towerPlacingMode = true;
+        this._audioManager.playSound("tower_pickup");
     }
 
     disableTowerPlacementMode() {
@@ -188,7 +225,8 @@ class LevelScene extends Phaser.Scene {
 
     addTower(x, y, towerName) {
         if (this.towerPlacementCursor.isValid) {
-            return this._towerManager.addTower(x, y, towerName)
+            this._audioManager.playSound("tower_place");
+            return this._towerManager.addTower(x, y, towerName) 
         } else {
             return null;
         }
@@ -236,6 +274,7 @@ class LevelScene extends Phaser.Scene {
         this._isWaveInProgress = true
         this._currentWaveIndex += 1;
         if (this._currentWaveIndex < this._waveCount) {
+            this._audioManager.playSound("wave_start");
             this.startWave(this._currentWaveIndex)
         } else {
             // DEBUG, reset waves

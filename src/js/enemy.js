@@ -1,5 +1,7 @@
 import images from '../assets/*.png';
 
+const CreditText = require("./creditText.js");
+
 class Enemy extends Phaser.Physics.Arcade.Sprite {
     // Initialization
     constructor(scene, x, y, enemyData, path) {
@@ -7,7 +9,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.scene = scene;
         this.path = path;
 
-        this.setTexture(enemyData.name);
+        this.setTexture(enemyData.texture);
         this.scale = enemyData.scale;
 
         // Private Attributes
@@ -15,6 +17,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this._health = enemyData.health;
         this._damage = enemyData.damage;
         this._speed = enemyData.speed;
+        this._credits = enemyData.credits;
 
 
         // Adds enemy to scene
@@ -41,6 +44,10 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         return this._speed;
     }
 
+    get credits(){
+        return this._credits;
+    }
+
     // Public Methods
     isDead() {
         return this._health <= 0 ? true : false;
@@ -53,8 +60,23 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     die() {
         // TODO: death animation ?
-        this.scene.decEnemyCount();
+        this.scene.registry.set('credits', this.scene.registry.get('credits') + this._credits);
+        
+        // Credit amount appears briefly where enemy dies.
+        this.credit_text = new CreditText(this.scene, this.x - 15, this.y - 15, this._credits, {
+            fontFamily: 'Verdana',
+            fontSize: '16px',
+            fontStyle: 'normal',
+            color: 'yellow',
+            stroke: 'black',
+            strokeThickness: '2'
+        });
+        this.scene.add.existing(this.credit_text);
+
+        this.scene.decrementEnemyCount();
         this.scene.registry.enemies.remove(this, true, true);
+
+        
     }
 
     update() {
@@ -66,7 +88,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.y = this.follower.vec.y;
         if (this.follower.t == 1) {
             this.scene.registry.set('base_health', (this.scene.registry.get('base_health') - this._damage));
-            this.scene.decEnemyCount();
+            this.scene.decrementEnemyCount();
             this.scene.registry.enemies.remove(this, true, true);
         }
     }
