@@ -45,11 +45,9 @@ class UserInterface {
         // Health Title
         this.healthTitle = this._scene.add.text(78, 549, "Health", {
             fontFamily: 'Verdana',
-            fontSize: '16px',
-            fontStyle: 'bold',
-            color: TITLE_COLOR,
-            stroke: TITLE_STROKE_COLOR,
-            strokeThickness: '2'
+            fontSize: '18px',
+            fontWeight: 'bold',
+            color: DETAILS_TEXT_COLOR
         });
 
         // Credits Value
@@ -64,13 +62,11 @@ class UserInterface {
         });
 
         // Credits Title
-        this.creditsTitle = this._scene.add.text(182, 549, "Credits", {
+        this.creditsTitle = this._scene.add.text(185, 549, "Credits", {
             fontFamily: 'Verdana',
-            fontSize: '16px',
-            fontStyle: 'bold',
-            color: TITLE_COLOR,
-            stroke: TITLE_STROKE_COLOR,
-            strokeThickness: '2'
+            fontSize: '18px',
+            fontWeight: 'bold',
+            color: DETAILS_TEXT_COLOR
         });
 
         // ---------------------
@@ -116,21 +112,21 @@ class UserInterface {
         //this.details.setStrokeStyle(2, DETAILS_STROKE_COLOR);
 
         // Damage Title + Value
-        this.damageTitle = this._scene.add.text(665, 516, 'Damage:', {
+        this.damageTitle = this._scene.add.text(729, 516, 'Damage:', {
             fontFamily: 'Verdana',
             fontSize: '12px',
             color: DETAILS_TEXT_COLOR
         });
 
         // Range Title + Value
-        this.rangeTitle = this._scene.add.text(665, 534, 'Range:', {
+        this.rangeTitle = this._scene.add.text(729, 534, 'Range:', {
             fontFamily: 'Verdana',
             fontSize: '12px',
             color: DETAILS_TEXT_COLOR
         });
 
         // Attack Speed + Title
-        this.attackSpeedTitle = this._scene.add.text(665, 550, 'Attack Speed:', {
+        this.attackSpeedTitle = this._scene.add.text(729, 550, 'Cooldown:', {
             fontFamily: 'Verdana',
             fontSize: '12px',
             color: DETAILS_TEXT_COLOR
@@ -262,7 +258,7 @@ class UserInterface {
 
     // Adds upgrade button to UI
     addUpgradeButton(buttonParent, tower) {
-        buttonParent.upgradeButton = buttonParent._scene.add.rectangle(830, 570, 60, 60, '0x44ff00').setOrigin(1, 1).setInteractive();
+        buttonParent.upgradeButton = buttonParent._scene.add.rectangle(594, 570, 60, 60, '0x44ff00').setOrigin(1, 1).setInteractive();
 
         // Upgrades tower and updates text
         buttonParent.upgradeButton.on("pointerdown", function (pointer) {
