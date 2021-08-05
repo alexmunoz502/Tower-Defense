@@ -5,7 +5,8 @@
         "damage": 5,
         "speed": 0.5,
         "scale": 1,
-        "health": 100        
+        "health": 100,
+        "credits": 10        
     },
     "runner" : {
         "name": "Martian Runner",
@@ -13,6 +14,7 @@
         "damage": 2,
         "speed": 0.75,
         "scale": 1,
-        "health": 25
+        "health": 25,
+        "credits": 10
     }
 }
