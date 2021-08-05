@@ -256,6 +256,7 @@ class UserInterface {
     // Adds upgrade button to UI
     addUpgradeButton(buttonParent, tower) {
         buttonParent.upgradeButton = buttonParent._scene.add.image(608, 558, 'tower_base_upgrade').setOrigin(1, 1).setInteractive();
+        buttonParent.deleteButton = buttonParent._scene.add.image(686, 558, 'tower_base_delete').setOrigin(1, 1).setInteractive();
 
         // Upgrades tower and updates text
         buttonParent.upgradeButton.on("pointerdown", function (pointer) {
@@ -270,6 +271,23 @@ class UserInterface {
             buttonParent.rangeTitle.setText("Range: " + tower.range);
             buttonParent.attackSpeedTitle.setText("Cooldown: " + tower.cooldown / 60.0);
         });
+
+        // Removes tower, refunds the base credits (no upgrade credits), removes buttons,
+        // removes range, and clears stats
+        buttonParent.deleteButton.on("pointerdown", function (pointer){
+            this.scene.addCredits(tower.cost);
+            buttonParent.damageTitle.setText("Damage:");
+            buttonParent.rangeTitle.setText("Range:");
+            buttonParent.attackSpeedTitle.setText("Cooldown:");
+
+            // TODO: play credit sound?
+            buttonParent.grid[Math.floor(tower.y / CELL_SIZE)][Math.floor(tower.x / CELL_SIZE)] = false;
+            tower.deleteTower();
+            this.scene.getUserInterface().clearRangeDisplay();
+            buttonParent.upgradeButton.destroy();
+            buttonParent.deleteButton.destroy();
+        });
+
     }
 
     // Displays the range information on a selected tower
@@ -280,8 +298,10 @@ class UserInterface {
     }
 
     clearRangeDisplay() {
-        this.rangeDisplay.destroy();
-        this.rangeDisplay = null;
+        if (this.rangeDisplay != null){
+            this.rangeDisplay.destroy();
+            this.rangeDisplay = null;
+        }
     }
 
 }
