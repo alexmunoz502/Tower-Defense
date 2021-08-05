@@ -179,8 +179,26 @@ class LevelScene extends Phaser.Scene {
             }
         }
     }
+    // Getters
+    getCredits() {
+        return this.registry.get('credits');
+    }
+
+    getTowerCost(towerName) {
+        return this._towerManager.getTowerCost(towerName);
+    }
 
     // Setters
+    addCredits(amount) {
+        var newCreditAmount = Math.min(this.getCredits() + amount, 9999);
+        this.registry.set('credits', newCreditAmount);
+    }
+
+    removeCredits(amount) {
+        var newCreditAmount = Math.max(this.getCredits() - amount, 0);
+        this.registry.set('credits', newCreditAmount);
+    }
+
     decrementEnemyCount() {
         this._enemyCount -= 1
     }
@@ -216,10 +234,11 @@ class LevelScene extends Phaser.Scene {
 
     addTower(x, y, towerName) {
         if (this.towerPlacementCursor.isValid) {
-            this._audioManager.playSound("tower_place");
-            return this._towerManager.addTower(x, y, towerName) 
-        } else {
-            return null;
+            var newTower = this._towerManager.addTower(x, y, towerName) 
+            if (newTower != null) {
+                this._audioManager.playSound("tower_place");
+            }
+            return newTower;
         }
     }
 
@@ -265,7 +284,15 @@ class LevelScene extends Phaser.Scene {
         this._isWaveInProgress = true
         this._currentWaveIndex += 1;
         if (this._currentWaveIndex < this._waveCount) {
-            this._audioManager.playSound("wave_start");
+            if (this._currentWaveIndex % 9 == 0 && this._currentWaveIndex != 0) {
+                // Boss Battle
+                this._audioManager.playSound("boss_warning");
+                this._audioManager.playMusic("boss");
+            } else {
+                // Regular Fight
+                this._audioManager.playSound("wave_start");
+            }
+            
             this.startWave(this._currentWaveIndex)
         } else {
             // DEBUG, reset waves

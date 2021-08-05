@@ -60,7 +60,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     die() {
         // TODO: death animation ?
-        this.scene.registry.set('credits', this.scene.registry.get('credits') + this._credits);
+        this.scene.addCredits(this._credits);
         
         // Credit amount appears briefly where enemy dies.
         this.credit_text = new CreditText(this.scene, this.x - 15, this.y - 15, this._credits, {
