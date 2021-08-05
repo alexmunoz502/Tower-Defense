@@ -99,7 +99,7 @@ class MainMenu extends Phaser.Scene {
         });
 
         // Credit text
-        this.add.text(320, 570, 'Created by Devin Leung, Alex Munox, and Ryan Ong', {
+        this.add.text(320, 570, 'Created by Devin Leung, Alex Muñoz, and Ryan Ong', {
             fontFamily: 'Arial',
             color: 'Black',
             fontSize: 14

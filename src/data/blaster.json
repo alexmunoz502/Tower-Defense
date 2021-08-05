@@ -1,6 +1,7 @@
 {
     "name": "blaster",
     "type": "non-homing",
+    "cost": 100,
     "projectile": "laser_red",
     "sound": "blaster",
     "sound_volume": 0.95,

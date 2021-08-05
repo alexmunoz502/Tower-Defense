@@ -16,5 +16,14 @@
         "scale": 1,
         "health": 25,
         "credits": 10
+    },
+    "boss" : {
+        "name": "Martian Boss",
+        "texture": "alien_pink",
+        "damage": 10,
+        "speed": 0.15,
+        "scale": 2,
+        "health": 5000,
+        "credits": 100
     }
 }

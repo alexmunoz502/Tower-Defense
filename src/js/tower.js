@@ -10,6 +10,7 @@ class Tower extends Phaser.Physics.Arcade.Sprite {
         this._scene = scene
         this.name = towerData.name;
         this.type = towerData.type;
+        this.cost = towerData.cost;
         this.sound = towerData.sound;
         this.soundVolume = towerData.sound_volume;
         this.projectile = towerData.projectile;
@@ -107,6 +108,10 @@ class Tower extends Phaser.Physics.Arcade.Sprite {
     }
     get rank() {
         return this._rank + 1
+    }
+
+    deleteTower() {
+        this.scene.registry.towers.remove(this, true, true);
     }
 
 }
