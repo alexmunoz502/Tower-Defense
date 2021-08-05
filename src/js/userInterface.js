@@ -47,7 +47,8 @@ class UserInterface {
         });
 
         // Credits Value
-        this.creditsValue = this._scene.add.text(182, 509, this._scene.registry.get('credits'), {
+        this.creditsLargeNumber = false
+        this.creditsValue = this._scene.add.text(176, 509, this._scene.registry.get('credits'), {
             fontFamily: 'Verdana',
             fontSize: '36px',
             fontStyle: 'bold',
@@ -69,7 +70,7 @@ class UserInterface {
         // ---------------------
         // Tower icons & titles
         // ---------------------
-        this.addTothis(this, 320, 531, "blaster");
+        var blaster = this.addTothis(this, 320, 531, "blaster");
         this.tower1Title = this._scene.add.text(302, 558, "100", {
 
             fontFamily: 'Verdana',
@@ -80,7 +81,7 @@ class UserInterface {
             strokeThickness: '2'
         });
 
-        this.addTothis(this, 398, 531, "repeater");
+        var repeater = this.addTothis(this, 398, 531, "repeater");
         this.tower2Title = this._scene.add.text(380, 558, "200", {
 
             fontFamily: 'Verdana',
@@ -91,7 +92,7 @@ class UserInterface {
             strokeThickness: '2'
         });
 
-        this.addTothis(this, 482, 531, "shocker");
+        var shocker = this.addTothis(this, 482, 531, "shocker");
         this.tower3Title = this._scene.add.text(464, 558, "250", {
 
             fontFamily: 'Verdana',
@@ -101,6 +102,7 @@ class UserInterface {
             stroke: STROKE_COLOR,
             strokeThickness: '2'
         });
+
         // -----------------------
 
         // Tower Details Background
@@ -144,6 +146,19 @@ class UserInterface {
                 break;
             case 'credits':
                 this.creditsValue.setText(data);
+                if (data < 1000 && this.creditsLargeNumber) {
+                    // 3 figures, expand text, move right
+                    this.creditsLargeNumber = false
+                    this.creditsValue.setFontSize(36)
+                    this.creditsValue.x += 2
+                    this.creditsValue.y -= 6
+                } else if (data > 999 && !this.creditsLargeNumber) {
+                    // 4 figures, shrink text, move left
+                    this.creditsLargeNumber = true
+                    this.creditsValue.setFontSize(28)
+                    this.creditsValue.x -= 2
+                    this.creditsValue.y += 6
+                }
                 break;
         }
     }
@@ -174,6 +189,10 @@ class UserInterface {
 
         // Clicking on a tower creates a floating transparent tower to preview placement.
         towerSelect.on("pointerdown", function (scene = this._scene) {
+            if (this.scene.getTowerCost(towerName) > this.scene.getCredits()) {
+                this.scene._audioManager.playSound("tower_error");
+                return;
+            }
             this.scene.enableTowerPlacementMode()
             towerParent.towerPreview = towerParent._scene.add.sprite(x, y, "tower_base").setInteractive();
             towerParent.towerPreview.turret = towerParent._scene.add.sprite(x, y, towerName);
@@ -188,6 +207,8 @@ class UserInterface {
                     var newTowerX = Math.floor(towerParent.towerPreview.x / CELL_SIZE) * CELL_SIZE + CELL_OFFSET;
                     var newTowerY = Math.floor(towerParent.towerPreview.y / CELL_SIZE) * CELL_SIZE + CELL_OFFSET;
                     var newTower = towerParent._scene.addTower(newTowerX, newTowerY, towerName);
+                    
+                    if (newTower == null) return;
 
                     // Mark grid space as occupied
                     towerParent._scene.grid[Math.floor(newTower.y / CELL_SIZE)][Math.floor(newTower.x / CELL_SIZE)] = true;
@@ -217,7 +238,7 @@ class UserInterface {
 
 
                     // DEBUG: Placing multiple towers
-                    if (!towerParent._scene.shiftKey.isDown) {
+                    if (!towerParent._scene.shiftKey.isDown || towerParent._scene.getTowerCost(towerName) > towerParent._scene.getCredits()) {
                         towerParent.towerPreview.turret.destroy(true);
                         towerParent.towerPreview.destroy(true);
                         towerParent._scene.disableTowerPlacementMode();
@@ -231,6 +252,7 @@ class UserInterface {
                 }
             });
         });
+        return towerSelect;
     }
 
     // Adds upgrade button to UI

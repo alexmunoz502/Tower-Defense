@@ -42,7 +42,7 @@ class AudioManager {
                 if (this._actionThemeCounter > ACTION_THEME_COUNT) this._actionThemeCounter = 1;
                 break;
             case "boss":
-                this._currentTrack = musicTracks["Boss_Theme"]
+                this._currentTrack = "Boss_Theme"
                 break;
             default:
                 break; 
