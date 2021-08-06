@@ -168,9 +168,11 @@ class LevelScene extends Phaser.Scene {
     update() {
         this._userInterface.update();
 
+
+        this.towerPlacementCursor.x = Math.floor(this.game.input.mousePointer.worldX / CELL_SIZE) * CELL_SIZE + CELL_OFFSET
+        this.towerPlacementCursor.y = Math.floor(this.game.input.mousePointer.worldY / CELL_SIZE) * CELL_SIZE + CELL_OFFSET
+
         if (this._towerPlacingMode) {
-            this.towerPlacementCursor.x = Math.floor(this.game.input.mousePointer.worldX / CELL_SIZE) * CELL_SIZE + CELL_OFFSET
-            this.towerPlacementCursor.y = Math.floor(this.game.input.mousePointer.worldY / CELL_SIZE) * CELL_SIZE + CELL_OFFSET
 
             if ((this.towerPlacementCursor.x != this.towerPlacementCursor.previousX) || (this.towerPlacementCursor.y != this.towerPlacementCursor.previousY)) {
                 this.towerPlacementCursor.isValid = this.checkTowerPlacementValidity();
@@ -224,7 +226,7 @@ class LevelScene extends Phaser.Scene {
     }
 
     deselectTower() {
-        if (this._selectedTower) { 
+        if (this._selectedTower) {
             this._selectedTower = null;
             this._userInterface.clearRangeDisplay();
         }
@@ -243,7 +245,7 @@ class LevelScene extends Phaser.Scene {
 
     addTower(x, y, towerName) {
         if (this.towerPlacementCursor.isValid) {
-            var newTower = this._towerManager.addTower(x, y, towerName) 
+            var newTower = this._towerManager.addTower(x, y, towerName)
             if (newTower != null) {
                 this._audioManager.playSound("tower_place");
             }
@@ -301,7 +303,7 @@ class LevelScene extends Phaser.Scene {
                 // Regular Fight
                 this._audioManager.playSound("wave_start");
             }
-            
+
             this.startWave(this._currentWaveIndex)
         } else {
             // DEBUG, reset waves
@@ -332,6 +334,10 @@ class LevelScene extends Phaser.Scene {
         this._enemyCount -= 1;
     }
 
+    getUserInterface() {
+        return this._userInterface;
+    }
+  
     get grid() {
         return this._grid
     }

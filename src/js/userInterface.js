@@ -39,11 +39,9 @@ class UserInterface {
         // Health Title
         this.healthTitle = this._scene.add.text(78, 549, "Health", {
             fontFamily: 'Verdana',
-            fontSize: '16px',
-            fontStyle: 'bold',
-            color: TITLE_COLOR,
-            stroke: TITLE_STROKE_COLOR,
-            strokeThickness: '2'
+            fontSize: '18px',
+            fontWeight: 'bold',
+            color: DETAILS_TEXT_COLOR
         });
 
         // Credits Value
@@ -58,13 +56,11 @@ class UserInterface {
         });
 
         // Credits Title
-        this.creditsTitle = this._scene.add.text(182, 549, "Credits", {
+        this.creditsTitle = this._scene.add.text(185, 549, "Credits", {
             fontFamily: 'Verdana',
-            fontSize: '16px',
-            fontStyle: 'bold',
-            color: TITLE_COLOR,
-            stroke: TITLE_STROKE_COLOR,
-            strokeThickness: '2'
+            fontSize: '18px',
+            fontWeight: 'bold',
+            color: DETAILS_TEXT_COLOR
         });
 
         // ---------------------
@@ -72,7 +68,6 @@ class UserInterface {
         // ---------------------
         var blaster = this.addTothis(this, 320, 531, "blaster");
         this.tower1Title = this._scene.add.text(302, 558, "100", {
-
             fontFamily: 'Verdana',
             fontSize: '16px',
             fontStyle: 'normal',
@@ -83,7 +78,6 @@ class UserInterface {
 
         var repeater = this.addTothis(this, 398, 531, "repeater");
         this.tower2Title = this._scene.add.text(380, 558, "200", {
-
             fontFamily: 'Verdana',
             fontSize: '16px',
             fontStyle: 'normal',
@@ -92,9 +86,8 @@ class UserInterface {
             strokeThickness: '2'
         });
 
-        var shocker = this.addTothis(this, 482, 531, "shocker");
-        this.tower3Title = this._scene.add.text(464, 558, "250", {
-
+        var shocker = this.addTothis(this, 476, 531, "shocker");
+        this.tower3Title = this._scene.add.text(460, 558, "250", {
             fontFamily: 'Verdana',
             fontSize: '16px',
             fontStyle: 'normal',
@@ -110,21 +103,21 @@ class UserInterface {
         //this.details.setStrokeStyle(2, DETAILS_STROKE_COLOR);
 
         // Damage Title + Value
-        this.damageTitle = this._scene.add.text(665, 516, 'Damage:', {
+        this.damageTitle = this._scene.add.text(729, 516, 'Damage:', {
             fontFamily: 'Verdana',
             fontSize: '12px',
             color: DETAILS_TEXT_COLOR
         });
 
         // Range Title + Value
-        this.rangeTitle = this._scene.add.text(665, 534, 'Range:', {
+        this.rangeTitle = this._scene.add.text(729, 534, 'Range:', {
             fontFamily: 'Verdana',
             fontSize: '12px',
             color: DETAILS_TEXT_COLOR
         });
 
         // Attack Speed + Title
-        this.attackSpeedTitle = this._scene.add.text(665, 550, 'Attack Speed:', {
+        this.attackSpeedTitle = this._scene.add.text(729, 550, 'Cooldown:', {
             fontFamily: 'Verdana',
             fontSize: '12px',
             color: DETAILS_TEXT_COLOR
@@ -194,6 +187,7 @@ class UserInterface {
                 return;
             }
             this.scene.enableTowerPlacementMode()
+            console.log(x, y)
             towerParent.towerPreview = towerParent._scene.add.sprite(x, y, "tower_base").setInteractive();
             towerParent.towerPreview.turret = towerParent._scene.add.sprite(x, y, towerName);
             towerParent.towerPreview.alpha = 0.5;
@@ -257,7 +251,8 @@ class UserInterface {
 
     // Adds upgrade button to UI
     addUpgradeButton(buttonParent, tower) {
-        buttonParent.upgradeButton = buttonParent._scene.add.rectangle(830, 570, 60, 60, '0x44ff00').setOrigin(1, 1).setInteractive();
+        buttonParent.upgradeButton = buttonParent._scene.add.image(608, 558, 'tower_base_upgrade').setOrigin(1, 1).setInteractive();
+        buttonParent.deleteButton = buttonParent._scene.add.image(686, 558, 'tower_base_delete').setOrigin(1, 1).setInteractive();
 
         // Upgrades tower and updates text
         buttonParent.upgradeButton.on("pointerdown", function (pointer) {
@@ -272,6 +267,23 @@ class UserInterface {
             buttonParent.rangeTitle.setText("Range: " + tower.range);
             buttonParent.attackSpeedTitle.setText("Cooldown: " + tower.cooldown / 60.0);
         });
+
+        // Removes tower, refunds the base credits (no upgrade credits), removes buttons,
+        // removes range, and clears stats
+        buttonParent.deleteButton.on("pointerdown", function (pointer) {
+            this.scene.addCredits(tower.cost);
+            buttonParent.damageTitle.setText("Damage:");
+            buttonParent.rangeTitle.setText("Range:");
+            buttonParent.attackSpeedTitle.setText("Cooldown:");
+
+            // TODO: play credit sound?
+            buttonParent.grid[Math.floor(tower.y / CELL_SIZE)][Math.floor(tower.x / CELL_SIZE)] = false;
+            tower.deleteTower();
+            this.scene.getUserInterface().clearRangeDisplay();
+            buttonParent.upgradeButton.destroy();
+            buttonParent.deleteButton.destroy();
+        });
+
     }
 
     // Displays the range information on a selected tower
@@ -282,8 +294,10 @@ class UserInterface {
     }
 
     clearRangeDisplay() {
-        this.rangeDisplay.destroy();
-        this.rangeDisplay = null;
+        if (this.rangeDisplay != null) {
+            this.rangeDisplay.destroy();
+            this.rangeDisplay = null;
+        }
     }
 
 }

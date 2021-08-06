@@ -115,8 +115,11 @@ class Tower extends Phaser.Physics.Arcade.Sprite {
         return this._rank + 1
     }
 
+    // Deletes the tower base and turret
     deleteTower() {
         this.scene.registry.towers.remove(this, true, true);
+        this.turret.destroy();
+        this.destroy();
     }
 
 }
