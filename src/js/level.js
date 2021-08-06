@@ -43,6 +43,9 @@ class LevelScene extends Phaser.Scene {
         this._currentWaveIndex = -1
         this._currentWave = this._waveData[this._currentWaveIndex]
         this._waveCount = this._waveData.length
+
+        // 2d array to track occupied spaces
+        this._grid = [];
     }
 
     init() {
@@ -94,6 +97,12 @@ class LevelScene extends Phaser.Scene {
 
         // Background
         this.add.image(459, 297, 'levelBg');
+
+        // Set game grid to correct size
+        for (let i = 0; i < (this.game.config.height / CELL_SIZE); i++) {
+            this._grid.push([])
+        }
+
 
         // Physics groups
         // NOTE: These physics groups were added indirectly by manager classes, but since
@@ -272,7 +281,7 @@ class LevelScene extends Phaser.Scene {
 
             // If both X and Y match, tower is on path, i.e. invalid position
             if ((isXMatch && isYMatch)
-                || this._userInterface.grid[Math.floor(this.towerPlacementCursor.y / CELL_SIZE)]
+                || this._grid[Math.floor(this.towerPlacementCursor.y / CELL_SIZE)]
                 [Math.floor(this.towerPlacementCursor.x / CELL_SIZE)]) {
                 return false;
             }
@@ -325,8 +334,8 @@ class LevelScene extends Phaser.Scene {
         this._enemyCount -= 1;
     }
 
-    getUserInterface() {
-        return this._userInterface;
+    get grid() {
+        return this._grid
     }
 
 

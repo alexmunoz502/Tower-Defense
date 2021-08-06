@@ -21,12 +21,6 @@ class UserInterface {
         this.towerPreview = null;
         this.activeButton = false;
 
-        // 2d array to track occupied spaces
-        this.grid = [];
-        for (let i = 0; i < (scene.game.config.height / CELL_SIZE); i++) {
-            this.grid.push([])
-        }
-
         // NOTE: Creating UI from left to right
 
         // UI region
@@ -211,7 +205,7 @@ class UserInterface {
                     if (newTower == null) return;
 
                     // Mark grid space as occupied
-                    towerParent.grid[Math.floor(newTower.y / CELL_SIZE)][Math.floor(newTower.x / CELL_SIZE)] = true;
+                    towerParent._scene.grid[Math.floor(newTower.y / CELL_SIZE)][Math.floor(newTower.x / CELL_SIZE)] = true;
 
                     // Shows tower stats when selecting tower.
                     newTower.on("pointerdown", function (pointer) {
@@ -235,6 +229,7 @@ class UserInterface {
                             }
                         }
                     });
+
 
                     // DEBUG: Placing multiple towers
                     if (!towerParent._scene.shiftKey.isDown || towerParent._scene.getTowerCost(towerName) > towerParent._scene.getCredits()) {
@@ -262,7 +257,7 @@ class UserInterface {
         // Upgrades tower and updates text
         buttonParent.upgradeButton.on("pointerdown", function (pointer) {
             // remove button if tower is fully upgraded(rank 3)
-            if (tower.upgrade() >= 2) {
+            if ((this.scene.getCredits() > tower.upgradeCost) && tower.upgrade() >= 2) {
                 buttonParent.upgradeButton.destroy();
                 buttonParent.activeButton = false;
             }

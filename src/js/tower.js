@@ -18,6 +18,7 @@ class Tower extends Phaser.Physics.Arcade.Sprite {
         this.projectileDuration = towerData.projectile_duration;
         this.accuracy = towerData.accuracy;
         this._damage = towerData.damage;
+        this._upgradeCost = towerData.upgrade_cost
         this.scale = towerData.scale;
         this._rank = 0
         this._range = towerData.range;
@@ -76,7 +77,7 @@ class Tower extends Phaser.Physics.Arcade.Sprite {
     }
 
     getTurretAngleToEnemy(enemy) {
-        let angle = Phaser.Math.Angle.Between(enemy.x, enemy.y, 
+        let angle = Phaser.Math.Angle.Between(enemy.x, enemy.y,
             this.turret.x, this.turret.y) + ROTATION_ADJUSTMENT;
         return angle;
     }
@@ -92,6 +93,7 @@ class Tower extends Phaser.Physics.Arcade.Sprite {
     upgrade() {
         if (this._rank < 2) {
             this._scene._audioManager.playSound("tower_upgrade", true);
+            this._scene.removeCredits(this.upgradeCost)
             this._rank += 1
             return this._rank
         }
@@ -105,6 +107,9 @@ class Tower extends Phaser.Physics.Arcade.Sprite {
     }
     get cooldown() {
         return this._cooldown[this._rank] * 60.0
+    }
+    get upgradeCost() {
+        return this._upgradeCost[this._rank]
     }
     get rank() {
         return this._rank + 1
