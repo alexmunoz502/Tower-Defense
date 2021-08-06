@@ -123,6 +123,17 @@ class UserInterface {
             color: DETAILS_TEXT_COLOR
         });
 
+
+        // Upgrade cost display
+        this.upgradeCost = this._scene.add.text(564, 558, '', {
+            fontFamily: 'Verdana',
+            fontSize: '16px',
+            fontStyle: 'normal',
+            color: CREDITS_COLOR,
+            stroke: STROKE_COLOR,
+            strokeThickness: '2'
+        });
+
         // Updates display of health and credit values when they change.
         this._scene.registry.events.on('changedata', this.updateValues, this);
 
@@ -254,6 +265,8 @@ class UserInterface {
         buttonParent.upgradeButton = buttonParent._scene.add.image(608, 558, 'tower_base_upgrade').setOrigin(1, 1).setInteractive();
         buttonParent.deleteButton = buttonParent._scene.add.image(686, 558, 'tower_base_delete').setOrigin(1, 1).setInteractive();
 
+        buttonParent.upgradeCost.setText(tower.upgradeCost)
+
         // Upgrades tower and updates text
         buttonParent.upgradeButton.on("pointerdown", function (pointer) {
             // remove button if tower is fully upgraded(rank 3)
@@ -266,6 +279,7 @@ class UserInterface {
             buttonParent.damageTitle.setText("Damage: " + tower.damage);
             buttonParent.rangeTitle.setText("Range: " + tower.range);
             buttonParent.attackSpeedTitle.setText("Cooldown: " + tower.cooldown / 60.0);
+            buttonParent.upgradeCost.setText(tower.upgradeCost)
         });
 
         // Removes tower, refunds the base credits (no upgrade credits), removes buttons,
@@ -275,9 +289,10 @@ class UserInterface {
             buttonParent.damageTitle.setText("Damage:");
             buttonParent.rangeTitle.setText("Range:");
             buttonParent.attackSpeedTitle.setText("Cooldown:");
+            buttonParent.upgradeCost.setText('')
 
             // TODO: play credit sound?
-            buttonParent.grid[Math.floor(tower.y / CELL_SIZE)][Math.floor(tower.x / CELL_SIZE)] = false;
+            buttonParent._scene.grid[Math.floor(tower.y / CELL_SIZE)][Math.floor(tower.x / CELL_SIZE)] = false;
             tower.deleteTower();
             this.scene.getUserInterface().clearRangeDisplay();
             buttonParent.upgradeButton.destroy();

@@ -334,6 +334,10 @@ class LevelScene extends Phaser.Scene {
         this._enemyCount -= 1;
     }
 
+    getUserInterface() {
+        return this._userInterface;
+    }
+
     get grid() {
         return this._grid
     }

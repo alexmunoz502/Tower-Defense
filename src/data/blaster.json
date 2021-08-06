@@ -1,6 +1,6 @@
 {
     "name": "blaster",
-    "type": "non-homing",
+    "type": "homing",
     "cost": 100,
     "upgrade_cost": [75, 100],
     "projectile": "laser_red",
