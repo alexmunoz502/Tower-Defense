@@ -233,6 +233,7 @@ class UserInterface {
                         // If another upgradeButton already exists in towerParent, remove it and add new one
                         else if (towerParent.activeButton !== newTower) {
                             towerParent.upgradeButton.destroy();
+                            towerParent.deleteButton.destroy();
                             towerParent.activeButton = false
                             if (newTower.rank < 3) {
                                 towerParent.addUpgradeButton(towerParent, newTower);
