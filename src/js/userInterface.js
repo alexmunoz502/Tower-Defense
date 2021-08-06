@@ -227,7 +227,6 @@ class UserInterface {
                         towerParent.upgradeCost.setText(newTower.upgradeCost)
                         if (towerParent.deleteButton) {
                             towerParent.deleteButton.destroy();
-                            console.log("something")
                         }
                         towerParent.deleteButton = towerParent._scene.add.image(686, 558, 'tower_base_delete').setOrigin(1, 1).setInteractive();
 
