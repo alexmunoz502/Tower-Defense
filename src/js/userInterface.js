@@ -193,6 +193,7 @@ class UserInterface {
                 return;
             }
             this.scene.enableTowerPlacementMode()
+            console.log(x, y)
             towerParent.towerPreview = towerParent._scene.add.sprite(x, y, "tower_base").setInteractive();
             towerParent.towerPreview.turret = towerParent._scene.add.sprite(x, y, towerName);
             towerParent.towerPreview.alpha = 0.5;
@@ -206,7 +207,7 @@ class UserInterface {
                     var newTowerX = Math.floor(towerParent.towerPreview.x / CELL_SIZE) * CELL_SIZE + CELL_OFFSET;
                     var newTowerY = Math.floor(towerParent.towerPreview.y / CELL_SIZE) * CELL_SIZE + CELL_OFFSET;
                     var newTower = towerParent._scene.addTower(newTowerX, newTowerY, towerName);
-                    
+
                     if (newTower == null) return;
 
                     // Mark grid space as occupied
@@ -274,7 +275,7 @@ class UserInterface {
 
         // Removes tower, refunds the base credits (no upgrade credits), removes buttons,
         // removes range, and clears stats
-        buttonParent.deleteButton.on("pointerdown", function (pointer){
+        buttonParent.deleteButton.on("pointerdown", function (pointer) {
             this.scene.addCredits(tower.cost);
             buttonParent.damageTitle.setText("Damage:");
             buttonParent.rangeTitle.setText("Range:");
@@ -298,7 +299,7 @@ class UserInterface {
     }
 
     clearRangeDisplay() {
-        if (this.rangeDisplay != null){
+        if (this.rangeDisplay != null) {
             this.rangeDisplay.destroy();
             this.rangeDisplay = null;
         }
