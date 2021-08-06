@@ -224,6 +224,12 @@ class UserInterface {
                         towerParent.damageTitle.setText("Damage: " + newTower.damage);
                         towerParent.rangeTitle.setText("Range: " + newTower.range);
                         towerParent.attackSpeedTitle.setText("Cooldown: " + newTower.cooldown / 60.0);
+                        towerParent.upgradeCost.setText(newTower.upgradeCost)
+                        if (towerParent.deleteButton) {
+                            towerParent.deleteButton.destroy();
+                            console.log("something")
+                        }
+                        towerParent.deleteButton = towerParent._scene.add.image(686, 558, 'tower_base_delete').setOrigin(1, 1).setInteractive();
 
                         // Adds upgradeButton to towerParent if tower is not at max rank
                         if (newTower.rank < 3 && !towerParent.activeButton) {
@@ -233,13 +239,29 @@ class UserInterface {
                         // If another upgradeButton already exists in towerParent, remove it and add new one
                         else if (towerParent.activeButton !== newTower) {
                             towerParent.upgradeButton.destroy();
-                            towerParent.deleteButton.destroy();
                             towerParent.activeButton = false
                             if (newTower.rank < 3) {
                                 towerParent.addUpgradeButton(towerParent, newTower);
                                 towerParent.activeButton = newTower;
                             }
                         }
+
+                        // Removes tower, refunds the base credits (no upgrade credits), removes buttons,
+                        // removes range, and clears stats
+                        towerParent.deleteButton.on("pointerdown", function (pointer) {
+                            this.scene.addCredits(newTower.cost);
+                            towerParent.damageTitle.setText("Damage:");
+                            towerParent.rangeTitle.setText("Range:");
+                            towerParent.attackSpeedTitle.setText("Cooldown:");
+                            towerParent.upgradeCost.setText('')
+
+                            // TODO: play credit sound?
+                            towerParent._scene.grid[Math.floor(newTower.y / CELL_SIZE)][Math.floor(newTower.x / CELL_SIZE)] = false;
+                            newTower.deleteTower();
+                            this.scene.getUserInterface().clearRangeDisplay();
+                            towerParent.upgradeButton.destroy();
+                            towerParent.deleteButton.destroy();
+                        });
                     });
 
 
@@ -264,7 +286,6 @@ class UserInterface {
     // Adds upgrade button to UI
     addUpgradeButton(buttonParent, tower) {
         buttonParent.upgradeButton = buttonParent._scene.add.image(608, 558, 'tower_base_upgrade').setOrigin(1, 1).setInteractive();
-        buttonParent.deleteButton = buttonParent._scene.add.image(686, 558, 'tower_base_delete').setOrigin(1, 1).setInteractive();
 
         buttonParent.upgradeCost.setText(tower.upgradeCost)
 
@@ -283,22 +304,6 @@ class UserInterface {
             buttonParent.upgradeCost.setText(tower.upgradeCost)
         });
 
-        // Removes tower, refunds the base credits (no upgrade credits), removes buttons,
-        // removes range, and clears stats
-        buttonParent.deleteButton.on("pointerdown", function (pointer) {
-            this.scene.addCredits(tower.cost);
-            buttonParent.damageTitle.setText("Damage:");
-            buttonParent.rangeTitle.setText("Range:");
-            buttonParent.attackSpeedTitle.setText("Cooldown:");
-            buttonParent.upgradeCost.setText('')
-
-            // TODO: play credit sound?
-            buttonParent._scene.grid[Math.floor(tower.y / CELL_SIZE)][Math.floor(tower.x / CELL_SIZE)] = false;
-            tower.deleteTower();
-            this.scene.getUserInterface().clearRangeDisplay();
-            buttonParent.upgradeButton.destroy();
-            buttonParent.deleteButton.destroy();
-        });
 
     }
 
