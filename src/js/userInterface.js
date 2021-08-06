@@ -123,6 +123,17 @@ class UserInterface {
             color: DETAILS_TEXT_COLOR
         });
 
+
+        // Upgrade cost display
+        this.upgradeCost = this._scene.add.text(564, 558, '', {
+            fontFamily: 'Verdana',
+            fontSize: '16px',
+            fontStyle: 'normal',
+            color: CREDITS_COLOR,
+            stroke: STROKE_COLOR,
+            strokeThickness: '2'
+        });
+
         // Updates display of health and credit values when they change.
         this._scene.registry.events.on('changedata', this.updateValues, this);
 
@@ -213,6 +224,11 @@ class UserInterface {
                         towerParent.damageTitle.setText("Damage: " + newTower.damage);
                         towerParent.rangeTitle.setText("Range: " + newTower.range);
                         towerParent.attackSpeedTitle.setText("Cooldown: " + newTower.cooldown / 60.0);
+                        towerParent.upgradeCost.setText(newTower.upgradeCost)
+                        if (towerParent.deleteButton) {
+                            towerParent.deleteButton.destroy();
+                        }
+                        towerParent.deleteButton = towerParent._scene.add.image(686, 558, 'tower_base_delete').setOrigin(1, 1).setInteractive();
 
                         // Adds upgradeButton to towerParent if tower is not at max rank
                         if (newTower.rank < 3 && !towerParent.activeButton) {
@@ -228,6 +244,23 @@ class UserInterface {
                                 towerParent.activeButton = newTower;
                             }
                         }
+
+                        // Removes tower, refunds the base credits (no upgrade credits), removes buttons,
+                        // removes range, and clears stats
+                        towerParent.deleteButton.on("pointerdown", function (pointer) {
+                            this.scene.addCredits(newTower.cost);
+                            towerParent.damageTitle.setText("Damage:");
+                            towerParent.rangeTitle.setText("Range:");
+                            towerParent.attackSpeedTitle.setText("Cooldown:");
+                            towerParent.upgradeCost.setText('')
+
+                            // TODO: play credit sound?
+                            towerParent._scene.grid[Math.floor(newTower.y / CELL_SIZE)][Math.floor(newTower.x / CELL_SIZE)] = false;
+                            newTower.deleteTower();
+                            this.scene.getUserInterface().clearRangeDisplay();
+                            towerParent.upgradeButton.destroy();
+                            towerParent.deleteButton.destroy();
+                        });
                     });
 
 
@@ -252,7 +285,8 @@ class UserInterface {
     // Adds upgrade button to UI
     addUpgradeButton(buttonParent, tower) {
         buttonParent.upgradeButton = buttonParent._scene.add.image(608, 558, 'tower_base_upgrade').setOrigin(1, 1).setInteractive();
-        buttonParent.deleteButton = buttonParent._scene.add.image(686, 558, 'tower_base_delete').setOrigin(1, 1).setInteractive();
+
+        buttonParent.upgradeCost.setText(tower.upgradeCost)
 
         // Upgrades tower and updates text
         buttonParent.upgradeButton.on("pointerdown", function (pointer) {
@@ -266,23 +300,9 @@ class UserInterface {
             buttonParent.damageTitle.setText("Damage: " + tower.damage);
             buttonParent.rangeTitle.setText("Range: " + tower.range);
             buttonParent.attackSpeedTitle.setText("Cooldown: " + tower.cooldown / 60.0);
+            buttonParent.upgradeCost.setText(tower.upgradeCost)
         });
 
-        // Removes tower, refunds the base credits (no upgrade credits), removes buttons,
-        // removes range, and clears stats
-        buttonParent.deleteButton.on("pointerdown", function (pointer) {
-            this.scene.addCredits(tower.cost);
-            buttonParent.damageTitle.setText("Damage:");
-            buttonParent.rangeTitle.setText("Range:");
-            buttonParent.attackSpeedTitle.setText("Cooldown:");
-
-            // TODO: play credit sound?
-            buttonParent.grid[Math.floor(tower.y / CELL_SIZE)][Math.floor(tower.x / CELL_SIZE)] = false;
-            tower.deleteTower();
-            this.scene.getUserInterface().clearRangeDisplay();
-            buttonParent.upgradeButton.destroy();
-            buttonParent.deleteButton.destroy();
-        });
 
     }
 

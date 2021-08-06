@@ -337,7 +337,7 @@ class LevelScene extends Phaser.Scene {
     getUserInterface() {
         return this._userInterface;
     }
-  
+
     get grid() {
         return this._grid
     }
