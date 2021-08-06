@@ -2,6 +2,7 @@
     "name": "shocker",
     "type": "stationary-aoe",
     "cost": 250,
+    "upgrade_cost": [175, 250],
     "sound": "shock",
     "sound_volume": 0.3,
     "projectile": null,
