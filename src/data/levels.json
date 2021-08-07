@@ -1,90 +1,85 @@
 {
-    "1": {
-        "name": "Level 1",
-        "background": "level_1",
-        "width": 960,
-        "height": 640,
-        "difficulty": "Easy",
-        "description": "// Incoming Transmission //\n\nTeam,\n\nTrouble is stirring on the Columbia Hills, and we need all hands on deck. Scouting reports estimate a large martian raiding party heading straight for the mining facility. Our risk department has determined the most cost-effective option is to extract all personnel from the site and wait for further instructions.\n\nWe've struck a deal with a local defense contractor to supply us with the necessary equipment needed to hold off the aliens while we pull out of the area.\n\nCorporate has given us a strict budget for this extraction, please submit all expense reports to accounting by Friday.\n\nThank you for your cooperation,\n\nMars Base Prosperity Operations\nU-CORP\n\"Putting the 'You' in Universe\"",
-        "startingCredits": 400,
-        "waveData": [
-            [[10, "grunt", 1000]],
-            [[12, "grunt", 900]],
-            [[14, "grunt", 800], [10, "runner", 500]],
-            [[17, "grunt", 700], [15, "runner", 500]],
-            [[20, "grunt", 600], [20, "runner", 500]],
-            [[10, "grunt", 1000]],
-            [[12, "grunt", 900]],
-            [[14, "grunt", 800], [10, "runner", 500]],
-            [[17, "grunt", 700], [15, "runner", 500]],
-            [[1, "boss", 1500]]
-        ],
-        "path": [
-            [0, 405, 567, 405],
-            [567, 405, 567, 243],
-            [567, 243, 81, 243],
-            [81, 243, 81, 81],
-            [81, 81, 837, 81],
-            [837, 81, 837, 243],
-            [837, 243, 675, 243],
-            [675, 243, 675, 405],
-            [675, 405, 918, 405]
-        ]
-    },
-    "2": {
-        "name": "Level 2",
-        "background": "level_1",
-        "width": 960,
-        "height": 640,
-        "difficulty": "Medium",
-        "description": "// Incoming Transmission //\n\nTeam,\n\nApparently, the members of the board are pleased with our performance back in Columbia Hills. Sales numbers are at an all-time high. For this reason, we need to recapture the mining facility and get back to normal operations.\n\nCorporate has hired a mercenary strike team to clear the site for reentry. We are expecting a counter-attack from the martians on the western side of the facility. In order to prevent further destruction of corporate property, we are once against asking for your assistance in setting up defenses.\n\nUnfortunately, hazard pay just isn't in the budget at the moment. While we know this is not the answer you hoped for, we will be having a pizza party in the north cafeteria on saturday as a token of our appreciation. Please limit yourself to 1 slice.\n\nThank you for your cooperation,\n\nMars Base Prosperity Operations\nU-CORP\n\"Putting the 'You' in Universe\"",
-        "startingCredits": 400,
-        "waveData": [
-            [[10, "grunt", 1000]],
-            [[12, "grunt", 900]],
-            [[14, "grunt", 800], [10, "runner", 500]],
-            [[17, "grunt", 700], [15, "runner", 500]],
-            [[20, "grunt", 600], [20, "runner", 500]],
-            [[10, "grunt", 1000]],
-            [[12, "grunt", 900]],
-            [[14, "grunt", 800], [10, "runner", 500]],
-            [[17, "grunt", 700], [15, "runner", 500]],
-            [[1, "boss", 1500]]
-        ],
-        "path": [
-            [0, 405, 513, 405],
-            [513, 405, 513, 243],
-            [513, 243, 26, 243],
-            [26, 243, 26, 81],
-            [26, 81, 594, 81]
-        ]
-    },
-    "3": {
-        "name": "Level 3",
-        "background": "level_1",
-        "width": 960,
-        "height": 640,
-        "difficulty": "Hard",
-        "description": "// Incoming Transmission //\n\nTeam,\n\nWe are ready to unveil the final step in our operations plan. Upper management has been working with a top strategy firm out of Uranus, and collaboratively developed a course of action to get rid of the Martian invaders.\n\nLast week, our scanners were finally able to find the home base of the Martians, deep within the SW Melas canyon. Our plan is to use noxious gas to flush them out of the depths, where we will be waiting to finish them off as they make their escape.\n\nTo ensure timely execution, we will be putting all purchased PTO requests on hold.\n\nThank you for your cooperation,\n\nMars Base Prosperity Operations\nU-CORP\n\"Putting the 'You' in Universe\"",
-        "startingCredits": 400,
-        "waveData": [
-            [[10, "grunt", 1000]],
-            [[12, "grunt", 900]],
-            [[14, "grunt", 800], [10, "runner", 500]],
-            [[17, "grunt", 700], [15, "runner", 500]],
-            [[20, "grunt", 600], [20, "runner", 500]],
-            [[10, "grunt", 1000]],
-            [[12, "grunt", 900]],
-            [[14, "grunt", 800], [10, "runner", 500]],
-            [[17, "grunt", 700], [15, "runner", 500]],
-            [[1, "boss", 1500]]
-        ],
-        "path": [
-            [0, 405, 513, 405],
-            [513, 405, 513, 243],
-            [513, 243, 26, 243],
-            [26, 243, 26, 81],
-            [26, 81, 594, 81]
-        ]
-    }
+	"1": {
+		"name": "Level 1",
+		"background": "level_1",
+		"width": 960,
+		"height": 640,
+		"difficulty": "Easy",
+		"description": "// Incoming Transmission //\n\nTeam,\n\nTrouble is stirring on the Columbia Hills, and we need all hands on deck. Scouting reports estimate a large martian raiding party heading straight for the mining facility. Our risk department has determined the most cost-effective option is to extract all personnel from the site and wait for further instructions.\n\nWe've struck a deal with a local defense contractor to supply us with the necessary equipment needed to hold off the aliens while we pull out of the area.\n\nCorporate has given us a strict budget for this extraction, please submit all expense reports to accounting by Friday.\n\nThank you for your cooperation,\n\nMars Base Prosperity Operations\nU-CORP\n\"Putting the 'You' in Universe\"",
+		"startingCredits": 400,
+		"waveData": [
+			[ [ 10, "grunt", 1000, 1 ] ],
+			[ [ 12, "grunt", 900, 1 ] ],
+			[ [ 14, "grunt", 800, 1 ], [ 10, "runner", 500, 1 ] ],
+			[ [ 17, "grunt", 700, 1 ], [ 15, "runner", 500, 1 ] ],
+			[ [ 20, "grunt", 600, 1 ], [ 20, "runner", 500, 1 ] ],
+			[ [ 10, "grunt", 1000, 1 ] ],
+			[ [ 12, "grunt", 900, 1 ] ],
+			[ [ 14, "grunt", 800, 1 ] ],
+			[ [ 10, "runner", 500, 1 ] ],
+			[ [ 17, "grunt", 700, 1 ], [ 15, "runner", 500, 1 ] ],
+			[ [ 1, "boss", 1500, 1 ] ]
+		],
+		"paths": {
+			"1": [
+				[ 0, 405, 567, 405 ],
+				[ 567, 405, 567, 243 ],
+				[ 567, 243, 81, 243 ],
+				[ 81, 243, 81, 81 ],
+				[ 81, 81, 837, 81 ],
+				[ 837, 81, 837, 243 ],
+				[ 837, 243, 675, 243 ],
+				[ 675, 243, 675, 405 ],
+				[ 675, 405, 918, 405 ]
+			]
+		}
+	},
+	"2": {
+		"name": "Level 2",
+		"background": "level_1",
+		"width": 960,
+		"height": 640,
+		"difficulty": "Medium",
+		"description": "// Incoming Transmission //\n\nTeam,\n\nApparently, the members of the board are pleased with our performance back in Columbia Hills. Sales numbers are at an all-time high. For this reason, we need to recapture the mining facility and get back to normal operations.\n\nCorporate has hired a mercenary strike team to clear the site for reentry. We are expecting a counter-attack from the martians on the western side of the facility. In order to prevent further destruction of corporate property, we are once against asking for your assistance in setting up defenses.\n\nUnfortunately, hazard pay just isn't in the budget at the moment. While we know this is not the answer you hoped for, we will be having a pizza party in the north cafeteria on saturday as a token of our appreciation. Please limit yourself to 1 slice.\n\nThank you for your cooperation,\n\nMars Base Prosperity Operations\nU-CORP\n\"Putting the 'You' in Universe\"",
+		"startingCredits": 400,
+		"waveData":[
+			[ [ 10, "grunt", 1000, 1 ] ],
+			[ [ 12, "grunt", 900, 1 ] ],
+			[ [ 14, "grunt", 800, 1 ], [ 10, "runner", 500, 1 ] ],
+			[ [ 17, "grunt", 700, 1 ], [ 15, "runner", 500, 1 ] ],
+			[ [ 20, "grunt", 600, 1 ], [ 20, "runner", 500, 1 ] ],
+			[ [ 10, "grunt", 1000, 1 ] ],
+			[ [ 12, "grunt", 900, 1 ] ],
+			[ [ 14, "grunt", 800, 1 ] ],
+			[ [ 10, "runner", 500, 1 ] ],
+			[ [ 17, "grunt", 700, 1 ], [ 15, "runner", 500, 1 ] ],
+			[ [ 1, "boss", 1500, 1 ] ]
+		],
+		"paths": {
+			"1": [
+				[ 0, 405, 513, 405 ],
+				[ 513, 405, 513, 243 ],
+				[ 513, 243, 26, 243 ],
+				[ 26, 243, 26, 81 ],
+				[ 26, 81, 594, 81 ]
+			]
+		}
+	},
+	"3": {
+		"name": "Level 3",
+		"background": "level_1",
+		"width": 960,
+		"height": 640,
+		"difficulty": "Hard",
+		"description": "// Incoming Transmission //\n\nTeam,\n\nWe are ready to unveil the final step in our operations plan. Upper management has been working with a top strategy firm out of Uranus, and collaboratively developed a course of action to get rid of the Martian invaders.\n\nLast week, our scanners were finally able to find the home base of the Martians, deep within the SW Melas canyon. Our plan is to use noxious gas to flush them out of the depths, where we will be waiting to finish them off as they make their escape.\n\nTo ensure timely execution, we will be putting all purchased PTO requests on hold.\n\nThank you for your cooperation,\n\nMars Base Prosperity Operations\nU-CORP\n\"Putting the 'You' in Universe\"",
+		"startingCredits": 400,
+		"waveData": [
+			[ [ 10, "grunt", 1000, 1 ], [ 10, "grunt", 1000, 2 ] ],
+			[ [ 12, "grunt", 900, 1 ], [ 10, "grunt", 1000, 2 ] ]
+		],
+		"paths": {
+			"1": [ [ 0, 405, 513, 405 ], [513,405, 513, 350], [513, 350, 0 , 350] ],
+			"2": [ [ 0, 105, 600, 105 ], [600,105, 600, 200], [600, 200, 0 , 200] ]
+		}
+	}
 }
