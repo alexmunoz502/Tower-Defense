@@ -282,6 +282,7 @@ class UserInterface {
                             towerParent.deleteButton.destroy();
                         }
                         towerParent.deleteButton = towerParent._scene.add.image(686, 558, 'tower_base_delete').setOrigin(1, 1).setInteractive();
+                        towerParent.deleteButton.depth = UI_TEXT_DEPTH
 
                         // Adds upgradeButton to towerParent if tower is not at max rank
                         if (newTower.rank < 3 && !towerParent.activeButton) {
@@ -343,7 +344,7 @@ class UserInterface {
         buttonParent.upgradeCost.depth = UI_TEXT_DEPTH;
 
         // Upgrades tower and updates text
-        buttonParent.upgradeButton.on("pointerdown", function (pointer) {
+        buttonParent.upgradeButton.on("pointerdown", function () {
             // remove button if tower is fully upgraded(rank 3)
             this.scene._selectorSwitch = true;
             if ((this.scene.getCredits() > tower.upgradeCost) && tower.upgrade() >= 2) {
@@ -356,6 +357,8 @@ class UserInterface {
             buttonParent.rangeTitle.setText("Range: " + tower.range);
             buttonParent.attackSpeedTitle.setText("Cooldown: " + tower.cooldown / 60.0);
             buttonParent.upgradeCost.setText(tower.upgradeCost)
+            
+            buttonParent.updateRangeDisplay(buttonParent._scene._selectedTower);
         });
 
 
@@ -363,10 +366,15 @@ class UserInterface {
 
     // Displays the range information on a selected tower
     updateRangeDisplay(selectedTower) {
-        this.rangeDisplay = selectedTower.scene.add.circle(
-            selectedTower.x, selectedTower.y, selectedTower.range)
-        this.rangeDisplay.setStrokeStyle(2, 0xfc0303)
-        this.rangeDisplay.depth = UI_DEPTH;
+        if (this.rangeDisplay){
+            console.log("upgrade range")
+            this.rangeDisplay.radius = selectedTower.range;
+        } else {
+            this.rangeDisplay = selectedTower.scene.add.circle(
+                selectedTower.x, selectedTower.y, selectedTower.range)
+            this.rangeDisplay.setStrokeStyle(2, 0xfc0303)
+            this.rangeDisplay.depth = UI_DEPTH;
+        }
     }
 
     clearRangeDisplay() {
