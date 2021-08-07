@@ -130,16 +130,26 @@ class LevelScene extends Phaser.Scene {
         let graphics = this.add.graphics();
         graphics.lineStyle(2, 0xffffff, 1);
 
-        let path = this.add.path();
-        for (var i = 0; i < this._levelData.path.length; i++) {
-            var lineData = this._levelData.path[i]
-            path.add(new Phaser.Curves.Line(lineData));
-            if (i == 0) {
-                path.startX = lineData[0];
-                path.startY = lineData[1];
+        let paths = {};
+        let i = 1;
+        for (const path in this._levelData.paths) {
+            let pathData = this._levelData.paths[path]
+            paths[i] = this.add.path();
+            paths[i].length = 0;
+            for (var j = 0; j < pathData.length; j++) {
+                var lineData = pathData[j];
+                paths[i].length += Math.abs(lineData[2] - lineData[0])
+                paths[i].length += Math.abs(lineData[3] - lineData[1])
+                paths[i].add(new Phaser.Curves.Line(lineData));
+                if (j == 0) {
+                    paths[i].startX = lineData[0];
+                    paths[i].startY = lineData[1];
+                }
             }
+            i++;
         }
-        this.path = path
+        this.paths = paths;
+        console.log(paths)
         // DEBUG: 
         // path.draw(graphics);
         // -------------------------
@@ -153,7 +163,6 @@ class LevelScene extends Phaser.Scene {
 
         // Click on a spot to print x/y coordinates to console.
         this.input.on('pointerdown', (pointer) => {
-            console.log(pointer.x, pointer.y);
             if (this._selectedTower && !this._selectorSwitch) {
                 this.deselectTower();
             } else {
@@ -263,36 +272,42 @@ class LevelScene extends Phaser.Scene {
     }
 
     checkTowerPlacementValidity() {
-        var pathData = this._levelData.path
-        for (var i = 0; i < pathData.length; i++) {
-            var x1 = pathData[i][0];
-            var y1 = pathData[i][1];
-            var x2 = pathData[i][2];
-            var y2 = pathData[i][3];
+        var paths = this._levelData.paths
+        for (const path in paths) {
+            let pathData = paths[path]
+            for (var i = 0; i < pathData.length; i++) {
+                var x1 = Math.floor(pathData[i][0] / CELL_SIZE);
+                var y1 = Math.floor(pathData[i][1] / CELL_SIZE);
+                var x2 = Math.floor(pathData[i][2] / CELL_SIZE);
+                var y2 = Math.floor(pathData[i][3] / CELL_SIZE);
 
-            // Check if tower position is on path on X axis
-            var isXMatch = false
-            if (this.towerPlacementCursor.x >= x1 && this.towerPlacementCursor.x <= x2) {
-                // Check X left-to-right
-                isXMatch = true
-            } else if (this.towerPlacementCursor.x >= x2 && this.towerPlacementCursor.x <= x1) {
-                // Check X right-to-left
-                isXMatch = true
-            }
+                // Check if tower position is on path on X axis
+                var isXMatch = false
+                var cellX = Math.floor(this.towerPlacementCursor.x / CELL_SIZE)
+                if (cellX >= x1 && cellX <= x2) {
+                    // Check X left-to-right
+                    isXMatch = true
+                } else if (cellX >= x2 && cellX <= x1) {
+                    // Check X right-to-left
+                    isXMatch = true
+                }
 
-            // Check if tower position is on path Y axis
-            var isYMatch = false
-            if (this.towerPlacementCursor.y >= y1 && this.towerPlacementCursor.y <= y2) {
-                isYMatch = true
-            } else if (this.towerPlacementCursor.y >= y2 && this.towerPlacementCursor.y <= y1) {
-                isYMatch = true
-            }
+                // Check if tower position is on path Y axis
+                var isYMatch = false
+                var cellY = Math.floor(this.towerPlacementCursor.y / CELL_SIZE)
+                if (cellY >= y1 && cellY <= y2) {
+                    isYMatch = true
+                } else if (cellY >= y2 && cellY <= y1) {
+                    isYMatch = true
+                }
 
-            // If both X and Y match, tower is on path, i.e. invalid position
-            if ((isXMatch && isYMatch)
-                || this._grid[Math.floor(this.towerPlacementCursor.y / CELL_SIZE)]
-                [Math.floor(this.towerPlacementCursor.x / CELL_SIZE)]) {
-                return false;
+
+                // If both X and Y match, tower is on path, i.e. invalid position
+                if ((isXMatch && isYMatch)
+                    || this._grid[Math.floor(this.towerPlacementCursor.y / CELL_SIZE)]
+                    [Math.floor(this.towerPlacementCursor.x / CELL_SIZE)]) {
+                    return false;
+                }
             }
         }
         return true;
@@ -358,12 +373,13 @@ class LevelScene extends Phaser.Scene {
             var enemyCount = wave[0]
             var enemyType = wave[1]
             var spawnDelay = wave[2]
+            var path = wave[3]
             this._enemyCount += enemyCount;
 
             var waveTimer = this.time.addEvent({
                 delay: spawnDelay,
                 callback: this._enemyManager.addToPath,
-                args: [this, this.path, enemyType],
+                args: [this, this.paths[path], enemyType],
                 callbackScope: this._enemyManager,
                 repeat: enemyCount - 1
             })

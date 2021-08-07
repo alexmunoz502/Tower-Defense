@@ -21,7 +21,7 @@ class EnemyManager {
             targets: f,
             t: 1,
             ease: "Linear",
-            duration: 5000 / enemy.speed,
+            duration: (path.length * 4) / enemy.speed,
             yoyo: false,
             repeat: 0
         });
