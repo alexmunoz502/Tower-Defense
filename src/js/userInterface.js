@@ -6,11 +6,17 @@ const HUD_STROKE_COLOR = '0x696969';
 const STROKE_COLOR = 'black';  // Default stroke color that stands out from HUD background
 const TITLE_COLOR = 'blue';
 const TITLE_STROKE_COLOR = 'cyan';
+const TIMER_COLOR = 'white';
 const CREDITS_COLOR = 'yellow';
 const HEALTH_COLOR = 'red';
 const DETAILS_BACKGROUND_COLOR = 'black';
 const DETAILS_TEXT_COLOR = 'lime';
 const DETAILS_STROKE_COLOR = '0x00FF00';
+
+// Depth Controls
+const UI_DEPTH = 1;
+const UI_HUD_DEPTH = 2;
+const UI_TEXT_DEPTH = 3;
 
 const CELL_SIZE = 54;
 const CELL_OFFSET = CELL_SIZE / 2;
@@ -25,6 +31,7 @@ class UserInterface {
 
         // UI region
         this.hud = this._scene.add.sprite(459, 540, "HUD");
+        this.hud.depth = 2;
 
         // Health Value
         this.healthValue = this._scene.add.text(78, 509, this._scene.registry.get('base_health'), {
@@ -35,6 +42,7 @@ class UserInterface {
             stroke: STROKE_COLOR,
             strokeThickness: '4'
         });
+        this.healthValue.depth = UI_TEXT_DEPTH;
 
         // Health Title
         this.healthTitle = this._scene.add.text(78, 549, "Health", {
@@ -43,6 +51,7 @@ class UserInterface {
             fontWeight: 'bold',
             color: DETAILS_TEXT_COLOR
         });
+        this.healthTitle.depth = UI_TEXT_DEPTH;
 
         // Credits Value
         this.creditsLargeNumber = false
@@ -54,6 +63,7 @@ class UserInterface {
             stroke: STROKE_COLOR,
             strokeThickness: '4'
         });
+        this.creditsValue.depth = UI_TEXT_DEPTH;
 
         // Credits Title
         this.creditsTitle = this._scene.add.text(185, 549, "Credits", {
@@ -62,6 +72,7 @@ class UserInterface {
             fontWeight: 'bold',
             color: DETAILS_TEXT_COLOR
         });
+        this.creditsTitle.depth = UI_TEXT_DEPTH;
 
         // ---------------------
         // Tower icons & titles
@@ -75,6 +86,8 @@ class UserInterface {
             stroke: STROKE_COLOR,
             strokeThickness: '2'
         });
+        blaster.depth = UI_TEXT_DEPTH;
+        this.tower1Title.depth = UI_TEXT_DEPTH;
 
         var repeater = this.addTothis(this, 398, 531, "repeater");
         this.tower2Title = this._scene.add.text(380, 558, "200", {
@@ -85,6 +98,8 @@ class UserInterface {
             stroke: STROKE_COLOR,
             strokeThickness: '2'
         });
+        repeater.depth = UI_TEXT_DEPTH;
+        this.tower2Title.depth = UI_TEXT_DEPTH;
 
         var shocker = this.addTothis(this, 476, 531, "shocker");
         this.tower3Title = this._scene.add.text(460, 558, "250", {
@@ -95,6 +110,8 @@ class UserInterface {
             stroke: STROKE_COLOR,
             strokeThickness: '2'
         });
+        shocker.depth = UI_TEXT_DEPTH;
+        this.tower3Title.depth = UI_TEXT_DEPTH;
 
         // -----------------------
 
@@ -108,6 +125,7 @@ class UserInterface {
             fontSize: '12px',
             color: DETAILS_TEXT_COLOR
         });
+        this.damageTitle.depth = UI_TEXT_DEPTH;
 
         // Range Title + Value
         this.rangeTitle = this._scene.add.text(729, 534, 'Range:', {
@@ -115,6 +133,7 @@ class UserInterface {
             fontSize: '12px',
             color: DETAILS_TEXT_COLOR
         });
+        this.rangeTitle.depth = UI_TEXT_DEPTH;
 
         // Attack Speed + Title
         this.attackSpeedTitle = this._scene.add.text(729, 550, 'Cooldown:', {
@@ -122,6 +141,7 @@ class UserInterface {
             fontSize: '12px',
             color: DETAILS_TEXT_COLOR
         });
+        this.attackSpeedTitle.depth = UI_TEXT_DEPTH;
 
 
         // Upgrade cost display
@@ -133,12 +153,34 @@ class UserInterface {
             stroke: STROKE_COLOR,
             strokeThickness: '2'
         });
+        this.upgradeCost.depth = UI_TEXT_DEPTH;
 
         // Updates display of health and credit values when they change.
         this._scene.registry.events.on('changedata', this.updateValues, this);
 
         // Controls
         this.rangeDisplay = null;
+
+        // Wave Information
+        this.preparationTimer = this._scene.add.text(324, 422, "", {
+            fontFamily: 'Verdana',
+            fontSize: '36px',
+            fontStyle: 'normal',
+            color: TIMER_COLOR,
+            stroke: STROKE_COLOR,
+            strokeThickness: '2'    
+        });
+        this.preparationTimer.depth = UI_TEXT_DEPTH;
+
+        this.startNextWaveText = this._scene.add.text(396, 459, "Press [A] to Start",{
+            fontFamily: 'Verdana',
+            fontSize: '18px',
+            fontStyle: 'normal',
+            color: TIMER_COLOR,
+            stroke: STROKE_COLOR,
+            strokeThickness: '2'
+        });
+        this.startNextWaveText.depth = UI_TEXT_DEPTH;
     }
 
     // Triggered when health or credit values change
@@ -184,12 +226,21 @@ class UserInterface {
                 this.towerPreview.turret.setTint(0xffffff);
             }
         }
+
+
+        this.preparationTimer.visible = !this._scene._isWaveInProgress;
+        this.startNextWaveText.visible = !this._scene._isWaveInProgress;
+    }
+
+    updatePreparationTimer() {
+        this.preparationTimer.text = `NEXT WAVE: ${20 - this._scene.getPreparationSecondsElapsed()}`;
     }
 
     // Adds interactive tower icon to scene
     addTothis(towerParent, x, y, towerName) {
         var towerSelect = towerParent._scene.add.sprite(x, y, "tower_base").setInteractive();
-        towerSelect.turret = towerParent._scene.add.sprite(x, y, towerName)
+        towerSelect.turret = towerParent._scene.add.sprite(x, y, towerName);
+        towerSelect.turret.depth = UI_TEXT_DEPTH;
 
         // Clicking on a tower creates a floating transparent tower to preview placement.
         towerSelect.on("pointerdown", function (scene = this._scene) {
@@ -200,7 +251,9 @@ class UserInterface {
             this.scene.enableTowerPlacementMode()
             console.log(x, y)
             towerParent.towerPreview = towerParent._scene.add.sprite(x, y, "tower_base").setInteractive();
+            towerParent.towerPreview.depth = UI_DEPTH;
             towerParent.towerPreview.turret = towerParent._scene.add.sprite(x, y, towerName);
+            towerParent.towerPreview.turret.depth = UI_DEPTH;
             towerParent.towerPreview.alpha = 0.5;
             towerParent.towerPreview.turret.alpha = 0.5;
 
@@ -285,12 +338,14 @@ class UserInterface {
     // Adds upgrade button to UI
     addUpgradeButton(buttonParent, tower) {
         buttonParent.upgradeButton = buttonParent._scene.add.image(608, 558, 'tower_base_upgrade').setOrigin(1, 1).setInteractive();
-
-        buttonParent.upgradeCost.setText(tower.upgradeCost)
+        buttonParent.upgradeButton.depth = UI_TEXT_DEPTH;
+        buttonParent.upgradeCost.setText(tower.upgradeCost);
+        buttonParent.upgradeCost.depth = UI_TEXT_DEPTH;
 
         // Upgrades tower and updates text
         buttonParent.upgradeButton.on("pointerdown", function (pointer) {
             // remove button if tower is fully upgraded(rank 3)
+            this.scene._selectorSwitch = true;
             if ((this.scene.getCredits() > tower.upgradeCost) && tower.upgrade() >= 2) {
                 buttonParent.upgradeButton.destroy();
                 buttonParent.activeButton = false;
@@ -311,6 +366,7 @@ class UserInterface {
         this.rangeDisplay = selectedTower.scene.add.circle(
             selectedTower.x, selectedTower.y, selectedTower.range)
         this.rangeDisplay.setStrokeStyle(2, 0xfc0303)
+        this.rangeDisplay.depth = UI_DEPTH;
     }
 
     clearRangeDisplay() {
