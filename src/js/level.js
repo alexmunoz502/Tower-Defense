@@ -29,6 +29,7 @@ class LevelScene extends Phaser.Scene {
         this._levelData = levelData;
 
         // State Control
+        this._isLevelWon = false
         this._isWaveInProgress = false
         this._enemyCount = 0
 
@@ -187,6 +188,13 @@ class LevelScene extends Phaser.Scene {
                 this._audioManager.playSound("wave_end");
                 this._isWaveInProgress = false
                 this._audioManager.playMusic("preparation");
+                if (this._currentWaveIndex > this._waveCount) {
+                    this._isLevelWon = true;
+                    console.log("You win!")
+                }
+                if (!this._isLevelWon) {
+                    this.setPreparationTimer();
+                }
             }
         }
     }
@@ -290,8 +298,31 @@ class LevelScene extends Phaser.Scene {
     }
 
     // -- Waves
+    setPreparationTimer() {
+        this.preparationTimer = this.time.addEvent({
+            delay: 30000,
+            callback: this.nextWave,
+            callbackScope: this
+        });
+        this.secondsTimer = this.time.addEvent({
+            delay: 1000,
+            callback: (prepTimer = this.preparationTimer) => {
+                console.log(30 - prepTimer.getElapsedSeconds());
+            },
+            callbackScope: this.preparationTimer,
+            repeat: 30
+        })
+    }
+
+    stopWaveTimers() {
+        this.preparationTimer.remove()
+        this.secondsTimer.remove()
+    }
+
     nextWave() {
+        if (this.preparationTimer || this.secondsTimer) this.stopWaveTimers();
         if (!this._isWaveInProgress) this._audioManager.playMusic("action");
+
         this._isWaveInProgress = true
         this._currentWaveIndex += 1;
         if (this._currentWaveIndex < this._waveCount) {
