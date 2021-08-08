@@ -26,8 +26,21 @@ class LevelScene extends Phaser.Scene {
         super({ key: levelData.name });
 
         // Private scene properties
-        this._isSceneUsed = false;
         this._levelData = levelData;
+        this.resetPrivateAttributes();
+
+    }
+
+    init() {
+        // Scene's registry data
+        this.registry.set('credits', this._levelData.startingCredits);
+        this.registry.set('base_health', 20);
+        this.registry.events.on('changedata', this.loseIfDead, this);
+    }
+
+    resetPrivateAttributes() {
+        // Private scene properties
+        this._isSceneUsed = false;
 
         // State Control
         this._isLevelWon = false
@@ -49,14 +62,6 @@ class LevelScene extends Phaser.Scene {
 
         // 2d array to track occupied spaces
         this._grid = [];
-
-    }
-
-    init() {
-        // Scene's registry data
-        this.registry.set('credits', this._levelData.startingCredits);
-        this.registry.set('base_health', 20);
-        this.registry.events.on('changedata', this.loseIfDead, this);
     }
 
     preload() {
@@ -97,6 +102,7 @@ class LevelScene extends Phaser.Scene {
     }
 
     create() {
+        if (this.scene._isSceneUsed) this.resetPrivateAttributes();
         this.scene._isSceneUsed = true;
         this.cameras.main.fadeIn(1000, 0, 0, 0);
 
@@ -178,6 +184,8 @@ class LevelScene extends Phaser.Scene {
         // this.input.keyboard.on('keydown-C', () => {
         //     this.registry.set('credits', this.registry.get('credits') + 1000);
         // }, this);
+        
+        
     }
 
     update() {
@@ -208,10 +216,10 @@ class LevelScene extends Phaser.Scene {
                 this._audioManager.playSound("wave_end");
                 this._isWaveInProgress = false
                 this._audioManager.playMusic("preparation");
-                if (this._currentWaveIndex == this._waveCount) {
+                if (this._currentWaveIndex == this._waveCount - 1) {
                     this._isLevelWon = true;
                     this.cleanUp();
-                    this.scene.start('winScreen');
+                    this.scene.start('winScreen', this);
                 }
                 if (!this._isLevelWon) {
                     this.setPreparationTimer();

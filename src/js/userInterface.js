@@ -172,7 +172,7 @@ class UserInterface {
         });
         this.preparationTimer.depth = UI_TEXT_DEPTH;
 
-        this.startNextWaveText = this._scene.add.text(396, 459, "Press [A] to Start",{
+        this.startNextWaveText = this._scene.add.text(396, 459, "Press [SPACE] to Start",{
             fontFamily: 'Verdana',
             fontSize: '18px',
             fontStyle: 'normal',
@@ -368,7 +368,6 @@ class UserInterface {
     // Displays the range information on a selected tower
     updateRangeDisplay(selectedTower) {
         if (this.rangeDisplay){
-            console.log("upgrade range")
             this.rangeDisplay.radius = selectedTower.range;
         } else {
             this.rangeDisplay = selectedTower.scene.add.circle(

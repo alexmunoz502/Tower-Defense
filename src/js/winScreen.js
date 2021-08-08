@@ -15,8 +15,9 @@ class WinScreen extends Phaser.Scene {
         super({ key: 'winScreen' });
     }
 
-    init() {
-        
+    init(levelWonScene) {
+        levelWonScene.registry.destroy();
+        levelWonScene.events.off();
     }
 
     preload() {
@@ -60,7 +61,7 @@ class WinScreen extends Phaser.Scene {
             spacing: { x: 1, y: 1 }
         };
         this.cache.bitmapFont.add('retro_font', Phaser.GameObjects.RetroFont.Parse(this, startFontConfig));
-        this.start_option = this.add.bitmapText(250, 500, 'retro_font', 'RETURN TO TITLE');
+        this.start_option = this.add.bitmapText(100, 500, 'retro_font', 'RETURN TO LEVEL SELECT');
         this.start_option.setScale(1);
         
         // Fade in/out animation
@@ -90,7 +91,7 @@ class WinScreen extends Phaser.Scene {
         this.start_option.setInteractive(new Phaser.Geom.Rectangle(0, 0, this.start_option.width, this.start_option.height), Phaser.Geom.Rectangle.Contains);
         this.start_option.on('pointerdown', function() {
             music.stop();
-            window.location.reload();
+            this.scene.start("levelSelect");
         }, this);
         
 
