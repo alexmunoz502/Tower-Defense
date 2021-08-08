@@ -13,11 +13,11 @@
 			[ [ 14, "grunt", 800, 1 ], [ 10, "runner", 500, 1 ] ],
 			[ [ 17, "grunt", 700, 1 ], [ 15, "runner", 500, 1 ] ],
 			[ [ 20, "grunt", 600, 1 ], [ 20, "runner", 500, 1 ] ],
-			[ [ 10, "grunt", 1000, 1 ] ],
-			[ [ 12, "grunt", 900, 1 ] ],
-			[ [ 14, "grunt", 800, 1 ] ],
-			[ [ 10, "runner", 500, 1 ] ],
-			[ [ 17, "grunt", 700, 1 ], [ 15, "runner", 500, 1 ] ],
+			[ [ 10, "grunt", 1000, 1 ], [ 5, "elite", 600, 1 ]  ],
+			[ [ 20, "elite", 1200, 1 ] ],
+			[ [ 20, "elite", 1200, 1 ], [ 5, "tank", 3000, 1 ]  ],
+			[ [ 20, "elite", 1200, 1 ], [ 5, "tank", 3000, 1 ], [ 30, "runner", 500, 1 ] ],
+			[ [ 20, "elite", 2500, 1 ], [ 20, "grunt", 900, 1 ], [ 15, "tank", 2000, 1 ], [ 15, "flyer", 800, 1 ] ],
 			[ [ 1, "boss", 1500, 1 ] ]
 		],
 		"paths": {
@@ -77,9 +77,9 @@
 		"height": 640,
 		"difficulty": "Hard",
 		"description": "// Incoming Transmission //\n\nTeam,\n\nWe are ready to unveil the final step in our operations plan. Upper management has been working with a top strategy firm out of Uranus, and collaboratively developed a course of action to get rid of the Martian invaders.\n\nLast week, our scanners were finally able to find the home base of the Martians, deep within the SW Melas canyon. Our plan is to use noxious gas to flush them out of the depths, where we will be waiting to finish them off as they make their escape.\n\nTo ensure timely execution, we will be putting all purchased PTO requests on hold.\n\nThank you for your cooperation,\n\nMars Base Prosperity Operations\nU-CORP\n\"Putting the 'You' in Universe\"",
-		"startingCredits": 400,
+		"startingCredits": 500,
 		"waveData": [
-			[ [ 10, "grunt", 1000, 1 ], [ 10, "grunt", 1000, 2 ] ],
+			[ [ 3, "grunt", 2000, 1 ], [ 3, "grunt", 2000, 2 ] ],
 			[ [ 12, "grunt", 900, 1 ], [ 10, "grunt", 1000, 2 ] ]
 		],
 		"paths": {

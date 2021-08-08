@@ -1,16 +1,16 @@
 {
     "name": "blaster",
     "type": "homing",
-    "cost": 100,
-    "upgrade_cost": [75, 100],
+    "cost": 150,
+    "upgrade_cost": [60, 100],
     "projectile": "laser_red",
     "sound": "blaster",
     "sound_volume": 0.95,
     "projectile_speed" : 450,
     "projectile_duration" : 300,
     "accuracy": 1.0,
-    "damage": [25,35,50],
-    "range": [250,275,300],
+    "damage": [30,40,50],
+    "range": [225,250,275],
     "cooldown": [1.0, 0.975, 0.95],
     "scale": 1
 }

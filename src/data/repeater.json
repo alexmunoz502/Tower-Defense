@@ -1,16 +1,16 @@
 {
     "name": "repeater",
     "type": "non-homing",
-    "cost": 200,
-    "upgrade_cost": [150, 200],
+    "cost": 225,
+    "upgrade_cost": [80, 120],
     "sound": "repeater",
     "sound_volume": 0.65,
     "projectile": "bullet",
     "projectile_speed" : 1100,
     "projectile_duration" : 300,
-    "accuracy": 0.6,
-    "damage": [8,15,22.5],
-    "range": [225, 250, 265],
-    "cooldown": [0.175, 0.16, 0.15],
+    "accuracy": 0.55,
+    "damage": [12,18,25],
+    "range": [175, 200, 225],
+    "cooldown": [0.15, 0.14, 0.13],
     "scale": 1
 }
