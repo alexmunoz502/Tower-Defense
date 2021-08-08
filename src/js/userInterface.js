@@ -186,6 +186,7 @@ class UserInterface {
     // Triggered when health or credit values change
     // Add each updateable value to the switch statement
     updateValues(parent, key, data) {
+        if (data == null) return;
         switch (key) {
             case 'base_health':
                 this.healthValue.setText(data);

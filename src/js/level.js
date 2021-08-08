@@ -26,6 +26,7 @@ class LevelScene extends Phaser.Scene {
         super({ key: levelData.name });
 
         // Private scene properties
+        this._isSceneUsed = false;
         this._levelData = levelData;
 
         // State Control
@@ -48,6 +49,7 @@ class LevelScene extends Phaser.Scene {
 
         // 2d array to track occupied spaces
         this._grid = [];
+
     }
 
     init() {
@@ -95,6 +97,7 @@ class LevelScene extends Phaser.Scene {
     }
 
     create() {
+        this.scene._isSceneUsed = true;
         this.cameras.main.fadeIn(1000, 0, 0, 0);
 
         // World Properties
@@ -152,7 +155,6 @@ class LevelScene extends Phaser.Scene {
             i++;
         }
         this.paths = paths;
-        console.log(paths)
         // DEBUG:
         // for (const path in this.paths) {
         //     this.paths[path].draw(graphics);
@@ -175,10 +177,10 @@ class LevelScene extends Phaser.Scene {
             }
         }, this);
 
-        // Increase credits
-        this.input.keyboard.on('keydown-C', () => {
-            this.registry.set('credits', this.registry.get('credits') + 1000);
-        }, this);
+        // // Increase credits
+        // this.input.keyboard.on('keydown-C', () => {
+        //     this.registry.set('credits', this.registry.get('credits') + 1000);
+        // }, this);
     }
 
     update() {
@@ -203,7 +205,7 @@ class LevelScene extends Phaser.Scene {
                 this._audioManager.playSound("wave_end");
                 this._isWaveInProgress = false
                 this._audioManager.playMusic("preparation");
-                if (this._currentWaveIndex > this._waveCount) {
+                if (this._currentWaveIndex == this._waveCount) {
                     this._isLevelWon = true;
                     console.log("You win!")
                 }
@@ -402,7 +404,7 @@ class LevelScene extends Phaser.Scene {
     loseIfDead(){
         if (this.registry.get('base_health') < 1){
             this.sound.stopAll();
-            this.scene.start('loseScreen');
+            this.scene.start('loseScreen', this);
         }
     }
 

@@ -12,8 +12,9 @@ class LoseScreen extends Phaser.Scene {
         super({ key: 'loseScreen' });
     }
 
-    init() {
-        
+    init(levelLostScene) {
+        levelLostScene.registry.destroy();
+        levelLostScene.events.off();
     }
 
     preload() {
