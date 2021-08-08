@@ -27,6 +27,8 @@ class MainMenu extends Phaser.Scene {
     }
 
     create() {
+        this.cameras.main.fadeIn(1000, 0, 0, 0);
+
         // World Properties
         this.physics.world.setBounds(0, 0, ROOM_WIDTH, ROOM_HEIGHT);
 

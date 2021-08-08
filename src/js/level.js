@@ -26,6 +26,7 @@ class LevelScene extends Phaser.Scene {
         super({ key: levelData.name });
 
         // Private scene properties
+        this._isSceneUsed = false;
         this._levelData = levelData;
 
         // State Control
@@ -48,12 +49,14 @@ class LevelScene extends Phaser.Scene {
 
         // 2d array to track occupied spaces
         this._grid = [];
+
     }
 
     init() {
         // Scene's registry data
         this.registry.set('credits', this._levelData.startingCredits);
         this.registry.set('base_health', 20);
+        this.registry.events.on('changedata', this.loseIfDead, this);
     }
 
     preload() {
@@ -80,7 +83,7 @@ class LevelScene extends Phaser.Scene {
 
         // -- Background Image
         var bgImageName = this._levelData.background;
-        this.load.image('levelBg', backgroundImages[bgImageName]);
+        this.load.image(bgImageName, backgroundImages[bgImageName]);
 
         // -- Audio - Music
         for (const track in musicTracks) {
@@ -94,11 +97,14 @@ class LevelScene extends Phaser.Scene {
     }
 
     create() {
+        this.scene._isSceneUsed = true;
+        this.cameras.main.fadeIn(1000, 0, 0, 0);
+
         // World Properties
         this.physics.world.setBounds(0, 0, this._levelData.width, this._levelData.height);
 
         // Background
-        this.add.image(459, 297, 'levelBg');
+        this.add.image(459, 297, this._levelData.background);
 
         // Set game grid to correct size
         for (let i = 0; i < (this.game.config.height / CELL_SIZE); i++) {
@@ -115,6 +121,7 @@ class LevelScene extends Phaser.Scene {
 
         // Controls
         this.shiftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
+        this.spaceBar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         // Initialize Managers
         this._audioManager = new AudioManager(this, musicTracks);
@@ -149,7 +156,6 @@ class LevelScene extends Phaser.Scene {
             i++;
         }
         this.paths = paths;
-        console.log(paths)
         // DEBUG:
         // for (const path in this.paths) {
         //     this.paths[path].draw(graphics);
@@ -157,11 +163,7 @@ class LevelScene extends Phaser.Scene {
         // -------------------------
         // DEBUG Tools
         // -------------------------
-        // Spawn an enemy manually
-        this.input.keyboard.on('keydown-A', () => {
-            //this._enemyManager.addToPath(this, path, "test_enemy")
-            this.nextWave();
-        }, this);
+        
 
         // Click on a spot to print x/y coordinates to console.
         this.input.on('pointerdown', (pointer) => {
@@ -172,13 +174,19 @@ class LevelScene extends Phaser.Scene {
             }
         }, this);
 
-        // Increase credits
-        this.input.keyboard.on('keydown-C', () => {
-            this.registry.set('credits', this.registry.get('credits') + 1000);
-        }, this);
+        // // Increase credits
+        // this.input.keyboard.on('keydown-C', () => {
+        //     this.registry.set('credits', this.registry.get('credits') + 1000);
+        // }, this);
     }
 
     update() {
+        if (Phaser.Input.Keyboard.JustDown(this.spaceBar)){
+            if (this._isWaveInProgress == false){
+                this.nextWave();
+            }
+        }
+
         this._userInterface.update();
 
 
@@ -200,9 +208,10 @@ class LevelScene extends Phaser.Scene {
                 this._audioManager.playSound("wave_end");
                 this._isWaveInProgress = false
                 this._audioManager.playMusic("preparation");
-                if (this._currentWaveIndex > this._waveCount) {
+                if (this._currentWaveIndex == this._waveCount) {
                     this._isLevelWon = true;
-                    console.log("You win!")
+                    this.cleanUp();
+                    this.scene.start('winScreen');
                 }
                 if (!this._isLevelWon) {
                     this.setPreparationTimer();
@@ -394,6 +403,20 @@ class LevelScene extends Phaser.Scene {
 
     getUserInterface() {
         return this._userInterface;
+    }
+
+    loseIfDead(){
+        if (this.registry.get('base_health') < 1){
+            this.cleanUp();
+            this.scene.start('loseScreen', this);
+        }
+    }
+
+    // Call this before leaving the screen
+    cleanUp(){
+        this.registry.destroy();
+        this.events.off();
+        this.sound.stopAll();
     }
 
     get grid() {
