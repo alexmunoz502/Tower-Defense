@@ -51,32 +51,31 @@ class LevelSelect extends Phaser.Scene {
         });
 
         // Level 1 Button
-        let levelOneButton = new UIButton(this, 94, 135, "1. Level Name", 'menu_select', (levelName) => {
+        let levelOneButton = new UIButton(this, 94, 135, "1. A New Threat", 'menu_select', (levelName) => {
             this.selectLevel(levelName);
         }, '1')
         this.add.existing(levelOneButton)
 
         // Level 2 Button
-        let levelTwoButton = new UIButton(this, 94, 216, "2. Level Name", 'menu_select', (levelName) => {
+        let levelTwoButton = new UIButton(this, 94, 216, "2. Recapture", 'menu_select', (levelName) => {
             this.selectLevel(levelName);
         }, '2')
         this.add.existing(levelTwoButton)
 
         // Level 3 Button
-        let levelThreeButton = new UIButton(this, 94, 297, "3. Level Name", 'menu_select', (levelName) => {
+        let levelThreeButton = new UIButton(this, 94, 297, "3. Extermination", 'menu_select', (levelName) => {
             this.selectLevel(levelName);
         }, '3')
         this.add.existing(levelThreeButton)
 
         // Back to title Screen Button
-        let backButton = new UIButton(this, 94, 486, "Main Menu", 'menu_back', (levelName) => {
+        let backButton = new UIButton(this, 94, 486, "   Main Menu", 'menu_back', (levelName) => {
             music.stop();
             this.changeScene(levelName);
         }, 'mainMenu')
         this.add.existing(backButton)
 
         // Selected Level Information
-        // x was 378
         this.levelPreview.picture = this.add.image(378, 108, this.selectedLevel.background).setOrigin(0, 0)
         this.levelPreview.picture.scale = (1/5);
 
@@ -106,7 +105,7 @@ class LevelSelect extends Phaser.Scene {
         })
 
         // Play Level Button
-        this.playLevelButton = new UIButton(this, 594, 180, "PLAY", 'menu_select', (level) => {
+        this.playLevelButton = new UIButton(this, 594, 180, "       PLAY", 'menu_select', (level) => {
             music.stop()
             this.changeScene(level);
         }, this.selectedLevel.name)
@@ -128,9 +127,10 @@ class LevelSelect extends Phaser.Scene {
     selectLevel(levelName) {
         this.selectedLevel = levelData[levelName]
         this.playLevelButton.callbackArgs = this.selectedLevel.name
-        this.levelPreview.picture.texture = this.selectedLevel.background
+        this.levelPreview.picture.setTexture(this.selectedLevel.background)
         this.levelPreview.name.text = this.selectedLevel.name
         this.levelPreview.difficulty.text = `Difficulty: ${this.selectedLevel.difficulty}`
+        this.levelPreview.waveCount.text = `Waves: ${this.getSelectedLevelWaveCount()}`;
         this.levelPreview.description.text = this.selectedLevel.description
     }
 
