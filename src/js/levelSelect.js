@@ -138,7 +138,6 @@ class LevelSelect extends Phaser.Scene {
 
     changeScene(levelName) {      
         this.scene.start(levelName);
-
     }
 
     getSelectedLevelWaveCount() {

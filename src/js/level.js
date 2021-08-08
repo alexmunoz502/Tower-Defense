@@ -121,6 +121,7 @@ class LevelScene extends Phaser.Scene {
 
         // Controls
         this.shiftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
+        this.spaceBar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         // Initialize Managers
         this._audioManager = new AudioManager(this, musicTracks);
@@ -162,11 +163,7 @@ class LevelScene extends Phaser.Scene {
         // -------------------------
         // DEBUG Tools
         // -------------------------
-        // Spawn an enemy manually
-        this.input.keyboard.on('keydown-A', () => {
-            //this._enemyManager.addToPath(this, path, "test_enemy")
-            this.nextWave();
-        }, this);
+        
 
         // Click on a spot to print x/y coordinates to console.
         this.input.on('pointerdown', (pointer) => {
@@ -184,6 +181,10 @@ class LevelScene extends Phaser.Scene {
     }
 
     update() {
+        if (Phaser.Input.Keyboard.JustDown(this.spaceBar)){
+            this.nextWave();
+        }
+
         this._userInterface.update();
 
 
@@ -207,7 +208,8 @@ class LevelScene extends Phaser.Scene {
                 this._audioManager.playMusic("preparation");
                 if (this._currentWaveIndex == this._waveCount) {
                     this._isLevelWon = true;
-                    console.log("You win!")
+                    this.cleanUp();
+                    this.scene.start('winScreen');
                 }
                 if (!this._isLevelWon) {
                     this.setPreparationTimer();
@@ -403,9 +405,16 @@ class LevelScene extends Phaser.Scene {
 
     loseIfDead(){
         if (this.registry.get('base_health') < 1){
-            this.sound.stopAll();
+            this.cleanUp();
             this.scene.start('loseScreen', this);
         }
+    }
+
+    // Call this before leaving the screen
+    cleanUp(){
+        this.registry.destroy();
+        this.events.off();
+        this.sound.stopAll();
     }
 
     get grid() {

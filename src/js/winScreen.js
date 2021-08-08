@@ -90,7 +90,7 @@ class WinScreen extends Phaser.Scene {
         this.start_option.setInteractive(new Phaser.Geom.Rectangle(0, 0, this.start_option.width, this.start_option.height), Phaser.Geom.Rectangle.Contains);
         this.start_option.on('pointerdown', function() {
             music.stop();
-            this.scene.start('mainMenu');
+            window.location.reload();
         }, this);
         
 
