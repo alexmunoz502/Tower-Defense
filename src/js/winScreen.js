@@ -1,6 +1,6 @@
 // Importing only necessary assets
 import { Scene } from 'phaser';
-import background from '../assets/backgrounds/menu_background.png'
+import background from '../assets/backgrounds/win_background.png'
 import mainTheme from '../assets/music/Main_Theme.mp3'
 import greenRetroFont from '../assets/bitmaps/knight3_green.png'
 import redRetroFont from '../assets/bitmaps/knight3_red.png'
@@ -15,12 +15,13 @@ class WinScreen extends Phaser.Scene {
         super({ key: 'winScreen' });
     }
 
-    init() {
-        
+    init(levelWonScene) {
+        levelWonScene.registry.destroy();
+        levelWonScene.events.off();
     }
 
     preload() {
-        this.load.image('menu_background', background);
+        this.load.image('win_background', background);
         this.load.audio('main_theme', mainTheme);
         this.load.image('green_retro_font', greenRetroFont);
         this.load.image('red_retro_font', redRetroFont);
@@ -60,7 +61,7 @@ class WinScreen extends Phaser.Scene {
             spacing: { x: 1, y: 1 }
         };
         this.cache.bitmapFont.add('retro_font', Phaser.GameObjects.RetroFont.Parse(this, startFontConfig));
-        this.start_option = this.add.bitmapText(250, 500, 'retro_font', 'RETURN TO TITLE');
+        this.start_option = this.add.bitmapText(100, 500, 'retro_font', 'RETURN TO LEVEL SELECT');
         this.start_option.setScale(1);
         
         // Fade in/out animation
@@ -90,7 +91,7 @@ class WinScreen extends Phaser.Scene {
         this.start_option.setInteractive(new Phaser.Geom.Rectangle(0, 0, this.start_option.width, this.start_option.height), Phaser.Geom.Rectangle.Contains);
         this.start_option.on('pointerdown', function() {
             music.stop();
-            window.location.reload();
+            this.scene.start("levelSelect");
         }, this);
         
 

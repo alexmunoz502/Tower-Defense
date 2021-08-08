@@ -172,7 +172,7 @@ class UserInterface {
         });
         this.preparationTimer.depth = UI_TEXT_DEPTH;
 
-        this.startNextWaveText = this._scene.add.text(396, 459, "Press [Space] to Start", {
+        this.startNextWaveText = this._scene.add.text(396, 459, "Press [SPACE] to Start", {
             fontFamily: 'Verdana',
             fontSize: '18px',
             fontStyle: 'normal',

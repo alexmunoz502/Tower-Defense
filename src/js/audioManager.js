@@ -47,7 +47,6 @@ class AudioManager {
             default:
                 break; 
         }
-        console.log(this._currentTrack)
         this._song = this._music[this._currentTrack]
         this._song.setLoop(true)
         this._song.setVolume(0)

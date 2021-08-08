@@ -128,7 +128,6 @@ class LevelSelect extends Phaser.Scene {
 
     selectLevel(levelName) {
         this.selectedLevel = levelData[levelName]
-        console.log(this.selectedLevel)
         this.playLevelButton.callbackArgs = this.selectedLevel.name
         this.levelPreview.picture.setTexture(this.selectedLevel.background)
         this.levelPreview.name.text = this.selectedLevel.name
@@ -138,7 +137,12 @@ class LevelSelect extends Phaser.Scene {
     }
 
     changeScene(levelName) {
-        this.scene.start(levelName);
+        var levelScene = this.scene.get(levelName)
+        if (levelScene._isSceneUsed) {
+            this.scene.restart();
+        } else {
+            this.scene.start(levelName);
+        }
     }
 
     getSelectedLevelWaveCount() {
