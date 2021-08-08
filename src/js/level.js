@@ -182,7 +182,9 @@ class LevelScene extends Phaser.Scene {
 
     update() {
         if (Phaser.Input.Keyboard.JustDown(this.spaceBar)){
-            this.nextWave();
+            if (this._isWaveInProgress == false){
+                this.nextWave();
+            }
         }
 
         this._userInterface.update();
