@@ -1,6 +1,6 @@
 // Importing only necessary assets
 import { Scene } from 'phaser';
-import background from '../assets/backgrounds/menu_background.png'
+import background from '../assets/backgrounds/win_background.png'
 import mainTheme from '../assets/music/Main_Theme.mp3'
 import greenRetroFont from '../assets/bitmaps/knight3_green.png'
 import redRetroFont from '../assets/bitmaps/knight3_red.png'
@@ -20,7 +20,7 @@ class WinScreen extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('menu_background', background);
+        this.load.image('win_background', background);
         this.load.audio('main_theme', mainTheme);
         this.load.image('green_retro_font', greenRetroFont);
         this.load.image('red_retro_font', redRetroFont);
