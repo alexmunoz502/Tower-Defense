@@ -150,8 +150,10 @@ class LevelScene extends Phaser.Scene {
         }
         this.paths = paths;
         console.log(paths)
-        // DEBUG: 
-        // path.draw(graphics);
+        // DEBUG:
+        // for (const path in this.paths) {
+        //     this.paths[path].draw(graphics);
+        // }
         // -------------------------
         // DEBUG Tools
         // -------------------------
