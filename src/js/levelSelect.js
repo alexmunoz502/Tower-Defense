@@ -29,7 +29,7 @@ class LevelSelect extends Phaser.Scene {
         for (const soundClip in menuSFX) {
             this.load.audio(`menu${soundClip}`, menuSFX[soundClip]);
         }
-        
+
     }
 
     create() {
@@ -79,7 +79,7 @@ class LevelSelect extends Phaser.Scene {
 
         // Selected Level Information
         this.levelPreview.picture = this.add.image(378, 108, this.selectedLevel.background).setOrigin(0, 0)
-        this.levelPreview.picture.scale = (1/5);
+        this.levelPreview.picture.scale = (1 / 5);
 
         this.levelPreview.name = this.add.text(594, 108, this.selectedLevel.name, {
             fontFamily: 'Verdana',
@@ -128,6 +128,7 @@ class LevelSelect extends Phaser.Scene {
 
     selectLevel(levelName) {
         this.selectedLevel = levelData[levelName]
+        console.log(this.selectedLevel)
         this.playLevelButton.callbackArgs = this.selectedLevel.name
         this.levelPreview.picture.setTexture(this.selectedLevel.background)
         this.levelPreview.name.text = this.selectedLevel.name
@@ -136,7 +137,7 @@ class LevelSelect extends Phaser.Scene {
         this.levelPreview.description.text = this.selectedLevel.description
     }
 
-    changeScene(levelName) {      
+    changeScene(levelName) {
         this.scene.start(levelName);
 
     }
@@ -145,7 +146,7 @@ class LevelSelect extends Phaser.Scene {
         var waveCount = this.selectedLevel.waveData.length
         return waveCount
     }
-    
+
 }
 
 export default LevelSelect;

@@ -83,7 +83,7 @@ class LevelScene extends Phaser.Scene {
 
         // -- Background Image
         var bgImageName = this._levelData.background;
-        this.load.image('levelBg', backgroundImages[bgImageName]);
+        this.load.image(bgImageName, backgroundImages[bgImageName]);
 
         // -- Audio - Music
         for (const track in musicTracks) {
@@ -104,7 +104,7 @@ class LevelScene extends Phaser.Scene {
         this.physics.world.setBounds(0, 0, this._levelData.width, this._levelData.height);
 
         // Background
-        this.add.image(459, 297, 'levelBg');
+        this.add.image(459, 297, this._levelData.background);
 
         // Set game grid to correct size
         for (let i = 0; i < (this.game.config.height / CELL_SIZE); i++) {
@@ -401,9 +401,10 @@ class LevelScene extends Phaser.Scene {
         return this._userInterface;
     }
 
-    loseIfDead(){
-        if (this.registry.get('base_health') < 1){
+    loseIfDead() {
+        if (this.registry.get('base_health') < 1) {
             this.sound.stopAll();
+            this.add.displayList.removeAll();
             this.scene.start('loseScreen', this);
         }
     }
