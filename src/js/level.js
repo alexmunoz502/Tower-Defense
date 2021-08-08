@@ -403,16 +403,9 @@ class LevelScene extends Phaser.Scene {
         return this._userInterface;
     }
 
-<<<<<<< HEAD
     loseIfDead(){
         if (this.registry.get('base_health') < 1){
             this.cleanUp();
-=======
-    loseIfDead() {
-        if (this.registry.get('base_health') < 1) {
-            this.sound.stopAll();
-            this.add.displayList.removeAll();
->>>>>>> d7a776e6f7aafc627dfaac4e9a1f476feba0344d
             this.scene.start('loseScreen', this);
         }
     }
