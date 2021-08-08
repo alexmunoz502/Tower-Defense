@@ -33,6 +33,8 @@ class LevelSelect extends Phaser.Scene {
     }
 
     create() {
+        this.cameras.main.fadeIn(1000, 0, 0, 0);
+
         // Level Select Properties
         this.selectedLevel = levelData["1"]
         this.levelPreview = {}

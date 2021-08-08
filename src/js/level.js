@@ -54,6 +54,7 @@ class LevelScene extends Phaser.Scene {
         // Scene's registry data
         this.registry.set('credits', this._levelData.startingCredits);
         this.registry.set('base_health', 20);
+        this.registry.events.on('changedata', this.loseIfDead, this);
     }
 
     preload() {
@@ -94,6 +95,8 @@ class LevelScene extends Phaser.Scene {
     }
 
     create() {
+        this.cameras.main.fadeIn(1000, 0, 0, 0);
+
         // World Properties
         this.physics.world.setBounds(0, 0, this._levelData.width, this._levelData.height);
 
@@ -394,6 +397,13 @@ class LevelScene extends Phaser.Scene {
 
     getUserInterface() {
         return this._userInterface;
+    }
+
+    loseIfDead(){
+        if (this.registry.get('base_health') < 1){
+            this.sound.stopAll();
+            this.scene.start('loseScreen');
+        }
     }
 
     get grid() {

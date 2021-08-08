@@ -4,17 +4,16 @@ import levelData from '../data/levels.json';
 import MainMenu from './mainMenu.js';
 import LevelSelect from './levelSelect.js';
 import WinScreen from './winScreen.js';
+import LoseScreen from './loseScreen.js';
 import levelSelectBg from '../assets/backgrounds/level_select.png';
 
 
-var scenes = [new MainMenu(), new LevelSelect()];
+var scenes = [new MainMenu(), new LevelSelect(), new WinScreen(), new LoseScreen()];
 
 // Creates a new scene for each existing level data
 for (var level in levelData) if (levelData.hasOwnProperty(level)) {
   scenes.push(new LevelScene(levelData[level]));
 }
-
-scenes.push(new WinScreen());
 
 // Game settings
 const gameConfig = {
