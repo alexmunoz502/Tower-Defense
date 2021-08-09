@@ -90,7 +90,7 @@ class UserInterface {
         this.tower1Title.depth = UI_TEXT_DEPTH;
 
         var repeater = this.addTothis(this, 398, 531, "repeater");
-        this.tower2Title = this._scene.add.text(380, 558, "225", {
+        this.tower2Title = this._scene.add.text(380, 558, "250", {
             fontFamily: 'Verdana',
             fontSize: '16px',
             fontStyle: 'normal',

@@ -44,7 +44,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         return this._speed;
     }
 
-    get credits(){
+    get credits() {
         return this._credits;
     }
 
@@ -61,7 +61,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     die() {
         // TODO: death animation ?
         this.scene.addCredits(this._credits);
-        
+
         // Credit amount appears briefly where enemy dies.
         this.credit_text = new CreditText(this.scene, this.x - 15, this.y - 15, this._credits, {
             fontFamily: 'Verdana',
@@ -76,7 +76,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.scene.decrementEnemyCount();
         this.scene.registry.enemies.remove(this, true, true);
 
-        
+
     }
 
     update() {
@@ -88,8 +88,10 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.y = this.follower.vec.y;
         if (this.follower.t == 1) {
             this.scene.registry.set('base_health', (this.scene.registry.get('base_health') - this._damage));
-            this.scene.decrementEnemyCount();
-            this.scene.registry.enemies.remove(this, true, true);
+            if (this.scene.registry.get('base_health') > 0) {
+                this.scene.decrementEnemyCount();
+                this.scene.registry.enemies.remove(this, true, true);
+            }
         }
     }
 
