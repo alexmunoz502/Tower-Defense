@@ -89,7 +89,6 @@ class MainMenu extends Phaser.Scene {
         
         // Clicking action
         this.start_option.setInteractive(new Phaser.Geom.Rectangle(0, 0, this.start_option.width, this.start_option.height), Phaser.Geom.Rectangle.Contains);
-        console.log(this.start_option)
         this.start_option.on('pointerdown', function() {
             music.stop();
             this.scene.start('levelSelect');
