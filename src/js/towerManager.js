@@ -21,7 +21,7 @@ class TowerManager {
 
         // Show/hide range display when mousing over tower.
         // let rangeDisplay;
-        newTower.setInteractive();
+        newTower.setInteractive({ cursor: 'pointer' });
         newTower.on("pointerdown", function () {
             if (this._scene.selectedTower != this) {
                 this._scene.selectTower(this)

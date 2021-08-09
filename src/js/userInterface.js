@@ -249,7 +249,7 @@ class UserInterface {
 
     // Adds interactive tower icon to scene
     addTothis(towerParent, x, y, towerName) {
-        var towerSelect = towerParent._scene.add.sprite(x, y, "tower_base").setInteractive();
+        var towerSelect = towerParent._scene.add.sprite(x, y, "tower_base").setInteractive({ cursor: 'grab' });
         towerSelect.turret = towerParent._scene.add.sprite(x, y, towerName);
         towerSelect.turret.depth = UI_TEXT_DEPTH;
 
@@ -261,7 +261,7 @@ class UserInterface {
             }
             this.scene.enableTowerPlacementMode()
             console.log(x, y)
-            towerParent.towerPreview = towerParent._scene.add.sprite(x, y, "tower_base").setInteractive();
+            towerParent.towerPreview = towerParent._scene.add.sprite(x, y, "tower_base").setInteractive({ cursor: 'grabbing' });
             towerParent.towerPreview.depth = UI_DEPTH;
             towerParent.towerPreview.turret = towerParent._scene.add.sprite(x, y, towerName);
             towerParent.towerPreview.turret.depth = UI_DEPTH;
@@ -292,7 +292,7 @@ class UserInterface {
                         if (towerParent.deleteButton) {
                             towerParent.deleteButton.destroy();
                         }
-                        towerParent.deleteButton = towerParent._scene.add.image(686, 558, 'tower_base_delete').setOrigin(1, 1).setInteractive();
+                        towerParent.deleteButton = towerParent._scene.add.image(686, 558, 'tower_base_delete').setOrigin(1, 1).setInteractive({ cursor: 'pointer' });
                         towerParent.deleteButton.depth = UI_TEXT_DEPTH
 
                         // Adds upgradeButton to towerParent if tower is not at max rank
@@ -349,7 +349,7 @@ class UserInterface {
 
     // Adds upgrade button to UI
     addUpgradeButton(buttonParent, tower) {
-        buttonParent.upgradeButton = buttonParent._scene.add.image(608, 558, 'tower_base_upgrade').setOrigin(1, 1).setInteractive();
+        buttonParent.upgradeButton = buttonParent._scene.add.image(608, 558, 'tower_base_upgrade').setOrigin(1, 1).setInteractive({ cursor: 'pointer' });
         buttonParent.upgradeButton.depth = UI_TEXT_DEPTH;
         buttonParent.upgradeCost.setText(tower.upgradeCost);
         buttonParent.upgradeCost.depth = UI_TEXT_DEPTH;
