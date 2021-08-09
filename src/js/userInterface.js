@@ -78,7 +78,7 @@ class UserInterface {
         // Tower icons & titles
         // ---------------------
         var blaster = this.addTothis(this, 320, 531, "blaster");
-        this.tower1Title = this._scene.add.text(302, 558, "100", {
+        this.tower1Title = this._scene.add.text(302, 558, "150", {
             fontFamily: 'Verdana',
             fontSize: '16px',
             fontStyle: 'normal',
@@ -90,7 +90,7 @@ class UserInterface {
         this.tower1Title.depth = UI_TEXT_DEPTH;
 
         var repeater = this.addTothis(this, 398, 531, "repeater");
-        this.tower2Title = this._scene.add.text(380, 558, "200", {
+        this.tower2Title = this._scene.add.text(380, 558, "225", {
             fontFamily: 'Verdana',
             fontSize: '16px',
             fontStyle: 'normal',
@@ -168,11 +168,11 @@ class UserInterface {
             fontStyle: 'normal',
             color: TIMER_COLOR,
             stroke: STROKE_COLOR,
-            strokeThickness: '2'    
+            strokeThickness: '2'
         });
         this.preparationTimer.depth = UI_TEXT_DEPTH;
 
-        this.startNextWaveText = this._scene.add.text(396, 459, "Press [SPACE] to Start",{
+        this.startNextWaveText = this._scene.add.text(396, 459, "Press [SPACE] to Start", {
             fontFamily: 'Verdana',
             fontSize: '18px',
             fontStyle: 'normal',
@@ -348,7 +348,7 @@ class UserInterface {
         buttonParent.upgradeButton.on("pointerdown", function () {
             // remove button if tower is fully upgraded(rank 3)
             this.scene._selectorSwitch = true;
-            if ((this.scene.getCredits() > tower.upgradeCost) && tower.upgrade() >= 2) {
+            if ((this.scene.getCredits() >= tower.upgradeCost) && tower.upgrade() >= 2) {
                 buttonParent.upgradeButton.destroy();
                 buttonParent.activeButton = false;
             }
@@ -358,7 +358,7 @@ class UserInterface {
             buttonParent.rangeTitle.setText("Range: " + tower.range);
             buttonParent.attackSpeedTitle.setText("Cooldown: " + tower.cooldown / 60.0);
             buttonParent.upgradeCost.setText(tower.upgradeCost)
-            
+
             buttonParent.updateRangeDisplay(buttonParent._scene._selectedTower);
         });
 
@@ -367,7 +367,7 @@ class UserInterface {
 
     // Displays the range information on a selected tower
     updateRangeDisplay(selectedTower) {
-        if (this.rangeDisplay){
+        if (this.rangeDisplay) {
             this.rangeDisplay.radius = selectedTower.range;
         } else {
             this.rangeDisplay = selectedTower.scene.add.circle(

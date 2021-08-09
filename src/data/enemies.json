@@ -2,11 +2,20 @@
     "grunt" : {
         "name": "Martian Grunt",
         "texture": "alien_green",
-        "damage": 5,
+        "damage": 4,
         "speed": 0.5,
         "scale": 1,
         "health": 100,
-        "credits": 10        
+        "credits": 10
+    },
+    "elite" : {
+        "name": "Martian Elite",
+        "texture": "alien_blue",
+        "damage": 5,
+        "speed": 0.55,
+        "scale": 1,
+        "health": 275,
+        "credits": 15
     },
     "runner" : {
         "name": "Martian Runner",
@@ -14,16 +23,52 @@
         "damage": 2,
         "speed": 0.75,
         "scale": 1,
-        "health": 25,
-        "credits": 10
+        "health": 30,
+        "credits": 5
+    },
+    "flyer" : {
+        "name": "Martian flier",
+        "texture": "flyer",
+        "damage": 4,
+        "speed": 0.75,
+        "scale": 1,
+        "health": 90,
+        "credits": 5
+    },
+    "tank" : {
+        "name": "Martian Tank",
+        "texture": "spike_bug_red",
+        "damage": 4,
+        "speed": 0.25,
+        "scale": 1.5,
+        "health": 525,
+        "credits": 15
+    },
+    "small_tank" : {
+        "name": "Martian Small Tank",
+        "texture": "spike_bug_blue",
+        "damage": 4,
+        "speed": 0.25,
+        "scale": 1.2,
+        "health": 350,
+        "credits": 15
+    },
+    "mini-boss" : {
+        "name": "Martian Mini Boss",
+        "texture": "bug_boss_red",
+        "damage": 10,
+        "speed": 0.2,
+        "scale": 1.8,
+        "health": 3500,
+        "credits": 125
     },
     "boss" : {
         "name": "Martian Boss",
         "texture": "alien_pink",
-        "damage": 10,
+        "damage": 20,
         "speed": 0.15,
         "scale": 2,
-        "health": 5000,
-        "credits": 100
+        "health": 7500,
+        "credits": 300
     }
 }

@@ -13,11 +13,11 @@
 			[ [ 14, "grunt", 800, 1 ], [ 10, "runner", 500, 1 ] ],
 			[ [ 17, "grunt", 700, 1 ], [ 15, "runner", 500, 1 ] ],
 			[ [ 20, "grunt", 600, 1 ], [ 20, "runner", 500, 1 ] ],
-			[ [ 10, "grunt", 1000, 1 ] ],
-			[ [ 12, "grunt", 900, 1 ] ],
-			[ [ 14, "grunt", 800, 1 ] ],
-			[ [ 10, "runner", 500, 1 ] ],
-			[ [ 17, "grunt", 700, 1 ], [ 15, "runner", 500, 1 ] ],
+			[ [ 10, "grunt", 1000, 1 ], [ 5, "elite", 600, 1 ]  ],
+			[ [ 20, "elite", 1200, 1 ] ],
+			[ [ 20, "elite", 1200, 1 ], [ 5, "tank", 3000, 1 ]  ],
+			[ [ 20, "elite", 1200, 1 ], [ 5, "tank", 3000, 1 ], [ 30, "runner", 500, 1 ] ],
+			[ [ 20, "elite", 2500, 1 ], [ 20, "grunt", 900, 1 ], [ 15, "tank", 2000, 1 ], [ 15, "flyer", 800, 1 ] ],
 			[ [ 1, "boss", 1500, 1 ] ]
 		],
 		"paths": {
@@ -77,10 +77,19 @@
 		"height": 640,
 		"difficulty": "Hard",
 		"description": "// Incoming Transmission //\n\nTeam,\n\nWe are ready to unveil the final step in our operations plan. Upper management has been working with a top strategy firm out of Uranus, and collaboratively developed a course of action to get rid of the Martian invaders.\n\nLast week, our scanners were finally able to find the home base of the Martians, deep within the SW Melas canyon. Our plan is to use noxious gas to flush them out of the depths, where we will be waiting to finish them off as they make their escape.\n\nTo ensure timely execution, we will be putting all purchased PTO requests on hold.\n\nThank you for your cooperation,\n\nMars Base Prosperity Operations\nU-CORP\n\"Putting the 'You' in Universe\"",
-		"startingCredits": 400,
+		"startingCredits": 500,
 		"waveData": [
-			[ [ 10, "grunt", 1000, 1 ], [ 10, "grunt", 1000, 2 ] ],
-			[ [ 12, "grunt", 900, 1 ], [ 10, "grunt", 1000, 2 ] ]
+			[ [ 10, "grunt", 1900, 1 ], [ 10, "grunt", 2000, 2 ] ],
+			[ [ 13, "grunt", 1700, 1 ], [ 13, "grunt", 1700, 2 ] ],
+            [ [ 20, "grunt", 1500, 1 ], [ 20, "runner", 1500, 2 ],  [ 1, "elite", 4000, 1 ],[ 1, "elite", 6000, 2 ] ],
+            [ [ 10, "small_tank", 600, 1 ], [ 10, "small_tank", 600, 2 ], [5, "runner", 1200, 1], [5, "runner", 1200, 2]],
+            [ [ 14, "small_tank", 400, 1 ], [ 14, "small_tank", 400, 2 ], [3, "flyer", 1200, 1], [3, "flyer", 800, 2]],
+            [ [ 6, "elite", 900, 1 ], [ 6, "small_tank", 600, 2 ], [8, "flyer", 1000, 1], [8, "flyer", 1200, 2]],
+            [ [ 8, "elite", 200, 1 ], [ 12, "small_tank", 400, 2 ], [5, "flyer", 1000, 1], [5, "flyer", 1001, 2]],
+            [ [ 12, "elite", 700, 1 ],[ 12, "elite", 700, 2 ], [8, "flyer", 700, 1], [8, "runner", 705, 2]],
+            [ [ 14, "elite", 500, 1 ],[ 20, "tank", 600, 2 ], [13, "flyer", 600, 1], [13, "flyer", 605, 2]],
+            [ [ 1, "mini-boss", 500, 1 ], [ 1, "mini-boss", 500, 2 ], [1, "boss", 20000, 1]],
+            [ [ 1, "boss", 500, 1 ], [ 1, "boss", 500, 2 ]]
 		],
 		"paths": {
 			"1": [  [ 0, 135, 243, 135 ],

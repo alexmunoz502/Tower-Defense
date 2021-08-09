@@ -169,7 +169,7 @@ class LevelScene extends Phaser.Scene {
         // -------------------------
         // DEBUG Tools
         // -------------------------
-        
+
 
         // Click on a spot to print x/y coordinates to console.
         this.input.on('pointerdown', (pointer) => {
@@ -184,13 +184,13 @@ class LevelScene extends Phaser.Scene {
         // this.input.keyboard.on('keydown-C', () => {
         //     this.registry.set('credits', this.registry.get('credits') + 1000);
         // }, this);
-        
-        
+
+
     }
 
     update() {
-        if (Phaser.Input.Keyboard.JustDown(this.spaceBar)){
-            if (this._isWaveInProgress == false){
+        if (Phaser.Input.Keyboard.JustDown(this.spaceBar)) {
+            if (this._isWaveInProgress == false) {
                 this.nextWave();
             }
         }
@@ -369,7 +369,7 @@ class LevelScene extends Phaser.Scene {
         this._isWaveInProgress = true
         this._currentWaveIndex += 1;
         if (this._currentWaveIndex < this._waveCount) {
-            if (this._currentWaveIndex % 9 == 0 && this._currentWaveIndex != 0) {
+            if (this._currentWaveIndex % 10 == 0 && this._currentWaveIndex != 0) {
                 // Boss Battle
                 this._audioManager.playSound("boss_warning");
                 this._audioManager.playMusic("boss");
@@ -413,15 +413,15 @@ class LevelScene extends Phaser.Scene {
         return this._userInterface;
     }
 
-    loseIfDead(){
-        if (this.registry.get('base_health') < 1){
+    loseIfDead() {
+        if (this.registry.get('base_health') < 1) {
             this.cleanUp();
             this.scene.start('loseScreen', this);
         }
     }
 
     // Call this before leaving the screen
-    cleanUp(){
+    cleanUp() {
         this.registry.destroy();
         this.events.off();
         this.sound.stopAll();
