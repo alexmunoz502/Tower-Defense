@@ -6,7 +6,7 @@
     "projectile": "laser_red",
     "sound": "blaster",
     "sound_volume": 0.95,
-    "projectile_speed" : 475,
+    "projectile_speed" : 500,
     "projectile_duration" : 300,
     "accuracy": 1.0,
     "damage": [30,45,60],

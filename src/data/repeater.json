@@ -8,7 +8,7 @@
     "projectile": "bullet",
     "projectile_speed" : 1000,
     "projectile_duration" : 300,
-    "accuracy": 0.55,
+    "accuracy": 0.6,
     "damage": [12,16,22.5],
     "range": [150, 175, 200],
     "cooldown": [0.15, 0.14, 0.13],
