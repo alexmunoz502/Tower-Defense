@@ -162,6 +162,16 @@ class UserInterface {
         this.rangeDisplay = null;
 
         // Wave Information
+        this.waveNumberDisplay = this._scene.add.text(405, 162, `Wave #`, {
+            fontFamily: 'Verdana',
+            fontSize: '48px',
+            fontStyle: 'normal',
+            color: TIMER_COLOR,
+            stroke: STROKE_COLOR,
+            strokeThickness: '2'
+        })
+        this.waveNumberDisplay.visible = false;
+
         this.preparationTimer = this._scene.add.text(324, 422, "", {
             fontFamily: 'Verdana',
             fontSize: '36px',
@@ -172,7 +182,7 @@ class UserInterface {
         });
         this.preparationTimer.depth = UI_TEXT_DEPTH;
 
-        this.startNextWaveText = this._scene.add.text(396, 459, "Press [SPACE] to Start", {
+        this.startNextWaveText = this._scene.add.text(369, 459, "Press [SPACE] to Start", {
             fontFamily: 'Verdana',
             fontSize: '18px',
             fontStyle: 'normal',
@@ -382,6 +392,19 @@ class UserInterface {
             this.rangeDisplay.destroy();
             this.rangeDisplay = null;
         }
+    }
+
+    // Showing Wave Number at start of wave
+    showWaveNumber(waveNumber) {
+        this.waveNumberDisplay.text = `Wave ${waveNumber}`
+        this.waveNumberDisplay.visible = true;
+        this._scene.time.addEvent({
+            delay: 1300,
+            callback: () => {
+                this.waveNumberDisplay.visible = false;
+            },
+            callbackScope: this
+        });
     }
 
 }
