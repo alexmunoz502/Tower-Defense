@@ -44,6 +44,24 @@
         "health": 525,
         "credits": 15
     },
+    "small_tank" : {
+        "name": "Martian Small Tank",
+        "texture": "spike_bug_blue",
+        "damage": 4,
+        "speed": 0.25,
+        "scale": 1.2,
+        "health": 350,
+        "credits": 15
+    },
+    "mini-boss" : {
+        "name": "Martian Mini Boss",
+        "texture": "bug_boss_red",
+        "damage": 10,
+        "speed": 0.2,
+        "scale": 1.8,
+        "health": 3500,
+        "credits": 125
+    },
     "boss" : {
         "name": "Martian Boss",
         "texture": "alien_pink",
@@ -51,6 +69,6 @@
         "speed": 0.15,
         "scale": 2,
         "health": 7500,
-        "credits": 100
+        "credits": 300
     }
 }

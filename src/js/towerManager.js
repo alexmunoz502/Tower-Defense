@@ -9,12 +9,12 @@ class TowerManager {
     addTower(x, y, towerName) {
         // Adds tower to scene
         var towerData = data[towerName];
-        
+
         if (this._scene.getCredits() < towerData.cost) {
             // Can't Afford
             return null;
         }
-        
+
         let newTower = new Tower(this._scene, x, y, towerData);
         this._scene.removeCredits(newTower.cost);
         this._scene.registry.towers.add(newTower);

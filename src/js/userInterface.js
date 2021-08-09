@@ -102,7 +102,7 @@ class UserInterface {
         this.tower2Title.depth = UI_TEXT_DEPTH;
 
         var shocker = this.addTothis(this, 476, 531, "shocker");
-        this.tower3Title = this._scene.add.text(460, 558, "275", {
+        this.tower3Title = this._scene.add.text(460, 558, "250", {
             fontFamily: 'Verdana',
             fontSize: '16px',
             fontStyle: 'normal',
@@ -348,7 +348,7 @@ class UserInterface {
         buttonParent.upgradeButton.on("pointerdown", function () {
             // remove button if tower is fully upgraded(rank 3)
             this.scene._selectorSwitch = true;
-            if ((this.scene.getCredits() > tower.upgradeCost) && tower.upgrade() >= 2) {
+            if ((this.scene.getCredits() >= tower.upgradeCost) && tower.upgrade() >= 2) {
                 buttonParent.upgradeButton.destroy();
                 buttonParent.activeButton = false;
             }

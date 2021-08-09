@@ -1,16 +1,16 @@
 {
     "name": "shocker",
     "type": "stationary-aoe",
-    "cost": 275,
-    "upgrade_cost": [125, 150],
+    "cost": 250,
+    "upgrade_cost": [100, 150],
     "sound": "shock",
     "sound_volume": 0.3,
     "projectile": null,
     "projectile_speed" : null,
     "projectile_duration" : null,
     "accuracy": 1.0,
-    "damage": [25, 35, 50],
+    "damage": [30, 45, 65],
     "range": [100, 110, 125],
-    "cooldown": [1.0, 0.9, 0.8],
+    "cooldown": [0.9, 0.8, 0.7],
     "scale": 1
 }
