@@ -218,8 +218,8 @@ class LevelScene extends Phaser.Scene {
                 this._isWaveInProgress = false
                 this._audioManager.playMusic("preparation");
                 if (this._currentWaveIndex == this._waveCount - 1) {
-                    this._isLevelWon = true;
                     this.cleanUp();
+                    this._isLevelWon = true;
                     this.scene.start('winScreen', this);
                 }
                 if (!this._isLevelWon) {
