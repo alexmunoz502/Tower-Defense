@@ -171,6 +171,7 @@ class UserInterface {
             strokeThickness: '2'
         })
         this.waveNumberDisplay.visible = false;
+        this.waveNumberDisplay.depth = UI_TEXT_DEPTH;
 
         this.preparationTimer = this._scene.add.text(324, 422, "", {
             fontFamily: 'Verdana',
