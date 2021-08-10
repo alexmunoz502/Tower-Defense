@@ -162,6 +162,16 @@ class UserInterface {
         this.rangeDisplay = null;
 
         // Wave Information
+        this.waveNumberDisplay = this._scene.add.text(405, 162, `Wave #`, {
+            fontFamily: 'Verdana',
+            fontSize: '48px',
+            fontStyle: 'normal',
+            color: TIMER_COLOR,
+            stroke: STROKE_COLOR,
+            strokeThickness: '2'
+        })
+        this.waveNumberDisplay.visible = false;
+
         this.preparationTimer = this._scene.add.text(324, 422, "", {
             fontFamily: 'Verdana',
             fontSize: '36px',
@@ -172,7 +182,7 @@ class UserInterface {
         });
         this.preparationTimer.depth = UI_TEXT_DEPTH;
 
-        this.startNextWaveText = this._scene.add.text(396, 459, "Press [SPACE] to Start", {
+        this.startNextWaveText = this._scene.add.text(369, 459, "Press [SPACE] to Start", {
             fontFamily: 'Verdana',
             fontSize: '18px',
             fontStyle: 'normal',
@@ -239,7 +249,7 @@ class UserInterface {
 
     // Adds interactive tower icon to scene
     addTothis(towerParent, x, y, towerName) {
-        var towerSelect = towerParent._scene.add.sprite(x, y, "tower_base").setInteractive();
+        var towerSelect = towerParent._scene.add.sprite(x, y, "tower_base").setInteractive({ cursor: 'grab' });
         towerSelect.turret = towerParent._scene.add.sprite(x, y, towerName);
         towerSelect.turret.depth = UI_TEXT_DEPTH;
 
@@ -251,7 +261,7 @@ class UserInterface {
             }
             this.scene.enableTowerPlacementMode()
             console.log(x, y)
-            towerParent.towerPreview = towerParent._scene.add.sprite(x, y, "tower_base").setInteractive();
+            towerParent.towerPreview = towerParent._scene.add.sprite(x, y, "tower_base").setInteractive({ cursor: 'grabbing' });
             towerParent.towerPreview.depth = UI_DEPTH;
             towerParent.towerPreview.turret = towerParent._scene.add.sprite(x, y, towerName);
             towerParent.towerPreview.turret.depth = UI_DEPTH;
@@ -282,7 +292,7 @@ class UserInterface {
                         if (towerParent.deleteButton) {
                             towerParent.deleteButton.destroy();
                         }
-                        towerParent.deleteButton = towerParent._scene.add.image(686, 558, 'tower_base_delete').setOrigin(1, 1).setInteractive();
+                        towerParent.deleteButton = towerParent._scene.add.image(686, 558, 'tower_base_delete').setOrigin(1, 1).setInteractive({ cursor: 'pointer' });
                         towerParent.deleteButton.depth = UI_TEXT_DEPTH
 
                         // Adds upgradeButton to towerParent if tower is not at max rank
@@ -339,7 +349,7 @@ class UserInterface {
 
     // Adds upgrade button to UI
     addUpgradeButton(buttonParent, tower) {
-        buttonParent.upgradeButton = buttonParent._scene.add.image(608, 558, 'tower_base_upgrade').setOrigin(1, 1).setInteractive();
+        buttonParent.upgradeButton = buttonParent._scene.add.image(608, 558, 'tower_base_upgrade').setOrigin(1, 1).setInteractive({ cursor: 'pointer' });
         buttonParent.upgradeButton.depth = UI_TEXT_DEPTH;
         buttonParent.upgradeCost.setText(tower.upgradeCost);
         buttonParent.upgradeCost.depth = UI_TEXT_DEPTH;
@@ -382,6 +392,19 @@ class UserInterface {
             this.rangeDisplay.destroy();
             this.rangeDisplay = null;
         }
+    }
+
+    // Showing Wave Number at start of wave
+    showWaveNumber(waveNumber) {
+        this.waveNumberDisplay.text = `Wave ${waveNumber}`
+        this.waveNumberDisplay.visible = true;
+        this._scene.time.addEvent({
+            delay: 1300,
+            callback: () => {
+                this.waveNumberDisplay.visible = false;
+            },
+            callbackScope: this
+        });
     }
 
 }
