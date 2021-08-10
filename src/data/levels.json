@@ -41,19 +41,18 @@
 		"height": 640,
 		"difficulty": "Medium",
 		"description": "// Incoming Transmission //\n\nTeam,\n\nApparently, the members of the board are pleased with our performance back in Columbia Hills. Sales numbers are at an all-time high. For this reason, we need to recapture the mining facility and get back to normal operations.\n\nCorporate has hired a mercenary strike team to clear the site for reentry. We are expecting a counter-attack from the martians on the western side of the facility. In order to prevent further destruction of corporate property, we are once against asking for your assistance in setting up defenses.\n\nUnfortunately, hazard pay just isn't in the budget at the moment. While we know this is not the answer you hoped for, we will be having a pizza party in the north cafeteria on saturday as a token of our appreciation. Please limit yourself to 1 slice.\n\nThank you for your cooperation,\n\nMars Base Prosperity Operations\nU-CORP\n\"Putting the 'You' in Universe\"",
-		"startingCredits": 400,
+		"startingCredits": 150,
 		"waveData":[
-			[ [ 10, "grunt", 1000, 1 ] ],
-			[ [ 12, "grunt", 900, 1 ] ],
-			[ [ 14, "grunt", 800, 1 ], [ 10, "runner", 500, 1 ] ],
-			[ [ 17, "grunt", 700, 1 ], [ 15, "runner", 500, 1 ] ],
-			[ [ 20, "grunt", 600, 1 ], [ 20, "runner", 500, 1 ] ],
-			[ [ 10, "grunt", 1000, 1 ] ],
-			[ [ 12, "grunt", 900, 1 ] ],
-			[ [ 14, "grunt", 800, 1 ] ],
-			[ [ 10, "runner", 500, 1 ] ],
-			[ [ 17, "grunt", 700, 1 ], [ 15, "runner", 500, 1 ] ],
-			[ [ 1, "boss", 1500, 1 ] ]
+			[ [ 10, "flyer", 500, 1 ] ],
+			[ [ 10, "small_tank", 1000, 1 ] ],
+			[ [ 10, "small_tank", 500, 1 ], [ 5, "flyer", 5000, 1 ]],
+			[ [ 20, "elite", 600, 1 ] ],
+			[ [ 60, "flyer", 500, 1 ] , [ 20, "small_tank", 500, 1 ]],
+			[ [ 4, "mini-boss", 4000, 1 ]],
+			[ [ 6, "mini-boss", 1000, 1 ], [ 60, "small_tank", 500, 1 ]],
+			[ [ 8, "mini-boss", 1000, 1 ], [ 60, "elite", 600, 1 ]],
+			[ [ 10, "mini-boss", 1000, 1 ], [ 60, "elite", 600, 1 ], [ 60, "small_tank", 500, 1 ]],
+			[ [ 4, "boss", 5000, 1 ], [10, "mini-boss", 1000, 1] ]
 		],
 		"paths": {
 			"1": [
