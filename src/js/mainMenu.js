@@ -101,7 +101,7 @@ class MainMenu extends Phaser.Scene {
         });
 
         // Credit text
-        this.add.text(320, 570, 'Created by Devin Leung, Alex Muñoz, and Ryan Ong', {
+        this.add.text(320, 560, 'Created by Devin Leung, Alex Muñoz, and Ryan Ong\n      Music by Eric Matyas www.soundimage.org', {
             fontFamily: 'Arial',
             color: 'Black',
             fontSize: 14
